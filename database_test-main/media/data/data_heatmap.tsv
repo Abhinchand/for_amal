@@ -1,0 +1,122 @@
+x,y,value
+AflP-1A,Agrotis ipsilon,2
+AflP-1A,Anticarsia gemmatalis,2
+AflP-1A,Chrysodeixis includens,2
+AflP-1A,Coleomegilla maculata,2
+AflP-1A,Diabrotica barberi,0.5
+AflP-1A,Diabrotica undecimpunctata,0.5
+AflP-1A,Diabrotica virgifera virgifera,0.5
+AflP-1A,Helicoverpa zea,2
+AflP-1A,Ostrinia nubilalis,2
+AflP-1A,Spodoptera frugiperda,2
+AflP-1B,Agrotis ipsilon,2
+AflP-1B,Anticarsia gemmatalis,2
+AflP-1B,Chrysodeixis includens,2
+AflP-1B,Coleomegilla maculata,2
+AflP-1B,Diabrotica barberi,0.5
+AflP-1B,Diabrotica undecimpunctata,0.5
+AflP-1B,Diabrotica virgifera virgifera,0.5
+AflP-1B,Helicoverpa zea,2
+AflP-1B,Ostrinia nubilalis,2
+AflP-1B,Spodoptera frugiperda,2
+Cry11A,Macrosiphum euphorbiae,0.5
+Cry11Aa,Acyrthosiphon pisum,0.5
+Cry1Ab,Acyrthosiphon pisum,0.5
+Cry1Ab,Diaphorina citri,0.5
+Cry1Ac,Macrosiphum euphorbiae,2
+Cry1Ba,Diaphorina citri,0.5
+Cry2Aa,Aedes aegypti,2
+Cry2Aa,Anopheles gambiae,0.5
+Cry2Aa,Culex pipiens,2
+Cry2Aa,Macrosiphum euphorbiae,0.5
+Cry2Aa17,Aedes aegypti,2
+Cry2Aa2,Aedes aegypti,0.5
+Cry2Ab1,Aedes aegypti,2
+Cry2Ab2,Aedes aegypti,2
+Cry2Ab2,Anopheles gambiae,0.5
+Cry2Ab2,Culex pipiens,2
+Cry2Ab29,Aedes aegypti,2
+Cry2Ab4,Aedes aegypti,2
+Cry2Ac11,Aedes aegypti,0.5
+Cry2Ad5,Aedes aegypti,2
+Cry2Ah1,Aedes aegypti,2
+Cry2Am1,Aedes aegypti,0.5
+Cry32Wa1,Helicoverpa armigera,2
+Cry3A,Macrosiphum euphorbiae,0.5
+Cry3Aa,Acyrthosiphon pisum,0.5
+Cry4Aa,Acyrthosiphon pisum,0.5
+Cry73Ba1,Mamestra brassicae,2
+Cry73Ba1,Myzus persicae,0.5
+Cry73Ba1,Spodoptera exigua,2
+Cry73Ba1,Spodoptera frugiperda,2
+Cry73Ba1,Spodoptera littoralis,2
+Cry78Aa1,Chrysoperla sinica,2
+Cry78Aa1,Colaphellus bowringi,2
+Cry78Aa1,Helicoverpa armigera,2
+Cry78Aa1,Laodelphax striatellus,0.5
+Cry78Aa1,Nilaparvata lugens,0.5
+Cry78Aa1,Plutella xylostella,2
+Cry78Ba1,Apis mellifera,2
+Cry78Ba1,Bemisia tabaci,2
+Cry78Ba1,Colaphellus bowringi,2
+Cry78Ba1,Laodelphax striatellus,0.5
+Cry78Ba1,Plutella xylostella,2
+Cry78Ba1,Rhopalosiphum maidis,2
+Cyt1Aa,Acyrthosiphon pisum,0.5
+Mpp51Aa2,Agrotis ipsilon,2
+Mpp51Aa2,Diabrotica undecimpunctata,2
+Mpp51Aa2,Diabrotica virgifera virgifera,2
+Mpp51Aa2,Helicoverpa zea,2
+Mpp51Aa2,Heliothis virescens,2
+Mpp51Aa2,Leptinotarsa decemlineata,0.5
+Mpp51Aa2,Lygus hesperus,0.5
+Mpp51Aa2,Ostrinia nubilalis,2
+Mpp51Aa2,Spodoptera frugiperda,2
+Mpp64Ba/Mpp64Ca,Colaphellus bowringi,2
+Mpp64Ba/Mpp64Ca,Laodelphax striatellus,0.5
+Mpp64Ba/Mpp64Ca,Ostrinia furnacalis,2
+Mpp64Ba/Mpp64Ca,Plutella xylostella,2
+Mpp64Ba/Mpp64Ca,Sogatella furcifera,0.5
+Mpp75Aa1,Diabrotica undecimpunctata howardi ,2
+Mpp75Aa1,Diabrotica vergifera vergifera,0.5
+Mpp75Aa1,Leptinotarsa decemlineata ,2
+Mpp75Aa2,Diabrotica undecimpunctata howardi ,2
+Mpp75Aa2,Diabrotica vergifera vergifera,0.5
+Mpp75Aa2,Leptinotarsa decemlineata ,2
+Mpp75Aa3,Diabrotica undecimpunctata howardi ,2
+Mpp75Aa3,Diabrotica vergifera vergifera,0.5
+Mpp75Aa3,Leptinotarsa decemlineata ,2
+axmi058,Anticarsia gemmatalis,2
+axmi058,Caenorhabditis elegans,2
+axmi058,Diatraea grandiosella,2
+axmi058,Helicoverpa zea,2
+axmi058,Heliothis virescens,2
+axmi058,Leptinotarsa decemlineata ,2
+axmi058,Ostrinia nubilalis,2
+axmi058,Plutella xylostella,0.5
+axmi079,Plutella xylostella,0.5
+axmi082,Plutella xylostella,0.5
+axmi100,Anticarsia gemmatalis,2
+axmi100,Caenorhabditis elegans,2
+axmi100,Diatraea grandiosella,2
+axmi100,Helicoverpa zea,2
+axmi100,Heliothis virescens,0.5
+axmi100,Leptinotarsa decemlineata ,2
+axmi100,Ostrinia nubilalis,0.5
+axmi100,Plutella xylostella,0.5
+axmi102,Anticarsia gemmatalis,2
+axmi102,Caenorhabditis elegans,2
+axmi102,Diatraea grandiosella,2
+axmi102,Helicoverpa zea,2
+axmi102,Heliothis virescens,2
+axmi102,Leptinotarsa decemlineata ,2
+axmi102,Ostrinia nubilalis,0.5
+axmi102,Plutella xylostella,0.5
+axmi112,Anticarsia gemmatalis,2
+axmi112,Caenorhabditis elegans,2
+axmi112,Diatraea grandiosella,0.5
+axmi112,Helicoverpa zea,2
+axmi112,Heliothis virescens,2
+axmi112,Leptinotarsa decemlineata ,2
+axmi112,Ostrinia nubilalis,0.5
+axmi112,Plutella xylostella,0.5

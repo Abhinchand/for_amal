@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>clustalanalysis.views &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>clustalanalysis.views</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for clustalanalysis.views</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">Bio.SeqUtils.ProtParam</span> <span class="kn">import</span> <span class="n">ProteinAnalysis</span>
+<span class="kn">from</span> <span class="nn">bokeh.embed</span> <span class="kn">import</span> <span class="n">components</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ColumnDataSource</span><span class="p">,</span>
+    <span class="n">LassoSelectTool</span><span class="p">,</span>
+    <span class="n">WheelZoomTool</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">bokeh.palettes</span> <span class="kn">import</span> <span class="n">Category20</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span>
+<span class="kn">from</span> <span class="nn">celery</span> <span class="kn">import</span> <span class="n">current_app</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponseRedirect</span><span class="p">,</span> <span class="n">JsonResponse</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+
+<span class="kn">from</span> <span class="nn">clustalanalysis.forms</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AnalysisForm</span><span class="p">,</span>
+    <span class="n">DendogramForm</span><span class="p">,</span>
+    <span class="n">UserDataForm</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">clustalanalysis.models</span> <span class="kn">import</span> <span class="n">StoreResultFiles</span>
+<span class="kn">from</span> <span class="nn">clustalanalysis.tasks</span> <span class="kn">import</span> <span class="n">create_tree</span>
+<span class="kn">from</span> <span class="nn">database.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Description</span><span class="p">,</span>
+    <span class="n">PesticidalProteinDatabase</span><span class="p">,</span>
+    <span class="n">UserUploadData</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="domain_analysis_homepage"><a class="viewcode-back" href="../../clustalanalysis.html#clustalanalysis.views.domain_analysis_homepage">[docs]</a><span class="k">def</span> <span class="nf">domain_analysis_homepage</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">AnalysisForm</span><span class="p">()</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span>
+        <span class="s2">&quot;userform&quot;</span><span class="p">:</span> <span class="n">UserDataForm</span><span class="p">(),</span>
+        <span class="s2">&quot;descriptions&quot;</span><span class="p">:</span> <span class="n">Description</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">),</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/dendogram_homepage.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="domain_analysis"><a class="viewcode-back" href="../../clustalanalysis.html#clustalanalysis.views.domain_analysis">[docs]</a><span class="k">def</span> <span class="nf">domain_analysis</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">AnalysisForm</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">post_values</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">post_values</span><span class="p">[</span><span class="s2">&quot;session_list_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;list_names&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">post_values</span><span class="p">[</span><span class="s2">&quot;session_list_nterminal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;list_nterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">post_values</span><span class="p">[</span><span class="s2">&quot;session_list_middle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;list_middle&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">post_values</span><span class="p">[</span><span class="s2">&quot;session_list_cterminal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;list_cterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">post_values</span><span class="p">[</span><span class="s2">&quot;list_activity_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;list_activity_names&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+        <span class="n">userdataids</span> <span class="o">=</span> <span class="n">UserUploadData</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">session_key</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_key</span><span class="p">)</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+
+        <span class="n">post_values</span><span class="p">[</span><span class="s2">&quot;userdataids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">userdataids</span><span class="p">)</span>
+
+        <span class="n">form</span> <span class="o">=</span> <span class="n">AnalysisForm</span><span class="p">(</span><span class="n">post_values</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">userform</span> <span class="o">=</span> <span class="n">UserDataForm</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;form is valid&quot;</span><span class="p">)</span>
+            <span class="n">userdataids</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;userdataids&quot;</span><span class="p">]</span>
+
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">inputfile</span><span class="p">,</span> <span class="n">outputfile</span><span class="p">,</span> <span class="n">numlines</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="c1"># print(&quot;inputfile&quot;, inputfile)</span>
+            <span class="c1"># print(&quot;outputfile&quot;, outputfile)</span>
+
+            <span class="n">task</span> <span class="o">=</span> <span class="n">create_tree</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="n">inputfile</span><span class="p">,</span> <span class="n">outputfile</span><span class="p">)</span>
+            <span class="c1">#</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;task_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">id</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;task_status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;userform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">userform</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;analysisform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">form</span>
+            <span class="c1"># context[&#39;numlines&#39;] = numlines</span>
+
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span>
+                <span class="n">request</span><span class="p">,</span>
+                <span class="s2">&quot;newwebpage/clustal_processing.html&quot;</span><span class="p">,</span>
+                <span class="n">context</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span>
+                <span class="n">request</span><span class="p">,</span>
+                <span class="s2">&quot;newwebpage/search_user_data_update.html&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">errors</span><span class="p">,</span>
+                    <span class="s2">&quot;userform&quot;</span><span class="p">:</span> <span class="n">userform</span><span class="p">,</span>
+                    <span class="s2">&quot;analysisform&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span>
+        <span class="n">request</span><span class="p">,</span>
+        <span class="s2">&quot;newwebpage/search_user_data_update.html&quot;</span><span class="p">,</span>
+        <span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s2">&quot;userform&quot;</span><span class="p">:</span> <span class="n">userform</span><span class="p">,</span> <span class="s2">&quot;analysisform&quot;</span><span class="p">:</span> <span class="n">userform</span><span class="p">},</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dendogram_homepage2"><a class="viewcode-back" href="../../clustalanalysis.html#clustalanalysis.views.dendogram_homepage2">[docs]</a><span class="k">def</span> <span class="nf">dendogram_homepage2</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">DendogramForm</span><span class="p">()</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span>
+        <span class="s2">&quot;descriptions&quot;</span><span class="p">:</span> <span class="n">Description</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">),</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/dendogram_homepage.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dendogram_homepage"><a class="viewcode-back" href="../../clustalanalysis.html#clustalanalysis.views.dendogram_homepage">[docs]</a><span class="k">def</span> <span class="nf">dendogram_homepage</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">DendogramForm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span>
+        <span class="n">request</span><span class="p">,</span>
+        <span class="s2">&quot;newwebpage/domain_cry_tree_d3js.html&quot;</span><span class="p">,</span>
+        <span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">},</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dendogram"><a class="viewcode-back" href="../../clustalanalysis.html#clustalanalysis.views.dendogram">[docs]</a><span class="k">def</span> <span class="nf">dendogram</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">DendogramForm</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">DendogramForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+
+            <span class="n">rooted_tree</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;tree&quot;</span><span class="p">:</span> <span class="n">rooted_tree</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/dendogram.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/dendogram.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s2">&quot;/dendogram_homepage/&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dendogram_celery"><a class="viewcode-back" href="../../clustalanalysis.html#clustalanalysis.views.dendogram_celery">[docs]</a><span class="k">def</span> <span class="nf">dendogram_celery</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">DendogramForm</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dendogram celery is running&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">DendogramForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">input_file</span><span class="p">,</span> <span class="n">output_file</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+            <span class="n">task</span> <span class="o">=</span> <span class="n">create_tree</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">output_file</span><span class="p">)</span>
+
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;task_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">id</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;task_status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;numlines&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">numlines</span>
+            <span class="c1"># context[&#39;radius&#39;] = radius</span>
+
+            <span class="c1"># print(&quot;outputfile&quot;, newlines)</span>
+            <span class="c1"># print(&quot;radius&quot;, radius)</span>
+
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span>
+                <span class="n">request</span><span class="p">,</span>
+                <span class="s2">&quot;newwebpage/clustal_processing.html&quot;</span><span class="p">,</span>
+                <span class="n">context</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span>
+            <span class="n">request</span><span class="p">,</span>
+            <span class="s2">&quot;newwebpage/dendogram_homepage.html&quot;</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">},</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s2">&quot;/dendogram_homepage2/&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="taskstatus_clustal_celery"><a class="viewcode-back" href="../../clustalanalysis.html#clustalanalysis.views.taskstatus_clustal_celery">[docs]</a><span class="k">def</span> <span class="nf">taskstatus_clustal_celery</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">task_id</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;GET&quot;</span><span class="p">:</span>
+        <span class="c1"># print(&quot;entering the function taskstatus&quot;)</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">AsyncResult</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span>
+        <span class="c1"># print(&quot;taskStatus&quot;, newlines)</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;task_status&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+            <span class="s2">&quot;task_id&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="n">task</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;SUCCESS&quot;</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">context</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">],</span>
+                <span class="n">created</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">StoreResultFiles</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">taskid</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">tempfile</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="c1"># context[&#39;file&#39;] = StoreResultFiles.objects.filter(taskid=task.id)</span>
+            <span class="c1"># context[&#39;align&#39;] = task.get()</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/dendogram.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;PENDING&quot;</span><span class="p">:</span>
+            <span class="c1"># context[&#39;results&#39;] = task</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/dendogram.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/dendogram.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/dendogram.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="celery_task_status_clustal"><a class="viewcode-back" href="../../clustalanalysis.html#clustalanalysis.views.celery_task_status_clustal">[docs]</a><span class="k">def</span> <span class="nf">celery_task_status_clustal</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">task_id</span><span class="p">):</span>
+
+    <span class="c1"># print(&quot;entering the function taskstatus&quot;)</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">AsyncResult</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span>
+    <span class="c1"># print(&quot;taskStatus&quot;, task)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task_status&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s2">&quot;task_id&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="protein_analysis"><a class="viewcode-back" href="../../clustalanalysis.html#clustalanalysis.views.protein_analysis">[docs]</a><span class="k">def</span> <span class="nf">protein_analysis</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+
+    <span class="n">categories</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+    <span class="p">)</span>  <span class="c1"># why you need flat=True</span>
+
+    <span class="n">category_prefixes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">category</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">category_prefixes</span><span class="p">:</span>
+            <span class="n">category_prefixes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+
+    <span class="n">dict_fasta_category</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">dict_histo_category</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">category_prefixes</span><span class="p">:</span>
+        <span class="n">fasta</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">name__istartswith</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">k</span><span class="p">:</span>
+            <span class="n">fasta</span> <span class="o">+=</span> <span class="n">s</span><span class="o">.</span><span class="n">fastasequence</span>
+        <span class="n">dict_fasta_category</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="n">fasta</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dict_fasta_category</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">ProteinAnalysis</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">get_amino_acids_percent</span><span class="p">()</span>
+        <span class="n">dict_m</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">k</span><span class="p">:</span>
+            <span class="n">dict_m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">dict_histo_category</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_m</span>
+
+    <span class="n">keys</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">dict_histo_category</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+
+    <span class="n">language</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">language</span><span class="p">,</span> <span class="n">counts</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span>
+        <span class="n">x_range</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
+        <span class="n">plot_height</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">plot_width</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">toolbar_location</span><span class="o">=</span><span class="s2">&quot;below&quot;</span><span class="p">,</span>
+        <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;pan, wheel_zoom, box_zoom, reset, hover, tap, crosshair&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">source</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="n">counts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">Category20</span><span class="p">[</span><span class="mi">20</span><span class="p">]))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_tools</span><span class="p">(</span><span class="n">LassoSelectTool</span><span class="p">())</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_tools</span><span class="p">(</span><span class="n">WheelZoomTool</span><span class="p">())</span>
+
+    <span class="n">p</span><span class="o">.</span><span class="n">vbar</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;language&quot;</span><span class="p">,</span>
+        <span class="n">top</span><span class="o">=</span><span class="s2">&quot;counts&quot;</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;color&quot;</span><span class="p">,</span>
+        <span class="n">legend_group</span><span class="o">=</span><span class="s2">&quot;language&quot;</span><span class="p">,</span>
+        <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;horizontal&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;top_center&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">y_range</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">script</span><span class="p">,</span> <span class="n">div</span> <span class="o">=</span> <span class="n">components</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;script&quot;</span><span class="p">:</span> <span class="n">script</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">:</span> <span class="n">div</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;clustalanalysis/protein_analysis.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

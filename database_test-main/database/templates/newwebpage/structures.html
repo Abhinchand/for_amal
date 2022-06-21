@@ -1,0 +1,119 @@
+{% extends "newwebpage/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+<div class="container">
+  <div class="row">
+    <div class="table-responsive col-lg-12">
+      <h3>List of known pesticidal protein structures</h3>
+      </br>
+      <h5>Links to structures in the PDB are given where:</h5>
+      </br>
+          <ul>
+           <li>The structure corresponds to a BPPRC sequence entry. Note, where two BPPRC entries represent identical amino acid sequences (e.g. App6Aa1 and App6Aa2), the structure PDB entry will be associated with both (regardless of which quaternary rank was described in any associated publication).</li>
+            </br>
+            <li>The structure corresponds to a mutant of a BPPRC sequence entry where a small number of mutations have been included to aid crystallisation and/or to elucidate function.</li>
+            </br>
+            <li>The structure represents either a full length or an activated form of the toxin (the structure may not represent the full-length sequence in the BPPRC database entry).</li>
+          </ul>
+          </br>
+          <h7><b> NOTE: Users are advised to check the correspondence between the PDB entry sequence and the BPPRC sequence (e.g. using both the BPPRC best match finder needle and blast alignments) and should take care in the interpretation of the data. </b> </h7>
+          </br>
+          </br>
+
+	<table id="table_id" class="display table-bordered table-hover nowrap" border='2' align="left" >
+		<thead>
+			<tr>
+					<th>Name </th>
+					<th>Old Name</th>
+					<th>Accession</th>
+					<th>PDBID</th>
+          <th>Modified</th>
+          <th>Comment</th>
+          <th>Year</th>
+          <th>DOI</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				{% for structure in structures %}
+          <TD class="C3" align="left">{{ structure.name}}</TD>
+          <TD class="C3" align="left">{{ structure.oldname}}</TD>
+          <TD class="C3" align="left"><a href="https://www.ncbi.nlm.nih.gov/protein/{{ structure.accession }}" target="_blank"> {{ structure.accession }} </a></TD>
+          <TD class="C3" align="left">
+            {% for id in structure.pdbid %}
+            {% if structure.pdbid|length > 1 %}
+              <a href="https://www.rcsb.org/structure/{{ id }}" target="_blank">{{ id }},</a>
+              <br>
+            {% else %}
+              <a href="https://www.rcsb.org/structure/{{ id }}" target="_blank">{{ id }}</a>
+            {% endif %}
+            {% endfor %}
+          </TD>
+          <TD class="C3" align="left">{{ structure.modified|default_if_none:''|title }}</TD>
+          <TD class="C3" align="left" style="white-space: pre-wrap;">{{ structure.comment|default_if_none:'' }} <br></TD>
+          <TD class="C3" align="left">{{ structure.year}}</TD>
+          {% if structure.doi == 'unpublished' %}
+              <TD class="C3" align="left"> Unpublished </TD>
+          {% else %}
+            <TD class="C3" align="left"> <a href="https://doi.org/{{ structure.doi }}" target="_blank"> {{ structure.doi}}</TD>
+          {% endif %}
+				</tr>
+    {% endfor %}
+	</tbody>
+		</table>
+
+  </div>
+  </div>
+  </div>
+  </div>
+
+
+
+{% endblock content %}
+
+
+
+{% block extrahead %}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.23/af-2.3.5/b-1.6.5/b-colvis-1.6.5/b-html5-1.6.5/b-print-1.6.5/cr-1.5.3/fc-3.3.2/kt-2.5.3/r-2.2.7/rg-1.1.2/rr-1.2.7/sb-1.0.1/sl-1.3.1/datatables.min.css"/>
+
+<style>
+
+
+
+</style>
+
+{% endblock extrahead %}
+
+
+
+{% block extrajs %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.23/af-2.3.5/b-1.6.5/b-colvis-1.6.5/b-html5-1.6.5/b-print-1.6.5/cr-1.5.3/fc-3.3.2/kt-2.5.3/r-2.2.7/rg-1.1.2/rr-1.2.7/sb-1.0.1/sl-1.3.1/datatables.min.js"></script>
+
+
+<script>
+    $(document).ready( function () {
+    $('#table_id').DataTable({
+      "paging":   false,
+      "ordering": false,
+      "info":     false,
+    dom: 'B<"clear">lfrtip',
+    buttons: {
+        name: 'primary',
+        buttons: [ 'copy', 'csv', 'excel','pdf','print' ]
+
+        }}
+    );
+} );
+</script>
+
+
+{% endblock extrajs %}

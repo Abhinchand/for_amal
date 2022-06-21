@@ -1,0 +1,1439 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Naming Algorithm &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Association" href="association.html" />
+    <link rel="prev" title="Best Match Finder" href="bestmatchfinder.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Naming Algorithm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-namingalgorithm.admin">namingalgorithm.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-namingalgorithm.apps">namingalgorithm.apps module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-namingalgorithm.forms">namingalgorithm.forms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-namingalgorithm.models">namingalgorithm.models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-namingalgorithm.predict_name">namingalgorithm.predict_name module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-namingalgorithm.tasks">namingalgorithm.tasks module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-namingalgorithm.urls">namingalgorithm.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-namingalgorithm.user_log">namingalgorithm.user_log module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-namingalgorithm.views">namingalgorithm.views module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-namingalgorithm">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Naming Algorithm</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="naming-algorithm">
+<h1>Naming Algorithm<a class="headerlink" href="#naming-algorithm" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-namingalgorithm.admin">
+<span id="namingalgorithm-admin-module"></span><h2>namingalgorithm.admin module<a class="headerlink" href="#module-namingalgorithm.admin" title="Permalink to this headline">¶</a></h2>
+<p>Submit the sequence by user and name of the protein is predicted.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ArchiveAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.admin.</span></span><span class="sig-name descname"><span class="pre">ArchiveAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#ArchiveAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.ArchiveAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.admin.ImportExportModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ArchiveAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('submittersname',</span> <span class="pre">'accession',</span> <span class="pre">'date',</span> <span class="pre">'admin_comments')</span></em><a class="headerlink" href="#namingalgorithm.admin.ArchiveAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ArchiveAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#namingalgorithm.admin.ArchiveAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ArchiveAdmin.resource_class">
+<span class="sig-name descname"><span class="pre">resource_class</span></span><a class="headerlink" href="#namingalgorithm.admin.ArchiveAdmin.resource_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#namingalgorithm.admin.ArchiveResource" title="namingalgorithm.admin.ArchiveResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">namingalgorithm.admin.ArchiveResource</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ArchiveAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['submittersemail',</span> <span class="pre">'submittersname']</span></em><a class="headerlink" href="#namingalgorithm.admin.ArchiveAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ArchiveResource">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.admin.</span></span><span class="sig-name descname"><span class="pre">ArchiveResource</span></span><a class="reference internal" href="_modules/namingalgorithm/admin.html#ArchiveResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.ArchiveResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.resources.ModelResource</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ArchiveResource.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/namingalgorithm/admin.html#ArchiveResource.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.ArchiveResource.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ArchiveResource.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#namingalgorithm.admin.ArchiveResource.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#namingalgorithm.models.Archive" title="namingalgorithm.models.Archive"><code class="xref py py-class docutils literal notranslate"><span class="pre">namingalgorithm.models.Archive</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ArchiveResource.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'accession':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">accession&gt;,</span> <span class="pre">'admin_comments':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">admin_comments&gt;,</span> <span class="pre">'admin_user':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">admin_user&gt;,</span> <span class="pre">'bacterium':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">bacterium&gt;,</span> <span class="pre">'bacterium_textbox':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">bacterium_textbox&gt;,</span> <span class="pre">'contact_status':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">contact_status&gt;,</span> <span class="pre">'date':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">date&gt;,</span> <span class="pre">'dnasequence':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">dnasequence&gt;,</span> <span class="pre">'id':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">id&gt;,</span> <span class="pre">'nontoxic':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">nontoxic&gt;,</span> <span class="pre">'partnerprotein':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">partnerprotein&gt;,</span> <span class="pre">'partnerprotein_textbox':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">partnerprotein_textbox&gt;,</span> <span class="pre">'pdbcode':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">pdbcode&gt;,</span> <span class="pre">'predict_name':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">predict_name&gt;,</span> <span class="pre">'private':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">private&gt;,</span> <span class="pre">'public':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">public&gt;,</span> <span class="pre">'publication':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">publication&gt;,</span> <span class="pre">'sequence':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">sequence&gt;,</span> <span class="pre">'submittersemail':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">submittersemail&gt;,</span> <span class="pre">'submittersname':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">submittersname&gt;,</span> <span class="pre">'taxonid':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">taxonid&gt;,</span> <span class="pre">'terms_conditions':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">terms_conditions&gt;,</span> <span class="pre">'toxicto':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">toxicto&gt;,</span> <span class="pre">'uploaded':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">uploaded&gt;,</span> <span class="pre">'user_comments':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">user_comments&gt;,</span> <span class="pre">'user_provided_proteinname':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">user_provided_proteinname&gt;,</span> <span class="pre">'year':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">year&gt;}</span></em><a class="headerlink" href="#namingalgorithm.admin.ArchiveResource.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.admin.AuditEntryLogAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.admin.</span></span><span class="sig-name descname"><span class="pre">AuditEntryLogAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#AuditEntryLogAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.AuditEntryLogAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.AuditEntryLogAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['action',</span> <span class="pre">'username',</span> <span class="pre">'ip']</span></em><a class="headerlink" href="#namingalgorithm.admin.AuditEntryLogAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.AuditEntryLogAdmin.list_filter">
+<span class="sig-name descname"><span class="pre">list_filter</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['action']</span></em><a class="headerlink" href="#namingalgorithm.admin.AuditEntryLogAdmin.list_filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="namingalgorithm.admin.AuditEntryLogAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#namingalgorithm.admin.AuditEntryLogAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.admin.BacteriumWidget">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.admin.</span></span><span class="sig-name descname"><span class="pre">BacteriumWidget</span></span><a class="reference internal" href="_modules/namingalgorithm/admin.html#BacteriumWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.BacteriumWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.widgets.BooleanWidget</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.BacteriumWidget.Clean">
+<span class="sig-name descname"><span class="pre">Clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#BacteriumWidget.Clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.BacteriumWidget.Clean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.admin.LogEntryAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.admin.</span></span><span class="sig-name descname"><span class="pre">LogEntryAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#LogEntryAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.LogEntryAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.LogEntryAdmin.get_actions">
+<span class="sig-name descname"><span class="pre">get_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#LogEntryAdmin.get_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.LogEntryAdmin.get_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary mapping the names of all actions for this
+ModelAdmin to a tuple of (callable, name, description) for each action.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.LogEntryAdmin.has_delete_permission">
+<span class="sig-name descname"><span class="pre">has_delete_permission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#LogEntryAdmin.has_delete_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.LogEntryAdmin.has_delete_permission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the given request has permission to change the given
+Django model instance, the default implementation doesn’t examine the
+<cite>obj</cite> parameter.</p>
+<p>Can be overridden by the user in subclasses. In such case it should
+return True if the given request has permission to delete the <cite>obj</cite>
+model instance. If <cite>obj</cite> is None, this should return True if the given
+request has permission to delete <em>any</em> object of the given type.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="namingalgorithm.admin.LogEntryAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#namingalgorithm.admin.LogEntryAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.LogEntryAdmin.readonly_fields">
+<span class="sig-name descname"><span class="pre">readonly_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('content_type',</span> <span class="pre">'user',</span> <span class="pre">'action_time',</span> <span class="pre">'object_id',</span> <span class="pre">'object_repr',</span> <span class="pre">'action_flag',</span> <span class="pre">'change_message')</span></em><a class="headerlink" href="#namingalgorithm.admin.LogEntryAdmin.readonly_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ModelAdminLog">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.admin.</span></span><span class="sig-name descname"><span class="pre">ModelAdminLog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#ModelAdminLog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.ModelAdminLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.contenttypes.admin.GenericStackedInline</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ModelAdminLog.can_delete">
+<span class="sig-name descname"><span class="pre">can_delete</span></span><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#namingalgorithm.admin.ModelAdminLog.can_delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ModelAdminLog.change_message">
+<span class="sig-name descname"><span class="pre">change_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#ModelAdminLog.change_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.ModelAdminLog.change_message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ModelAdminLog.checks_class">
+<span class="sig-name descname"><span class="pre">checks_class</span></span><a class="headerlink" href="#namingalgorithm.admin.ModelAdminLog.checks_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.checks.BaseModelAdminChecks</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ModelAdminLog.extra">
+<span class="sig-name descname"><span class="pre">extra</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#namingalgorithm.admin.ModelAdminLog.extra" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ModelAdminLog.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['action_time',</span> <span class="pre">'user',</span> <span class="pre">'change_message']</span></em><a class="headerlink" href="#namingalgorithm.admin.ModelAdminLog.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ModelAdminLog.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#namingalgorithm.admin.ModelAdminLog.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ModelAdminLog.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#namingalgorithm.admin.ModelAdminLog.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.models.LogEntry</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.ModelAdminLog.readonly_fields">
+<span class="sig-name descname"><span class="pre">readonly_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['action_time',</span> <span class="pre">'user',</span> <span class="pre">'change_message']</span></em><a class="headerlink" href="#namingalgorithm.admin.ModelAdminLog.readonly_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.admin.SendEmailAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.admin.</span></span><span class="sig-name descname"><span class="pre">SendEmailAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#SendEmailAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.SendEmailAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.SendEmailAdmin.inlines">
+<span class="sig-name descname"><span class="pre">inlines</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[&lt;class</span> <span class="pre">'namingalgorithm.admin.ModelAdminLog'&gt;]</span></em><a class="headerlink" href="#namingalgorithm.admin.SendEmailAdmin.inlines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.SendEmailAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('submittersname',</span> <span class="pre">'submittersemail',</span> <span class="pre">'accession',</span> <span class="pre">'message')</span></em><a class="headerlink" href="#namingalgorithm.admin.SendEmailAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="namingalgorithm.admin.SendEmailAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#namingalgorithm.admin.SendEmailAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.SendEmailAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('submittersname',</span> <span class="pre">'submittersemail',</span> <span class="pre">'accession',</span> <span class="pre">'message')</span></em><a class="headerlink" href="#namingalgorithm.admin.SendEmailAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.admin.</span></span><span class="sig-name descname"><span class="pre">UserSubmissionAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.admin.ImportExportModelAdmin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.Pfam">
+<span class="sig-name descname"><span class="pre">Pfam</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionAdmin.Pfam"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.Pfam" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.accession_url">
+<span class="sig-name descname"><span class="pre">accession_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionAdmin.accession_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.accession_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.align_results">
+<span class="sig-name descname"><span class="pre">align_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionAdmin.align_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.align_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit the sequence by user and name of the protein is predicted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.availability">
+<span class="sig-name descname"><span class="pre">availability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionAdmin.availability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.availability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.copy_to_private">
+<span class="sig-name descname"><span class="pre">copy_to_private</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionAdmin.copy_to_private"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.copy_to_private" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit the sequence by user and name of the protein is predicted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.copy_to_public">
+<span class="sig-name descname"><span class="pre">copy_to_public</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionAdmin.copy_to_public"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.copy_to_public" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit the sequence by user and name of the protein is predicted.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.exclude">
+<span class="sig-name descname"><span class="pre">exclude</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['alignresults']</span></em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.exclude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('submittersname',</span> <span class="pre">'accession_url',</span> <span class="pre">'naming_algorithm',</span> <span class="pre">'availability',</span> <span class="pre">'copy_to_public',</span> <span class="pre">'copy_to_private',</span> <span class="pre">'refresh',</span> <span class="pre">'send_email',</span> <span class="pre">'date',</span> <span class="pre">'contact_status')</span></em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.list_editable">
+<span class="sig-name descname"><span class="pre">list_editable</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('contact_status',)</span></em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.list_editable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.naming_algorithm">
+<span class="sig-name descname"><span class="pre">naming_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionAdmin.naming_algorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.naming_algorithm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionAdmin.refresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit the sequence by user and name of the protein is predicted.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.resource_class">
+<span class="sig-name descname"><span class="pre">resource_class</span></span><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.resource_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit the sequence by user and name of the protein is predicted.</p>
+<p>alias of <a class="reference internal" href="#namingalgorithm.admin.UserSubmissionResource" title="namingalgorithm.admin.UserSubmissionResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">namingalgorithm.admin.UserSubmissionResource</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['submittersemail',</span> <span class="pre">'submittersname',</span> <span class="pre">'accession']</span></em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionAdmin.send_email">
+<span class="sig-name descname"><span class="pre">send_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionAdmin.send_email"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.send_email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.admin.</span></span><span class="sig-name descname"><span class="pre">UserSubmissionResource</span></span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.resources.ModelResource</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionResource.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource.Meta.exclude">
+<span class="sig-name descname"><span class="pre">exclude</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',</span> <span class="pre">'terms_conditions',</span> <span class="pre">'contact_status',</span> <span class="pre">'public',</span> <span class="pre">'private')</span></em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource.Meta.exclude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource.Meta.export_id_fields">
+<span class="sig-name descname"><span class="pre">export_id_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('submittersname',</span> <span class="pre">'submittersemail',</span> <span class="pre">'predict_name',</span> <span class="pre">'sequence',</span> <span class="pre">'bacterium',</span> <span class="pre">'bacterium_textbox',</span> <span class="pre">'taxonid',</span> <span class="pre">'year',</span> <span class="pre">'accession',</span> <span class="pre">'partnerprotein',</span> <span class="pre">'partnerprotein_textbox',</span> <span class="pre">'toxicto',</span> <span class="pre">'nontoxic',</span> <span class="pre">'dnasequence',</span> <span class="pre">'pdbcode',</span> <span class="pre">'publication',</span> <span class="pre">'user_comments',</span> <span class="pre">'user_provided_proteinname',</span> <span class="pre">'admin_comments',</span> <span class="pre">'date')</span></em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource.Meta.export_id_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource.Meta.export_order">
+<span class="sig-name descname"><span class="pre">export_order</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('submittersname',</span> <span class="pre">'submittersemail',</span> <span class="pre">'predict_name',</span> <span class="pre">'sequence',</span> <span class="pre">'bacterium',</span> <span class="pre">'bacterium_textbox',</span> <span class="pre">'taxonid',</span> <span class="pre">'year',</span> <span class="pre">'accession',</span> <span class="pre">'partnerprotein',</span> <span class="pre">'partnerprotein_textbox',</span> <span class="pre">'toxicto',</span> <span class="pre">'nontoxic',</span> <span class="pre">'dnasequence',</span> <span class="pre">'pdbcode',</span> <span class="pre">'publication',</span> <span class="pre">'user_comments',</span> <span class="pre">'user_provided_proteinname',</span> <span class="pre">'admin_comments',</span> <span class="pre">'date')</span></em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource.Meta.export_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('submittersname',</span> <span class="pre">'submittersemail',</span> <span class="pre">'predict_name',</span> <span class="pre">'sequence',</span> <span class="pre">'bacterium',</span> <span class="pre">'bacterium_textbox',</span> <span class="pre">'taxonid',</span> <span class="pre">'year',</span> <span class="pre">'accession',</span> <span class="pre">'partnerprotein',</span> <span class="pre">'partnerprotein_textbox',</span> <span class="pre">'toxicto',</span> <span class="pre">'nontoxic',</span> <span class="pre">'dnasequence',</span> <span class="pre">'pdbcode',</span> <span class="pre">'publication',</span> <span class="pre">'user_comments',</span> <span class="pre">'user_provided_proteinname',</span> <span class="pre">'admin_comments',</span> <span class="pre">'date')</span></em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource.Meta.import_id_fields">
+<span class="sig-name descname"><span class="pre">import_id_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('submittersname',</span> <span class="pre">'submittersemail',</span> <span class="pre">'predict_name',</span> <span class="pre">'sequence',</span> <span class="pre">'bacterium',</span> <span class="pre">'bacterium_textbox',</span> <span class="pre">'taxonid',</span> <span class="pre">'year',</span> <span class="pre">'accession',</span> <span class="pre">'partnerprotein',</span> <span class="pre">'partnerprotein_textbox',</span> <span class="pre">'toxicto',</span> <span class="pre">'nontoxic',</span> <span class="pre">'dnasequence',</span> <span class="pre">'pdbcode',</span> <span class="pre">'publication',</span> <span class="pre">'user_comments',</span> <span class="pre">'user_provided_proteinname',</span> <span class="pre">'admin_comments',</span> <span class="pre">'date')</span></em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource.Meta.import_id_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource.Meta.import_order">
+<span class="sig-name descname"><span class="pre">import_order</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('submittersname',</span> <span class="pre">'submittersemail',</span> <span class="pre">'predict_name',</span> <span class="pre">'sequence',</span> <span class="pre">'bacterium',</span> <span class="pre">'bacterium_textbox',</span> <span class="pre">'taxonid',</span> <span class="pre">'year',</span> <span class="pre">'accession',</span> <span class="pre">'partnerprotein',</span> <span class="pre">'partnerprotein_textbox',</span> <span class="pre">'toxicto',</span> <span class="pre">'nontoxic',</span> <span class="pre">'dnasequence',</span> <span class="pre">'pdbcode',</span> <span class="pre">'publication',</span> <span class="pre">'user_comments',</span> <span class="pre">'user_provided_proteinname',</span> <span class="pre">'admin_comments',</span> <span class="pre">'date')</span></em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource.Meta.import_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#namingalgorithm.models.UserSubmission" title="namingalgorithm.models.UserSubmission"><code class="xref py py-class docutils literal notranslate"><span class="pre">namingalgorithm.models.UserSubmission</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource.dehydrate_bacterium">
+<span class="sig-name descname"><span class="pre">dehydrate_bacterium</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">UserSubmissionDatabase</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionResource.dehydrate_bacterium"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource.dehydrate_bacterium" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource.dehydrate_partnerprotein">
+<span class="sig-name descname"><span class="pre">dehydrate_partnerprotein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">UserSubmissionDatabase</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/admin.html#UserSubmissionResource.dehydrate_partnerprotein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource.dehydrate_partnerprotein" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.admin.UserSubmissionResource.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'accession':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">accession&gt;,</span> <span class="pre">'admin_comments':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">admin_comments&gt;,</span> <span class="pre">'bacterium':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">bacterium&gt;,</span> <span class="pre">'bacterium_textbox':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">bacterium_textbox&gt;,</span> <span class="pre">'date':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">date&gt;,</span> <span class="pre">'dnasequence':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">dnasequence&gt;,</span> <span class="pre">'nontoxic':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">nontoxic&gt;,</span> <span class="pre">'partnerprotein':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">partnerprotein&gt;,</span> <span class="pre">'partnerprotein_textbox':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">partnerprotein_textbox&gt;,</span> <span class="pre">'pdbcode':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">pdbcode&gt;,</span> <span class="pre">'predict_name':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">predict_name&gt;,</span> <span class="pre">'publication':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">publication&gt;,</span> <span class="pre">'sequence':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">sequence&gt;,</span> <span class="pre">'submittersemail':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">submittersemail&gt;,</span> <span class="pre">'submittersname':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">submittersname&gt;,</span> <span class="pre">'taxonid':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">taxonid&gt;,</span> <span class="pre">'toxicto':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">toxicto&gt;,</span> <span class="pre">'user_comments':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">user_comments&gt;,</span> <span class="pre">'user_provided_proteinname':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">user_provided_proteinname&gt;,</span> <span class="pre">'year':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">year&gt;}</span></em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionResource.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-namingalgorithm.apps">
+<span id="namingalgorithm-apps-module"></span><h2>namingalgorithm.apps module<a class="headerlink" href="#module-namingalgorithm.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.apps.NamingalgorithmConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.apps.</span></span><span class="sig-name descname"><span class="pre">NamingalgorithmConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/apps.html#NamingalgorithmConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.apps.NamingalgorithmConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.apps.NamingalgorithmConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'namingalgorithm'</span></em><a class="headerlink" href="#namingalgorithm.apps.NamingalgorithmConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-namingalgorithm.forms">
+<span id="namingalgorithm-forms-module"></span><h2>namingalgorithm.forms module<a class="headerlink" href="#module-namingalgorithm.forms" title="Permalink to this headline">¶</a></h2>
+<p>Sequence submission form.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.forms.SendEmailForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.forms.</span></span><span class="sig-name descname"><span class="pre">SendEmailForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/forms.html#SendEmailForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.forms.SendEmailForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<p>Sequence submission form.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.forms.SendEmailForm.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/namingalgorithm/forms.html#SendEmailForm.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.forms.SendEmailForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.forms.SendEmailForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'__all__'</span></em><a class="headerlink" href="#namingalgorithm.forms.SendEmailForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.forms.SendEmailForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#namingalgorithm.forms.SendEmailForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#namingalgorithm.models.SendEmail" title="namingalgorithm.models.SendEmail"><code class="xref py py-class docutils literal notranslate"><span class="pre">namingalgorithm.models.SendEmail</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.forms.SendEmailForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'accession':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'message':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'submittersemail':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'submittersname':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#namingalgorithm.forms.SendEmailForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.forms.SendEmailForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'accession':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'message':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'submittersemail':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'submittersname':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#namingalgorithm.forms.SendEmailForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="namingalgorithm.forms.SendEmailForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#namingalgorithm.forms.SendEmailForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.forms.UserSubmissionForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.forms.</span></span><span class="sig-name descname"><span class="pre">UserSubmissionForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/forms.html#UserSubmissionForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<p>Sequence submission form.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.forms.UserSubmissionForm.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/namingalgorithm/forms.html#UserSubmissionForm.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.forms.UserSubmissionForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['submittersname',</span> <span class="pre">'submittersemail',</span> <span class="pre">'name',</span> <span class="pre">'year',</span> <span class="pre">'sequence',</span> <span class="pre">'public_or_private',</span> <span class="pre">'bacterium',</span> <span class="pre">'bacterium_textbox',</span> <span class="pre">'accession',</span> <span class="pre">'dnasequence',</span> <span class="pre">'partnerprotein',</span> <span class="pre">'partnerprotein_textbox',</span> <span class="pre">'toxicto',</span> <span class="pre">'nontoxic',</span> <span class="pre">'pdbcode',</span> <span class="pre">'publication',</span> <span class="pre">'comment',</span> <span class="pre">'terms_conditions']</span></em><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.forms.UserSubmissionForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#namingalgorithm.models.UserSubmission" title="namingalgorithm.models.UserSubmission"><code class="xref py py-class docutils literal notranslate"><span class="pre">namingalgorithm.models.UserSubmission</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.forms.UserSubmissionForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'accession':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'bacterium':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'bacterium_textbox':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'comment':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'dnasequence':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'nontoxic':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'partnerprotein':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'partnerprotein_textbox':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'pdbcode':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'public_or_private':</span> <span class="pre">&lt;django.forms.fields.TypedChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'publication':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'sequence':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'submittersemail':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'submittersname':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'terms_conditions':</span> <span class="pre">&lt;django.forms.fields.BooleanField</span> <span class="pre">object&gt;,</span> <span class="pre">'toxicto':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'year':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.forms.UserSubmissionForm.clean_dnasequence">
+<span class="sig-name descname"><span class="pre">clean_dnasequence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/forms.html#UserSubmissionForm.clean_dnasequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.clean_dnasequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.forms.UserSubmissionForm.clean_sequence">
+<span class="sig-name descname"><span class="pre">clean_sequence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/forms.html#UserSubmissionForm.clean_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.clean_sequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.forms.UserSubmissionForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'accession':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'bacterium':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'bacterium_textbox':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'comment':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'dnasequence':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'nontoxic':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'partnerprotein':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'partnerprotein_textbox':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'pdbcode':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'public_or_private':</span> <span class="pre">&lt;django.forms.fields.TypedChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'publication':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'sequence':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'submittersemail':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'submittersname':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'terms_conditions':</span> <span class="pre">&lt;django.forms.fields.BooleanField</span> <span class="pre">object&gt;,</span> <span class="pre">'toxicto':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'year':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="namingalgorithm.forms.UserSubmissionForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.forms.guess_if_dna">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.forms.</span></span><span class="sig-name descname"><span class="pre">guess_if_dna</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/forms.html#guess_if_dna"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.forms.guess_if_dna" title="Permalink to this definition">¶</a></dt>
+<dd><p>Guess if the given sequence is Protein.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.forms.guess_if_protein">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.forms.</span></span><span class="sig-name descname"><span class="pre">guess_if_protein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/forms.html#guess_if_protein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.forms.guess_if_protein" title="Permalink to this definition">¶</a></dt>
+<dd><p>Guess if the given sequence is Protein.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.forms.hasNumbers">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.forms.</span></span><span class="sig-name descname"><span class="pre">hasNumbers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/forms.html#hasNumbers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.forms.hasNumbers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.forms.invalidSymbol">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.forms.</span></span><span class="sig-name descname"><span class="pre">invalidSymbol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/forms.html#invalidSymbol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.forms.invalidSymbol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.forms.write_sequence_file">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.forms.</span></span><span class="sig-name descname"><span class="pre">write_sequence_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/forms.html#write_sequence_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.forms.write_sequence_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate protein sequence</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-namingalgorithm.models">
+<span id="namingalgorithm-models-module"></span><h2>namingalgorithm.models module<a class="headerlink" href="#module-namingalgorithm.models" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.models.</span></span><span class="sig-name descname"><span class="pre">AbstractModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#AbstractModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.AbstractModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/namingalgorithm/models.html#AbstractModel.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.AbstractModel.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.Meta.abstract">
+<span class="sig-name descname"><span class="pre">abstract</span></span><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#namingalgorithm.models.AbstractModel.Meta.abstract" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.Meta.ordering">
+<span class="sig-name descname"><span class="pre">ordering</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('-date',)</span></em><a class="headerlink" href="#namingalgorithm.models.AbstractModel.Meta.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.accession">
+<span class="sig-name descname"><span class="pre">accession</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.accession" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.admin_comments">
+<span class="sig-name descname"><span class="pre">admin_comments</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.admin_comments" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.admin_user">
+<span class="sig-name descname"><span class="pre">admin_user</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.admin_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.admin_user_id">
+<span class="sig-name descname"><span class="pre">admin_user_id</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.admin_user_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.bacterium">
+<span class="sig-name descname"><span class="pre">bacterium</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.bacterium" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.bacterium_textbox">
+<span class="sig-name descname"><span class="pre">bacterium_textbox</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.bacterium_textbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.contact_status">
+<span class="sig-name descname"><span class="pre">contact_status</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.contact_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.date">
+<span class="sig-name descname"><span class="pre">date</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.date" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.dnasequence">
+<span class="sig-name descname"><span class="pre">dnasequence</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.dnasequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.get_bacterium_display">
+<span class="sig-name descname"><span class="pre">get_bacterium_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">bacterium&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.get_bacterium_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.get_contact_status_display">
+<span class="sig-name descname"><span class="pre">get_contact_status_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">contact_status&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.get_contact_status_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.get_next_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_next_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=True</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.get_next_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.get_partnerprotein_display">
+<span class="sig-name descname"><span class="pre">get_partnerprotein_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">partnerprotein&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.get_partnerprotein_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.get_previous_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_previous_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=False</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.get_previous_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.get_private_display">
+<span class="sig-name descname"><span class="pre">get_private_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">private&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.get_private_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.get_terms_conditions_display">
+<span class="sig-name descname"><span class="pre">get_terms_conditions_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">terms_conditions&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.get_terms_conditions_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.nontoxic">
+<span class="sig-name descname"><span class="pre">nontoxic</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.nontoxic" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.partnerprotein">
+<span class="sig-name descname"><span class="pre">partnerprotein</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.partnerprotein" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.partnerprotein_textbox">
+<span class="sig-name descname"><span class="pre">partnerprotein_textbox</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.partnerprotein_textbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.pdbcode">
+<span class="sig-name descname"><span class="pre">pdbcode</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.pdbcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.predict_name">
+<span class="sig-name descname"><span class="pre">predict_name</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.predict_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.private">
+<span class="sig-name descname"><span class="pre">private</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.private" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.public">
+<span class="sig-name descname"><span class="pre">public</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.public" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.publication">
+<span class="sig-name descname"><span class="pre">publication</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.publication" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.publish">
+<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#AbstractModel.publish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.AbstractModel.publish" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.sequence">
+<span class="sig-name descname"><span class="pre">sequence</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.submittersemail">
+<span class="sig-name descname"><span class="pre">submittersemail</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.submittersemail" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.submittersname">
+<span class="sig-name descname"><span class="pre">submittersname</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.submittersname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.taxonid">
+<span class="sig-name descname"><span class="pre">taxonid</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.taxonid" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.terms_conditions">
+<span class="sig-name descname"><span class="pre">terms_conditions</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.terms_conditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.toxicto">
+<span class="sig-name descname"><span class="pre">toxicto</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.toxicto" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.uploaded">
+<span class="sig-name descname"><span class="pre">uploaded</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.uploaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.user_comments">
+<span class="sig-name descname"><span class="pre">user_comments</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.user_comments" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.user_provided_proteinname">
+<span class="sig-name descname"><span class="pre">user_provided_proteinname</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.user_provided_proteinname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AbstractModel.year">
+<span class="sig-name descname"><span class="pre">year</span></span><a class="headerlink" href="#namingalgorithm.models.AbstractModel.year" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.models.</span></span><span class="sig-name descname"><span class="pre">Archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submittersname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submittersemail</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bacterium</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bacterium_textbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxonid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partnerprotein</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partnerprotein_textbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toxicto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nontoxic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dnasequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdbcode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publication</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_comments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terms_conditions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_comments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">public</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uploaded</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_provided_proteinname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contact_status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#Archive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.Archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#namingalgorithm.models.AbstractModel" title="namingalgorithm.models.AbstractModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">namingalgorithm.models.AbstractModel</span></code></a></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#namingalgorithm.models.Archive.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#namingalgorithm.models.Archive.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.admin_user">
+<span class="sig-name descname"><span class="pre">admin_user</span></span><a class="headerlink" href="#namingalgorithm.models.Archive.admin_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.get_bacterium_display">
+<span class="sig-name descname"><span class="pre">get_bacterium_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">bacterium&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.Archive.get_bacterium_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.get_contact_status_display">
+<span class="sig-name descname"><span class="pre">get_contact_status_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">contact_status&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.Archive.get_contact_status_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.get_next_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_next_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=True</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.Archive.get_next_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.get_partnerprotein_display">
+<span class="sig-name descname"><span class="pre">get_partnerprotein_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">partnerprotein&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.Archive.get_partnerprotein_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.get_previous_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_previous_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=False</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.Archive.get_previous_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.get_private_display">
+<span class="sig-name descname"><span class="pre">get_private_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">private&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.Archive.get_private_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.get_terms_conditions_display">
+<span class="sig-name descname"><span class="pre">get_terms_conditions_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">terms_conditions&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.Archive.get_terms_conditions_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#namingalgorithm.models.Archive.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.Archive.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#namingalgorithm.models.Archive.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.models.AuditEntry">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.models.</span></span><span class="sig-name descname"><span class="pre">AuditEntry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#AuditEntry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.AuditEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="namingalgorithm.models.AuditEntry.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#namingalgorithm.models.AuditEntry.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="namingalgorithm.models.AuditEntry.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#namingalgorithm.models.AuditEntry.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AuditEntry.action">
+<span class="sig-name descname"><span class="pre">action</span></span><a class="headerlink" href="#namingalgorithm.models.AuditEntry.action" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AuditEntry.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#namingalgorithm.models.AuditEntry.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AuditEntry.ip">
+<span class="sig-name descname"><span class="pre">ip</span></span><a class="headerlink" href="#namingalgorithm.models.AuditEntry.ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AuditEntry.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#namingalgorithm.models.AuditEntry.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.AuditEntry.username">
+<span class="sig-name descname"><span class="pre">username</span></span><a class="headerlink" href="#namingalgorithm.models.AuditEntry.username" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.models.SendEmail">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.models.</span></span><span class="sig-name descname"><span class="pre">SendEmail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submittersname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submittersemail</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#SendEmail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.SendEmail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="namingalgorithm.models.SendEmail.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#namingalgorithm.models.SendEmail.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="namingalgorithm.models.SendEmail.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#namingalgorithm.models.SendEmail.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.SendEmail.accession">
+<span class="sig-name descname"><span class="pre">accession</span></span><a class="headerlink" href="#namingalgorithm.models.SendEmail.accession" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.SendEmail.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#namingalgorithm.models.SendEmail.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.SendEmail.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#namingalgorithm.models.SendEmail.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.SendEmail.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#namingalgorithm.models.SendEmail.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.SendEmail.submittersemail">
+<span class="sig-name descname"><span class="pre">submittersemail</span></span><a class="headerlink" href="#namingalgorithm.models.SendEmail.submittersemail" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.SendEmail.submittersname">
+<span class="sig-name descname"><span class="pre">submittersname</span></span><a class="headerlink" href="#namingalgorithm.models.SendEmail.submittersname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">namingalgorithm.models.</span></span><span class="sig-name descname"><span class="pre">UserSubmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submittersname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submittersemail</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bacterium</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bacterium_textbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxonid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partnerprotein</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partnerprotein_textbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toxicto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nontoxic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dnasequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdbcode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publication</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_comments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terms_conditions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_comments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">public</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uploaded</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_provided_proteinname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contact_status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#UserSubmission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.UserSubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#namingalgorithm.models.AbstractModel" title="namingalgorithm.models.AbstractModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">namingalgorithm.models.AbstractModel</span></code></a></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.admin_user">
+<span class="sig-name descname"><span class="pre">admin_user</span></span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.admin_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.get_bacterium_display">
+<span class="sig-name descname"><span class="pre">get_bacterium_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">bacterium&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.get_bacterium_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.get_contact_status_display">
+<span class="sig-name descname"><span class="pre">get_contact_status_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">contact_status&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.get_contact_status_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.get_next_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_next_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=True</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.get_next_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.get_partnerprotein_display">
+<span class="sig-name descname"><span class="pre">get_partnerprotein_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">partnerprotein&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.get_partnerprotein_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.get_previous_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_previous_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=False</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.get_previous_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.get_private_display">
+<span class="sig-name descname"><span class="pre">get_private_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">private&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.get_private_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.get_terms_conditions_display">
+<span class="sig-name descname"><span class="pre">get_terms_conditions_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">terms_conditions&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.get_terms_conditions_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="namingalgorithm.models.UserSubmission.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#namingalgorithm.models.UserSubmission.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.models.save_archive">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.models.</span></span><span class="sig-name descname"><span class="pre">save_archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#save_archive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.save_archive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.models.save_post">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.models.</span></span><span class="sig-name descname"><span class="pre">save_post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#save_post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.save_post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.models.send_notification">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.models.</span></span><span class="sig-name descname"><span class="pre">send_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#send_notification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.send_notification" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.models.user_logged_in_callback">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.models.</span></span><span class="sig-name descname"><span class="pre">user_logged_in_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#user_logged_in_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.user_logged_in_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.models.user_logged_out_callback">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.models.</span></span><span class="sig-name descname"><span class="pre">user_logged_out_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#user_logged_out_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.user_logged_out_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.models.user_login_failed_callback">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.models.</span></span><span class="sig-name descname"><span class="pre">user_login_failed_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credentials</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/models.html#user_login_failed_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.models.user_login_failed_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-namingalgorithm.predict_name">
+<span id="namingalgorithm-predict-name-module"></span><h2>namingalgorithm.predict_name module<a class="headerlink" href="#module-namingalgorithm.predict_name" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.predict_name.cmdline">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.predict_name.</span></span><span class="sig-name descname"><span class="pre">cmdline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/predict_name.html#cmdline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.predict_name.cmdline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.predict_name.empty_path_private">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.predict_name.</span></span><span class="sig-name descname"><span class="pre">empty_path_private</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/predict_name.html#empty_path_private"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.predict_name.empty_path_private" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.predict_name.filter_files_ending_with_one">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.predict_name.</span></span><span class="sig-name descname"><span class="pre">filter_files_ending_with_one</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">SUBJECT_FASTAFILES</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/predict_name.html#filter_files_ending_with_one"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.predict_name.filter_files_ending_with_one" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function filters the files end with 1</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.predict_name.needle_two_sequences">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.predict_name.</span></span><span class="sig-name descname"><span class="pre">needle_two_sequences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/predict_name.html#needle_two_sequences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.predict_name.needle_two_sequences" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.predict_name.run_naming">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.predict_name.</span></span><span class="sig-name descname"><span class="pre">run_naming</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/predict_name.html#run_naming"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.predict_name.run_naming" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.predict_name.update_private">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.predict_name.</span></span><span class="sig-name descname"><span class="pre">update_private</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/predict_name.html#update_private"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.predict_name.update_private" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.predict_name.write_files_private">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.predict_name.</span></span><span class="sig-name descname"><span class="pre">write_files_private</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objectname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/predict_name.html#write_files_private"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.predict_name.write_files_private" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-namingalgorithm.tasks">
+<span id="namingalgorithm-tasks-module"></span><h2>namingalgorithm.tasks module<a class="headerlink" href="#module-namingalgorithm.tasks" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.tasks.extract_email">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.tasks.</span></span><span class="sig-name descname"><span class="pre">extract_email</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/tasks.html#extract_email"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.tasks.extract_email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.tasks.feedback">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.tasks.</span></span><span class="sig-name descname"><span class="pre">feedback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/tasks.html#feedback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.tasks.feedback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.tasks.filter_by_date">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.tasks.</span></span><span class="sig-name descname"><span class="pre">filter_by_date</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/tasks.html#filter_by_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.tasks.filter_by_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.tasks.trigger_email_bpprc_SSL_status">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.tasks.</span></span><span class="sig-name descname"><span class="pre">trigger_email_bpprc_SSL_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/tasks.html#trigger_email_bpprc_SSL_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.tasks.trigger_email_bpprc_SSL_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.tasks.trigger_email_camtech_SSL_status">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.tasks.</span></span><span class="sig-name descname"><span class="pre">trigger_email_camtech_SSL_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/tasks.html#trigger_email_camtech_SSL_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.tasks.trigger_email_camtech_SSL_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.tasks.trigger_email_everyday">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.tasks.</span></span><span class="sig-name descname"><span class="pre">trigger_email_everyday</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/tasks.html#trigger_email_everyday"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.tasks.trigger_email_everyday" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.tasks.trigger_email_everyday_feedback">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.tasks.</span></span><span class="sig-name descname"><span class="pre">trigger_email_everyday_feedback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/tasks.html#trigger_email_everyday_feedback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.tasks.trigger_email_everyday_feedback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-namingalgorithm.urls">
+<span id="namingalgorithm-urls-module"></span><h2>namingalgorithm.urls module<a class="headerlink" href="#module-namingalgorithm.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-namingalgorithm.user_log">
+<span id="namingalgorithm-user-log-module"></span><h2>namingalgorithm.user_log module<a class="headerlink" href="#module-namingalgorithm.user_log" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.user_log.user_logged_in_callback">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.user_log.</span></span><span class="sig-name descname"><span class="pre">user_logged_in_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/user_log.html#user_logged_in_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.user_log.user_logged_in_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.user_log.user_logged_out_callback">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.user_log.</span></span><span class="sig-name descname"><span class="pre">user_logged_out_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/user_log.html#user_logged_out_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.user_log.user_logged_out_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.user_log.user_login_failed_callback">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.user_log.</span></span><span class="sig-name descname"><span class="pre">user_login_failed_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credentials</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/user_log.html#user_login_failed_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.user_log.user_login_failed_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-namingalgorithm.views">
+<span id="namingalgorithm-views-module"></span><h2>namingalgorithm.views module<a class="headerlink" href="#module-namingalgorithm.views" title="Permalink to this headline">¶</a></h2>
+<p>Predicts the name for the submitted pesticidal proteins .</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.views.align_results">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.views.</span></span><span class="sig-name descname"><span class="pre">align_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/views.html#align_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.views.align_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit the sequence for the naming purpose.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.views.contact_email">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.views.</span></span><span class="sig-name descname"><span class="pre">contact_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/views.html#contact_email"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.views.contact_email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.views.is_admin">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.views.</span></span><span class="sig-name descname"><span class="pre">is_admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/views.html#is_admin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.views.is_admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the user is admin staff.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.views.naming_algorithm">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.views.</span></span><span class="sig-name descname"><span class="pre">naming_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/views.html#naming_algorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.views.naming_algorithm" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the user is admin staff, show the naming html page.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.views.run_align">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.views.</span></span><span class="sig-name descname"><span class="pre">run_align</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/views.html#run_align"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.views.run_align" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit the sequence for the naming purpose.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.views.run_naming_algorithm">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.views.</span></span><span class="sig-name descname"><span class="pre">run_naming_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/views.html#run_naming_algorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.views.run_naming_algorithm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit the sequence for the naming purpose.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.views.run_naming_algorithm_celery">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.views.</span></span><span class="sig-name descname"><span class="pre">run_naming_algorithm_celery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/views.html#run_naming_algorithm_celery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.views.run_naming_algorithm_celery" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.views.submit">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.views.</span></span><span class="sig-name descname"><span class="pre">submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/views.html#submit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.views.submit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit the sequence for the naming purpose through user form.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.views.submit_home">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.views.</span></span><span class="sig-name descname"><span class="pre">submit_home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/views.html#submit_home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.views.submit_home" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.views.success_email">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.views.</span></span><span class="sig-name descname"><span class="pre">success_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/views.html#success_email"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.views.success_email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="namingalgorithm.views.taskstatus_naming_celery">
+<span class="sig-prename descclassname"><span class="pre">namingalgorithm.views.</span></span><span class="sig-name descname"><span class="pre">taskstatus_naming_celery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/namingalgorithm/views.html#taskstatus_naming_celery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#namingalgorithm.views.taskstatus_naming_celery" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-namingalgorithm">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-namingalgorithm" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="association.html" class="btn btn-neutral float-right" title="Association" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="bestmatchfinder.html" class="btn btn-neutral float-left" title="Best Match Finder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

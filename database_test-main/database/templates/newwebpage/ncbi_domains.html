@@ -1,0 +1,26 @@
+{% extends "newwebpage/base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- ======= F.A.Q Section ======= -->
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+<section id="faq" class="faq">
+  <div class="container">
+
+    <div class="section-title" data-aos="fade-up">
+      <h2>Domains</h2>
+    </div>
+
+    <div class="row faq-item d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-lg-5">
+        <i class="ri-question-line"></i>
+        {% if Endotoxin_N %}
+        <h4>{{ Endotoxin_N }}</h4>
+        <h4> {{ Endotoxin_N_start }} </h4>
+        {% endif %}
+      </div>
+    </div><!-- End F.A.Q Item-->
+  </div>
+</section><!-- End F.A.Q Section -->
+</div>
+{% endblock content %}

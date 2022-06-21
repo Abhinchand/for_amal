@@ -1,0 +1,664 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>namingalgorithm.forms &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin.html">BPPRC admin tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>namingalgorithm.forms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for namingalgorithm.forms</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Sequence submission form.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+
+<span class="kn">from</span> <span class="nn">Bio</span> <span class="kn">import</span> <span class="n">SeqIO</span>
+<span class="kn">from</span> <span class="nn">crispy_forms.helper</span> <span class="kn">import</span> <span class="n">FormHelper</span>
+<span class="kn">from</span> <span class="nn">crispy_forms.layout</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">HTML</span><span class="p">,</span>
+    <span class="n">Column</span><span class="p">,</span>
+    <span class="n">Layout</span><span class="p">,</span>
+    <span class="n">Row</span><span class="p">,</span>
+    <span class="n">Submit</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">SendEmail</span><span class="p">,</span> <span class="n">UserSubmission</span>
+
+<span class="c1"># from crispy_forms.bootstrap import AppendedText</span>
+
+<span class="n">RECAPTCHA_PUBLIC_KEY</span> <span class="o">=</span> <span class="s2">&quot;6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT&quot;</span>
+<span class="n">NEEDLE_CORRECT_SEQ_ERROR_MSG</span> <span class="o">=</span> <span class="s2">&quot;please paste correct sequence!&quot;</span>
+
+<span class="n">ALLOWED_AMINOACIDS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;E&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Q&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;L&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Y&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;V&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;W&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;I&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;H&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;G&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;P&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;S&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;R&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;T&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;K&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;N&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="hasNumbers"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.forms.hasNumbers">[docs]</a><span class="k">def</span> <span class="nf">hasNumbers</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">char</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="invalidSymbol"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.forms.invalidSymbol">[docs]</a><span class="k">def</span> <span class="nf">invalidSymbol</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">invalidsymbols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;`&quot;</span><span class="p">,</span> <span class="s2">&quot;~&quot;</span><span class="p">,</span> <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;@&quot;</span><span class="p">,</span> <span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="s2">&quot;$&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="n">sequence</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">invalidsymbols</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="write_sequence_file"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.forms.write_sequence_file">[docs]</a><span class="k">def</span> <span class="nf">write_sequence_file</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate protein sequence&quot;&quot;&quot;</span>
+
+    <span class="c1"># open a temperorary file</span>
+    <span class="n">tmp_seq</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wb+&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># print(tmp_seq.name)</span>
+
+    <span class="c1"># if sequence is none raise the ValidationError</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">NEEDLE_CORRECT_SEQ_ERROR_MSG</span><span class="p">)</span>
+
+    <span class="c1"># Write fasta sequence</span>
+    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">:</span>
+        <span class="n">tmp_seq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&gt;seq1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+    <span class="n">tmp_seq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sequence</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">tmp_seq</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c1"># Return name of the temporary file</span>
+    <span class="k">return</span> <span class="n">tmp_seq</span><span class="o">.</span><span class="n">name</span></div>
+
+
+<div class="viewcode-block" id="guess_if_protein"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.forms.guess_if_protein">[docs]</a><span class="k">def</span> <span class="nf">guess_if_protein</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.99</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Guess if the given sequence is Protein.&quot;&quot;&quot;</span>
+    <span class="c1"># protein_letters = [&#39;C&#39;, &#39;D&#39;, &#39;S&#39;, &#39;Q&#39;, &#39;K&#39;,&#39;I&#39;,&#39;P&#39;,&#39;T&#39;,&#39;F&#39;,&#39;N&#39;,&#39;G&#39;,</span>
+    <span class="c1">#                &#39;H&#39;,&#39;L&#39;,&#39;R&#39;,&#39;W&#39;,&#39;A&#39;,&#39;V&#39;,&#39;E&#39;,&#39;Y&#39;,&#39;M&#39;]</span>
+    <span class="n">dna_letters</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">]</span>
+    <span class="c1"># print(seq)</span>
+
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="s2">&quot;fasta&quot;</span><span class="p">):</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">seq</span>
+
+    <span class="n">seq</span> <span class="o">=</span> <span class="n">seq</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="n">protein_alpha_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">dna_letters</span><span class="p">:</span>
+        <span class="n">protein_alpha_count</span> <span class="o">+=</span> <span class="n">seq</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">float</span><span class="p">(</span><span class="n">protein_alpha_count</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="n">thresh</span></div>
+
+
+<div class="viewcode-block" id="guess_if_dna"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.forms.guess_if_dna">[docs]</a><span class="k">def</span> <span class="nf">guess_if_dna</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.99</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Guess if the given sequence is Protein.&quot;&quot;&quot;</span>
+    <span class="c1"># protein_letters = [&#39;C&#39;, &#39;D&#39;, &#39;S&#39;, &#39;Q&#39;, &#39;K&#39;,&#39;I&#39;,&#39;P&#39;,&#39;T&#39;,&#39;F&#39;,&#39;N&#39;,&#39;G&#39;,</span>
+    <span class="c1">#                &#39;H&#39;,&#39;L&#39;,&#39;R&#39;,&#39;W&#39;,&#39;A&#39;,&#39;V&#39;,&#39;E&#39;,&#39;Y&#39;,&#39;M&#39;]</span>
+    <span class="n">protein_letters</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">]</span>
+    <span class="c1"># print(seq)</span>
+
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="s2">&quot;fasta&quot;</span><span class="p">):</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">seq</span>
+
+    <span class="n">seq</span> <span class="o">=</span> <span class="n">seq</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="n">protein_alpha_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">protein_letters</span><span class="p">:</span>
+        <span class="n">protein_alpha_count</span> <span class="o">+=</span> <span class="n">seq</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">float</span><span class="p">(</span><span class="n">protein_alpha_count</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="n">thresh</span></div>
+
+
+<div class="viewcode-block" id="SendEmailForm"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.forms.SendEmailForm">[docs]</a><span class="k">class</span> <span class="nc">SendEmailForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sequence submission form.&quot;&quot;&quot;</span>
+
+    <span class="n">submittersname</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Submitter&#39;s Name&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+    <span class="p">)</span>
+
+    <span class="n">submittersemail</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Submitter&#39;s Email&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+    <span class="p">)</span>
+
+    <span class="n">accession</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Accession Number&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">message</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Message&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SendEmailForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;submittersname&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;submittersemail&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;accession&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="c1"># self.fields[&#39;message&#39;].widget.attrs[&#39;cols&#39;] = 20</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_id</span> <span class="o">=</span> <span class="s2">&quot;id-SendEmailForm&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_class</span> <span class="o">=</span> <span class="s2">&quot;SendEmailForm&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_method</span> <span class="o">=</span> <span class="s2">&quot;post&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_action</span> <span class="o">=</span> <span class="s2">&quot;contact&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="n">Submit</span><span class="p">(</span><span class="s2">&quot;submit&quot;</span><span class="p">,</span> <span class="s2">&quot;Submit&quot;</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SendEmailForm.Meta"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.forms.SendEmailForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">SendEmail</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s2">&quot;__all__&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="UserSubmissionForm"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.forms.UserSubmissionForm">[docs]</a><span class="k">class</span> <span class="nc">UserSubmissionForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sequence submission form.&quot;&quot;&quot;</span>
+
+    <span class="n">submittersname</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Submitter&#39;s Name&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+    <span class="p">)</span>
+
+    <span class="n">submittersemail</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Submitter&#39;s Email&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+    <span class="p">)</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Your name for the protein&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">year</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Year&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">sequence</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Protein Sequence&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">public_or_private</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">TypedChoiceField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Do you require the sequence to be maintained privately?&quot;</span><span class="p">,</span>
+        <span class="n">coerce</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">(</span>
+            <span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;Select one option&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;No&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Yes&quot;</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">bacterium</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Yes&quot;</span><span class="p">),</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;No&quot;</span><span class="p">)),</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Bacterium&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">initial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">bacterium_textbox</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Name of source bacterium (ideally taxonid)&quot;</span><span class="p">,</span>
+        <span class="c1"># label=&#39;&#39;,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+    <span class="p">)</span>
+
+    <span class="n">accession</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Genbank accession Number&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">dnasequence</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;DNA Sequence&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+    <span class="p">)</span>
+
+    <span class="n">partnerprotein</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Partner Protein required for toxicity?&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Yes&quot;</span><span class="p">),</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;No&quot;</span><span class="p">)),</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+        <span class="n">initial</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">partnerprotein_textbox</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Partner Protein Name&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">toxicto</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Toxic to&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">nontoxic</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Nontoxic to&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">pdbcode</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;PDB code&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">publication</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Publication&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">comment</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Comments&quot;</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">terms_conditions</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">CheckboxInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;10&quot;</span><span class="p">}),</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;By using our service and submitting your sequences of pesticidal proteins to us, you agree to the following:  You acknowledge that our services are being provided on our regularly operating IT systems, and we cannot guarantee the complete security of your submission.  OUR SERVICE IS PROVIDED “AS IS”.  WE EXPRESSLY DISCLAIM ALL WARRANTIES WITH RESPECT TO THE SERVICES.  WE MAKE NO WARRANTIES OR GUARANTEES WHATSOEVER, EXPRESS OR IMPLIED, INCLUDING, ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.  WE ARE NOT LIABLE FOR ANY USE OF THE SERVICES, OR FOR ANY LOSS, CLAIM, DAMAGE, OR LIABILITY OF ANY KIND OR NATURE WHICH MAY ARISE FROM OR IN CONNECTION WITH THIS SERVICE OR OUR STORAGE OF YOUR SUBMISSION.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">UserSubmissionForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;sequence&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="c1"># self.fields[&#39;sequence&#39;].widget.attrs[&#39;cols&#39;] = 20</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;bacterium_textbox&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="c1"># self.fields[&#39;comment&#39;].widget.attrs[&#39;cols&#39;] = 20</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;toxicto&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Toxic to&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_id</span> <span class="o">=</span> <span class="s2">&quot;id-UserSubmissionForm&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_class</span> <span class="o">=</span> <span class="s2">&quot;UserSubmissionForm&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_method</span> <span class="o">=</span> <span class="s2">&quot;post&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_action</span> <span class="o">=</span> <span class="s2">&quot;submit&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="n">Submit</span><span class="p">(</span><span class="s2">&quot;submit&quot;</span><span class="p">,</span> <span class="s2">&quot;Submit&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span>
+            <span class="n">Row</span><span class="p">(</span>
+                <span class="n">Column</span><span class="p">(</span>
+                    <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+                    <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-group col-md-6 mb-0&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span>
+                    <span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span>
+                    <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-group col-md-6 mb-0&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-row&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">Row</span><span class="p">(</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-group col-md-10 mb-0&quot;</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-group col-md-2 mb-0&quot;</span><span class="p">),</span>
+                <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-row&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">Row</span><span class="p">(</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;bacterium&quot;</span><span class="p">,</span> <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-group col-md-2 mb-0&quot;</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span>
+                    <span class="s2">&quot;bacterium_textbox&quot;</span><span class="p">,</span>
+                    <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-group col-md-6 mb-0&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="c1"># Column(&#39;taxonid&#39;,</span>
+                <span class="c1">#        css_class=&#39;form-group col-md-5 mb-0&#39;),</span>
+                <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-row&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">Row</span><span class="p">(</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;accession&quot;</span><span class="p">,</span> <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-group col-md-3 mb-0&quot;</span><span class="p">),</span>
+                <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-row&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;dnasequence&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;public_or_private&quot;</span><span class="p">,</span>
+            <span class="n">Row</span><span class="p">(</span>
+                <span class="n">Column</span><span class="p">(</span>
+                    <span class="s2">&quot;partnerprotein&quot;</span><span class="p">,</span>
+                    <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-group col-md-3 mb-0&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span>
+                    <span class="s2">&quot;partnerprotein_textbox&quot;</span><span class="p">,</span>
+                    <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-group col-md-9 mb-0&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-row&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;toxicto&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nontoxic&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pdbcode&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;terms_conditions&quot;</span><span class="p">,</span>
+            <span class="n">HTML</span><span class="p">(</span>
+                <span class="s1">&#39;&lt;div class=&quot;form-group col-md-6&quot;&gt;&lt;div class=&quot;g-recaptcha&quot; data-sitekey=&quot;</span><span class="si">%s</span><span class="s1">&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>
+                <span class="o">%</span> <span class="n">RECAPTCHA_PUBLIC_KEY</span>
+            <span class="p">),</span>
+            <span class="c1"># ButtonHolder(</span>
+            <span class="c1">#     Submit(&#39;submit&#39;, &#39;Submit&#39;)</span>
+            <span class="c1"># )</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="UserSubmissionForm.clean_sequence"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.forms.UserSubmissionForm.clean_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">clean_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sequence_in_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequence&quot;</span><span class="p">]</span>
+
+        <span class="c1"># invalidsymbols = invalid_symbol(sequence_in_form)</span>
+        <span class="k">if</span> <span class="n">invalidSymbol</span><span class="p">(</span><span class="n">sequence_in_form</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;There are invalid symbols in the sequence&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">hasNumbers</span><span class="p">(</span><span class="n">sequence_in_form</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;There are numbers in the sequence. Please paste protein sequence only&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sequence_in_form</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">write_sequence_file</span><span class="p">(</span><span class="n">sequence_in_form</span><span class="p">)</span>
+            <span class="n">sequence_is_protein</span> <span class="o">=</span> <span class="n">guess_if_protein</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">sequence_in_form</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Please paste valid protein sequences&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sequence_is_protein</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;Please paste only protein sequences here&quot;</span><span class="p">)</span>
+        <span class="c1"># print(self.cleaned_data)</span>
+        <span class="n">formatted_sequence</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">sequence_in_form</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">formatted_sequence</span></div>
+
+<div class="viewcode-block" id="UserSubmissionForm.clean_dnasequence"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.forms.UserSubmissionForm.clean_dnasequence">[docs]</a>    <span class="k">def</span> <span class="nf">clean_dnasequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dnasequence_in_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;dnasequence&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">invalidSymbol</span><span class="p">(</span><span class="n">dnasequence_in_form</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;There are invalid symbols in the sequence&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">hasNumbers</span><span class="p">(</span><span class="n">dnasequence_in_form</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;There are numbers in the sequence. Please paste DNA sequence only&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dnasequence_in_form</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">write_sequence_file</span><span class="p">(</span><span class="n">dnasequence_in_form</span><span class="p">)</span>
+            <span class="n">sequence_is_dna</span> <span class="o">=</span> <span class="n">guess_if_dna</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dnasequence_in_form</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Please paste valid DNA sequences&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sequence_is_dna</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Please paste only DNA sequences here&quot;</span><span class="p">)</span>
+
+        <span class="n">formatted_dnasequence</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">dnasequence_in_form</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">formatted_dnasequence</span></div>
+
+<div class="viewcode-block" id="UserSubmissionForm.Meta"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.forms.UserSubmissionForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">UserSubmission</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;public_or_private&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;bacterium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;bacterium_textbox&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;dnasequence&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;partnerprotein&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;partnerprotein_textbox&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;toxicto&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nontoxic&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pdbcode&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;terms_conditions&quot;</span><span class="p">,</span>
+        <span class="p">]</span></div></div>
+
+
+<span class="c1"># ToxicToFormSet = modelformset_factory(</span>
+<span class="c1">#     UserSubmission,</span>
+<span class="c1">#     fields=(&#39;toxicto&#39;,),</span>
+<span class="c1">#     extra=1,</span>
+<span class="c1">#     widgets={&#39;name&#39;: forms.TextInput(attrs={</span>
+<span class="c1">#         &#39;placeholder&#39;: &#39;Toxic to&#39;</span>
+<span class="c1">#     })</span>
+<span class="c1">#     }</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1"># )</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1"># class ToxicFormSetHelper(FormHelper):</span>
+<span class="c1">#     def __init__(self, *args, **kwargs):</span>
+<span class="c1">#         super().__init__(*args, **kwargs)</span>
+<span class="c1">#         self.form_method = &#39;post&#39;</span>
+<span class="c1">#         self.layout = Layout(</span>
+<span class="c1">#             &#39;toxicto&#39;</span>
+<span class="c1">#         )</span>
+<span class="c1">#         self.render_required_fields = False</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

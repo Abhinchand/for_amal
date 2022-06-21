@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>namingalgorithm.predict_name &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin.html">BPPRC admin tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>namingalgorithm.predict_name</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for namingalgorithm.predict_name</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">database.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">PesticidalProteinDatabase</span><span class="p">,</span>
+    <span class="n">PesticidalProteinHiddenSequence</span><span class="p">,</span>
+    <span class="n">PesticidalProteinPrivateDatabase</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">naming_package</span> <span class="kn">import</span> <span class="n">naming</span>
+
+<span class="n">NEEDLE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NEEDLE_PATH&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="cmdline"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.predict_name.cmdline">[docs]</a><span class="k">def</span> <span class="nf">cmdline</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
+    <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+        <span class="n">args</span><span class="o">=</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="needle_two_sequences"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.predict_name.needle_two_sequences">[docs]</a><span class="k">def</span> <span class="nf">needle_two_sequences</span><span class="p">(</span><span class="n">file1</span><span class="p">,</span> <span class="n">file2</span><span class="p">):</span>
+
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">NEEDLE_PATH</span>
+        <span class="o">+</span> <span class="s2">&quot;needle -datafile EBLOSUM62 -auto Y&quot;</span>
+        <span class="o">+</span> <span class="s2">&quot; -asequence &quot;</span>
+        <span class="o">+</span> <span class="n">file1</span>
+        <span class="o">+</span> <span class="s2">&quot; -bsequence &quot;</span>
+        <span class="o">+</span> <span class="n">file2</span>
+        <span class="o">+</span> <span class="s2">&quot; -sprotein1 Y -sprotein2 Y &quot;</span>
+        <span class="o">+</span> <span class="s2">&quot; -auto -stdout&quot;</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Command line&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">cmdline</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+    <span class="n">identity</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\d{1,3}\.\d*\%&quot;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">identity</span><span class="p">:</span>
+        <span class="n">identity</span> <span class="o">=</span> <span class="n">identity</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+        <span class="n">identity</span> <span class="o">=</span> <span class="n">identity</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;%&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">identity</span><span class="p">,</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="filter_files_ending_with_one"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.predict_name.filter_files_ending_with_one">[docs]</a><span class="k">def</span> <span class="nf">filter_files_ending_with_one</span><span class="p">(</span><span class="n">SUBJECT_FASTAFILES</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The function filters the files end with 1</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">SUBJECT_FASTAFILES</span> <span class="k">if</span> <span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="empty_path_private"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.predict_name.empty_path_private">[docs]</a><span class="k">def</span> <span class="nf">empty_path_private</span><span class="p">():</span>
+    <span class="n">proteins</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">proteins</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">protein</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">fastasequence_file</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">,</span>
+                                   <span class="n">t</span><span class="o">.</span><span class="n">fastasequence_file</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">fastasequence_file</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="write_files_private"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.predict_name.write_files_private">[docs]</a><span class="k">def</span> <span class="nf">write_files_private</span><span class="p">(</span><span class="n">objectname</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span> <span class="o">+</span> <span class="s1">&#39;/search_namingalgorithm/&#39;</span><span class="p">)</span>
+    <span class="c1"># print(&quot;path&quot;, path)</span>
+    <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">objectname</span><span class="p">:</span>
+        <span class="n">tmp_seq</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.txt&#39;</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wb+&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">fasta</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">protein</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">str_to_write</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="n">protein</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">fasta</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">tmp_seq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">str_to_write</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+        <span class="n">tmp_seq</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">tmp_seq</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">protein</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">path_filename</span> <span class="o">=</span> <span class="s2">&quot;fastasequence_files/&quot;</span> <span class="o">+</span> <span class="n">filename</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">fastasequence_file</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">path_filename</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="update_private"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.predict_name.update_private">[docs]</a><span class="k">def</span> <span class="nf">update_private</span><span class="p">():</span>
+    <span class="n">private_proteins</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">private_endwith1</span> <span class="o">=</span> <span class="n">filter_files_ending_with_one</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">private_proteins</span><span class="p">))</span>
+
+    <span class="n">private_proteins_filtered</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">name__in</span><span class="o">=</span><span class="n">private_endwith1</span><span class="p">)</span>
+    <span class="n">write_files_private</span><span class="p">(</span><span class="n">private_proteins_filtered</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="run_naming"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.predict_name.run_naming">[docs]</a><span class="k">def</span> <span class="nf">run_naming</span><span class="p">(</span><span class="n">query_data</span><span class="p">):</span>
+
+    <span class="n">update_private</span><span class="p">()</span>
+    <span class="n">empty</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">initial</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">align</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">percentageidentity</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span> <span class="o">+</span> <span class="s1">&#39;/search_namingalgorithm/&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;file..&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+        <span class="n">identity_percentage</span><span class="p">,</span> <span class="n">results</span> <span class="o">=</span> <span class="n">needle_two_sequences</span><span class="p">(</span><span class="n">query_data</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">identity_percentage</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">identity_percentage</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to convert identity_percentage </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">identity_percentage</span><span class="p">))</span>
+            <span class="n">identity_percentage</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="c1"># this has scaffold file name , query file name and identity percentage</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">file</span><span class="p">,</span> <span class="n">query_data</span><span class="p">,</span> <span class="n">identity_percentage</span>
+
+        <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">initial</span><span class="p">:</span>
+            <span class="n">empty</span> <span class="o">=</span> <span class="n">l</span>
+            <span class="n">initial</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">align</span> <span class="o">=</span> <span class="n">results</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">protein</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">percentageidentity</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">empty</span><span class="p">:</span>
+        <span class="c1"># my_condition = None</span>
+        <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">empty</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">95</span> <span class="ow">and</span> <span class="nb">float</span><span class="p">(</span><span class="n">empty</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;95 to 100%&quot;</span>
+            <span class="n">public</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">hidden</span> <span class="o">=</span> <span class="n">PesticidalProteinHiddenSequence</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">private</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">categories</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">public</span><span class="p">)</span>
+            <span class="n">categories</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">private</span><span class="p">))</span>
+            <span class="n">categories</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">hidden</span><span class="p">))</span>
+            <span class="n">predicted_name</span> <span class="o">=</span> <span class="n">naming</span><span class="o">.</span><span class="n">rank4_naming</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">float</span><span class="p">(</span><span class="n">empty</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">76</span> <span class="ow">and</span> <span class="nb">float</span><span class="p">(</span><span class="n">empty</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mf">94.9</span><span class="p">:</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;76 to 94%&quot;</span>
+            <span class="n">public</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">hidden</span> <span class="o">=</span> <span class="n">PesticidalProteinHiddenSequence</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">private</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">categories</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">public</span><span class="p">)</span>
+            <span class="n">categories</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">private</span><span class="p">))</span>
+            <span class="n">categories</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">hidden</span><span class="p">))</span>
+            <span class="n">predicted_name</span> <span class="o">=</span> <span class="n">naming</span><span class="o">.</span><span class="n">rank3_naming</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">float</span><span class="p">(</span><span class="n">empty</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">45</span> <span class="ow">and</span> <span class="nb">float</span><span class="p">(</span><span class="n">empty</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mf">75.9</span><span class="p">:</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;45 to 75%&quot;</span>
+            <span class="n">public</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">hidden</span> <span class="o">=</span> <span class="n">PesticidalProteinHiddenSequence</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">private</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">categories</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">public</span><span class="p">)</span>
+            <span class="n">categories</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">private</span><span class="p">))</span>
+            <span class="n">categories</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">hidden</span><span class="p">))</span>
+            <span class="n">predicted_name</span> <span class="o">=</span> <span class="n">naming</span><span class="o">.</span><span class="n">rank2_naming</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">float</span><span class="p">(</span><span class="n">empty</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">float</span><span class="p">(</span><span class="n">empty</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mf">44.9</span><span class="p">:</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;0 to 44%&quot;</span>
+            <span class="n">public</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">hidden</span> <span class="o">=</span> <span class="n">PesticidalProteinHiddenSequence</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">private</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__startswith</span><span class="o">=</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">categories</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">public</span><span class="p">)</span>
+            <span class="n">categories</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">private</span><span class="p">))</span>
+            <span class="n">categories</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">hidden</span><span class="p">))</span>
+            <span class="c1"># predicted_name = naming.rank1_naming(categories, name)</span>
+            <span class="n">predicted_name</span> <span class="o">=</span> <span class="n">naming</span><span class="o">.</span><span class="n">xpp_naming</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="c1"># predicted_name = &quot;Name manually&quot;</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="c1"># remove_directory(directory)</span>
+    <span class="n">empty_path_private</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">align</span><span class="p">,</span> <span class="n">percentageidentity</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">predicted_name</span><span class="p">,</span> <span class="n">name</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

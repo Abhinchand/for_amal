@@ -1,0 +1,452 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Web Hosting &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="BPPRC" href="BPPRC.html" />
+    <link rel="prev" title="Run Locally" href="runlocally.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="runlocally.html">Run Locally</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Web Hosting</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="web-hosting">
+<h1>Web Hosting<a class="headerlink" href="#web-hosting" title="Permalink to this headline">¶</a></h1>
+<p>Virtual environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">virtualenv</span>
+<span class="n">virtualenv</span> <span class="n">env</span>
+<span class="n">source</span> <span class="n">env</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+</pre></div>
+</div>
+<p>Install dependencies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>PostgreSQL is a powerful, open-source object-relational database system</p>
+<ul>
+<li><p>Install PostgreSQL:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">postgresql</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="mf">9.1</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">psycopg2</span> <span class="o">-</span> <span class="n">Or</span> <span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">psycopg2</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">postgresql</span> <span class="n">pgadmin3</span>
+</pre></div>
+</div>
+</li>
+<li><p>Change the default password:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">su</span>
+<span class="n">su</span> <span class="n">postgres</span> <span class="o">-</span><span class="n">c</span> <span class="n">psql</span> <span class="n">postgres</span>
+<span class="n">ALTER</span> <span class="n">USER</span> <span class="n">postgres</span> <span class="n">WITH</span> <span class="n">PASSWORD</span> <span class="s1">&#39;YourPassWordHere&#39;</span><span class="p">;</span>
+\<span class="n">q</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create the database:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">su</span>
+<span class="n">su</span> <span class="n">postgres</span> <span class="o">-</span><span class="n">c</span> <span class="n">psql</span> <span class="n">postgres</span>
+<span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">dbname</span><span class="p">;</span>
+<span class="n">CREATE</span> <span class="n">USER</span> <span class="n">djangouser</span> <span class="n">WITH</span> <span class="n">ENCRYPTED</span> <span class="n">PASSWORD</span> <span class="s1">&#39;myPasswordHere&#39;</span><span class="p">;</span>
+<span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">DATABASE</span> <span class="n">dbname</span> <span class="n">TO</span> <span class="n">djangouser</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Django settings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+<span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="s1">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s1">&#39;django.db.backends.postgresql_psycopg2&#39;</span><span class="p">,</span>
+<span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;dbname&#39;</span><span class="p">,</span>
+<span class="s1">&#39;USER&#39;</span><span class="p">:</span> <span class="s1">&#39;postgres&#39;</span><span class="p">,</span>
+<span class="s1">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s1">&#39;postgres&#39;</span><span class="p">,</span>
+<span class="s1">&#39;HOST&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="s1">&#39;PORT&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. Nginx can be deployed to server dynamic HTTP content on the network using WSGI application servers (an example) and it can serve as a software load balancer. Nginx will face the outside world. It will serve media files (images, CSS, etc) directly from the file system. However, it can’t talk directly to Django applications; it needs something (uWSGI) that will run the application, feed it requests from the web, and return responses. <a class="reference external" href="https://serverfault.com/a/887845">Refer1</a>.</p>
+<ul>
+<li><p>Install Nginx:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">nginx</span>
+</pre></div>
+</div>
+</li>
+<li><p>Nginx configuration file Location:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">virtual</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+</li>
+<li><p>conf file contents:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="p">{</span>
+<span class="n">listen</span> <span class="mi">80</span><span class="p">;</span>
+<span class="n">server_name</span> <span class="p">{</span><span class="n">your</span> <span class="n">domain_name</span><span class="p">};</span>
+<span class="n">error_log</span> <span class="o">/</span><span class="n">srv</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error</span><span class="o">.</span><span class="n">log</span><span class="p">;</span>
+<span class="n">access_log</span> <span class="o">/</span><span class="n">srv</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">log</span><span class="p">;</span>
+<span class="n">charset</span> <span class="n">utf</span><span class="o">-</span><span class="mi">8</span><span class="p">;</span>
+
+<span class="n">location</span> <span class="o">/</span><span class="n">static</span><span class="o">/</span> <span class="p">{</span>
+<span class="n">alias</span> <span class="o">/</span><span class="n">srv</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">static</span><span class="o">/</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">location</span> <span class="o">/</span><span class="n">media</span><span class="o">/</span> <span class="p">{</span>
+<span class="n">alias</span> <span class="o">/</span><span class="n">srv</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
+<span class="n">add_header</span> <span class="s1">&#39;Cache-Control&#39;</span> <span class="s1">&#39;no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0&#39;</span><span class="p">;</span>
+<span class="n">expires</span> <span class="n">off</span><span class="p">;</span>
+<span class="c1">#uwsgi_pass unix:/opt/uwsgi/sock/database.sock;</span>
+<span class="n">proxy_connect_timeout</span> <span class="mi">300</span><span class="n">s</span><span class="p">;</span>
+<span class="n">proxy_read_timeout</span> <span class="mi">300</span><span class="n">s</span><span class="p">;</span>
+<span class="n">proxy_pass</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">8000</span><span class="p">;</span>
+<span class="n">include</span> <span class="n">uwsgi_params</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">#root /srv/www/database_test/database/templates/extra;</span>
+<span class="c1">#index site-down.html;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Nginx file location:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">error</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>uWSGI is a popular web server that implements the WSGI (pronounced wiz-gee) standard. WSGI (Web Server Gateway Interface) is a software specification, uWSGI is a web server. It’s pretty common to pair Django and uWSGI since they both talk WSGI. The uWSGI server is a full featured HTTP server that is quite capable of running production web apps. However, it’s not as performant as nginx at serving static content, so it’s pretty common to see nginx sitting in front a uWSGI server. Here’s where some poor naming choices make things even more confusing. So we know WSGI is a software spec, uWSGI is a server, so what the hell is uwsgi? When it’s spelled using all lowercase letters, it refers to a binary protocol for connecting the uWSGI server to other applications. <a class="reference external" href="https://www.ultravioletsoftware.com/single-post/2017/03/23/An-introduction-into-the-WSGI-ecosystem">Refer2</a>.</p>
+<ul>
+<li><p>Install uWSGI:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">python</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">uwsgi</span>
+</pre></div>
+</div>
+</li>
+<li><p>uwsgi emperor configuration location:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">uwsgi</span><span class="o">/</span><span class="n">emperor</span><span class="o">.</span><span class="n">ini</span>
+</pre></div>
+</div>
+</li>
+<li><p>uwsgi emperor configuration contents:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">uwsgi</span><span class="p">]</span>
+<span class="n">emperor</span> <span class="o">=</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">uwsgi</span><span class="o">/</span><span class="n">vassals</span>
+<span class="n">uid</span> <span class="o">=</span> <span class="n">uwsgi</span>
+<span class="n">gid</span> <span class="o">=</span> <span class="n">uwsgi</span>
+<span class="n">logto</span> <span class="o">=</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">uwsgi</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">uwsgilog</span>
+</pre></div>
+</div>
+</li>
+<li><p>uwsgi vassals configuration location:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">uwsgi</span><span class="o">/</span><span class="n">vassals</span><span class="o">/</span><span class="n">demo</span><span class="o">.</span><span class="n">ini</span>
+</pre></div>
+</div>
+</li>
+<li><p>uwsgi vassals configuration contents:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">uwsgi</span><span class="p">]</span>
+<span class="n">http</span> <span class="o">=</span> <span class="p">:</span><span class="mi">8000</span>
+<span class="n">workers</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">processes</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">uwsgi</span><span class="o">/</span><span class="n">sock</span><span class="o">/</span><span class="n">database</span><span class="o">.</span><span class="n">sock</span>
+<span class="n">chdir</span> <span class="o">=</span> <span class="o">/</span><span class="n">srv</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">database</span><span class="o">/</span>
+<span class="n">pythonpath</span> <span class="o">=</span> <span class="o">/</span><span class="n">srv</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">database</span><span class="o">/</span>
+<span class="n">home</span> <span class="o">=</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">virtual</span><span class="o">-</span><span class="n">env</span><span class="o">/</span>
+<span class="n">logto</span> <span class="o">=</span> <span class="o">/</span><span class="n">srv</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">uwsgi</span><span class="o">.</span><span class="n">log</span>
+<span class="n">module</span> <span class="o">=</span> <span class="n">BPPRC</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">uid</span> <span class="o">=</span> <span class="n">uwsgi</span>
+<span class="n">chmod</span><span class="o">-</span><span class="n">socket</span> <span class="o">=</span> <span class="mi">666</span>
+<span class="n">chown</span><span class="o">-</span><span class="n">socket</span> <span class="o">=</span> <span class="n">uwsgi</span>
+<span class="n">harakiri</span> <span class="o">=</span> <span class="mi">300</span>
+</pre></div>
+</div>
+</li>
+<li><p>uwsgi log file location:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">uwsgi</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">uwsgilog</span>
+</pre></div>
+</div>
+</li>
+<li><p>Install Needle:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Needed</span> <span class="k">for</span> <span class="n">BestMatchFinder</span> <span class="n">app</span>
+
+<span class="n">Download</span> <span class="n">EMBOSS</span><span class="o">-</span><span class="mf">6.</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">Gunzip</span> <span class="n">EMBOSS</span><span class="o">-</span><span class="mf">6.</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">tar</span> <span class="n">xvf</span> <span class="n">EMBOSS</span><span class="o">-</span><span class="mf">6.</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">cd</span> <span class="n">EMBOSS</span><span class="o">-</span><span class="mf">6.</span><span class="n">x</span><span class="o">.</span><span class="n">x</span>
+<span class="o">./</span><span class="n">configure</span>
+<span class="n">make</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>It should be able to run in the terminal. Provide a full path in both production as well as local. This applies to all the binary external softwares.</p>
+<ul>
+<li><p>Clustal Omega:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Needed</span> <span class="k">for</span> <span class="n">Clustalanalysis</span> <span class="n">app</span>
+
+<span class="n">Download</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">clustal</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">omega</span><span class="o">/.</span>
+<span class="n">Clustal</span> <span class="n">installation</span> <span class="n">instructions</span> <span class="n">can</span> <span class="n">be</span> <span class="n">found</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">clustal</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">omega</span><span class="o">/</span><span class="n">INSTALL</span><span class="o">.</span>
+</pre></div>
+</div>
+</li>
+<li><p>Manage the production and local settings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Use a `.env` files in the production and local with respective settings
+
+Example production `.env` file::
+
+SECRET_KEY=&#39;………&#39;
+EMAIL_BACKEND=&#39;django_ses.SESBackend&#39;
+
+#Amazon key
+AWS_ACCESS_KEY_ID=&#39;……..&#39;
+AWS_SECRET_ACCESS_KEY=&#39;…’
+AWS_SES_REGION_NAME=&#39;us-east-1&#39;
+AWS_SES_REGION_ENDPOINT=&#39;email-smtp.us-east-1.amazonaws.com&#39;
+
+CRISPY_TEMPLATE_PACK=&#39;bootstrap4&#39;
+CSRF_COOKIE_SECURE=True
+
+# google recaptcha
+RECAPTCHA_PUBLIC_KEY=&quot;6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT&quot;
+
+# used betweeen server and reCAPTCHA
+RECAPTCHA_PRIVATE_KEY=&quot;6Lc-HfMUAAAAAI2H-DuGJKPETsB_ep3EQNKkdesC&quot;
+
+NEEDLE_PATH=&#39;/opt/EMBOSS-6.6.0/emboss/&#39;
+BLAST_PATH=&#39;/usr/local/bin/&#39;
+CLUSTAL_PATH=&#39;/usr/local/bin/&#39;
+DATABASE_TYPE=&#39;production&#39;
+
+
+Example local `.env` file::
+
+SECRET_KEY=’’
+DEVELOPMENT=True
+
+AWS_ACCESS_KEY_ID=&#39;&#39;
+AWS_SECRET_ACCESS_KEY=&#39;&#39;
+
+CRISPY_TEMPLATE_PACK=&#39;bootstrap4&#39;
+CSRF_COOKIE_SECURE=True
+
+# used betweeen server and reCAPTCHA
+RECAPTCHA_PRIVATE_KEY=&quot;6Lc-HfMUAAAAAI2H-DuGJKPETsB_ep3EQNKkdesC&quot;
+
+NEEDLE_PATH=&#39;/usr/local/bin/&#39;
+BLAST_PATH=&#39;&#39;
+CLUSTAL_PATH=&#39;/sw/bin/&#39;
+
+DATABASE_TYPE=&#39;sqlite3&#39;
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="BPPRC.html" class="btn btn-neutral float-right" title="BPPRC" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="runlocally.html" class="btn btn-neutral float-left" title="Run Locally" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

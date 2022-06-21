@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>namingalgorithm.admin &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>namingalgorithm.admin</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for namingalgorithm.admin</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Submit the sequence by user and name of the protein is predicted.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.admin.checks</span> <span class="kn">import</span> <span class="n">BaseModelAdminChecks</span>
+<span class="kn">from</span> <span class="nn">django.contrib.admin.models</span> <span class="kn">import</span> <span class="n">LogEntry</span>
+<span class="kn">from</span> <span class="nn">django.contrib.admin.options</span> <span class="kn">import</span> <span class="n">get_content_type_for_model</span>
+<span class="kn">from</span> <span class="nn">django.contrib.contenttypes.admin</span> <span class="kn">import</span> <span class="n">GenericStackedInline</span>
+<span class="kn">from</span> <span class="nn">django.utils.html</span> <span class="kn">import</span> <span class="n">format_html</span><span class="p">,</span> <span class="n">mark_safe</span>
+<span class="kn">from</span> <span class="nn">import_export</span> <span class="kn">import</span> <span class="n">resources</span><span class="p">,</span> <span class="n">widgets</span>
+<span class="kn">from</span> <span class="nn">import_export.admin</span> <span class="kn">import</span> <span class="n">ImportExportModelAdmin</span>
+<span class="kn">from</span> <span class="nn">import_export.fields</span> <span class="kn">import</span> <span class="n">Field</span>
+
+<span class="kn">from</span> <span class="nn">database.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">PesticidalProteinDatabase</span><span class="p">,</span>
+    <span class="n">PesticidalProteinPrivateDatabase</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">namingalgorithm.models</span> <span class="kn">import</span> <span class="n">AuditEntry</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Archive</span><span class="p">,</span> <span class="n">SendEmail</span><span class="p">,</span> <span class="n">UserSubmission</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponseRedirect</span>
+<span class="kn">from</span> <span class="nn">naming_package</span> <span class="kn">import</span> <span class="n">run_data</span>
+<span class="kn">from</span> <span class="nn">namingalgorithm.tasks</span> <span class="kn">import</span> <span class="n">namingalgorithm_task</span>
+
+
+<span class="n">import_order</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;predict_name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bacterium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bacterium_textbox&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;taxonid&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;partnerprotein&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;partnerprotein_textbox&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;toxicto&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;nontoxic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dnasequence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pdbcode&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;user_comments&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;user_provided_proteinname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;admin_comments&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;date&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="AuditEntryLogAdmin"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.AuditEntryLogAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">AuditEntry</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AuditEntryLogAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;username&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ip&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">list_filter</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">,</span>
+    <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="LogEntryAdmin"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.LogEntryAdmin">[docs]</a><span class="k">class</span> <span class="nc">LogEntryAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">readonly_fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;content_type&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;action_time&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;object_id&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;object_repr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;action_flag&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;change_message&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="LogEntryAdmin.has_delete_permission"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.LogEntryAdmin.has_delete_permission">[docs]</a>    <span class="k">def</span> <span class="nf">has_delete_permission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="LogEntryAdmin.get_actions"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.LogEntryAdmin.get_actions">[docs]</a>    <span class="k">def</span> <span class="nf">get_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">LogEntryAdmin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_actions</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">actions</span><span class="p">[</span><span class="s2">&quot;delete_selected&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">actions</span></div></div>
+
+
+<div class="viewcode-block" id="ModelAdminLog"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.ModelAdminLog">[docs]</a><span class="k">class</span> <span class="nc">ModelAdminLog</span><span class="p">(</span><span class="n">GenericStackedInline</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">LogEntry</span>
+
+    <span class="c1"># All fields are read-only, obviously</span>
+    <span class="n">readonly_fields</span> <span class="o">=</span> <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;action_time&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;change_message&quot;</span><span class="p">]</span>
+    <span class="c1"># No extra fields so noone can add new logs</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># No one can delete logs</span>
+    <span class="n">can_delete</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># This is a hackity hack! See below</span>
+    <span class="n">checks_class</span> <span class="o">=</span> <span class="n">BaseModelAdminChecks</span>
+
+<div class="viewcode-block" id="ModelAdminLog.change_message"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.ModelAdminLog.change_message">[docs]</a>    <span class="k">def</span> <span class="nf">change_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get_change_message</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">message</span></div></div>
+
+
+<div class="viewcode-block" id="ArchiveResource"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.ArchiveResource">[docs]</a><span class="k">class</span> <span class="nc">ArchiveResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+<div class="viewcode-block" id="ArchiveResource.Meta"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.ArchiveResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Archive</span></div></div>
+
+
+<div class="viewcode-block" id="ArchiveAdmin"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.ArchiveAdmin">[docs]</a><span class="k">class</span> <span class="nc">ArchiveAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">ArchiveResource</span>
+
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span> <span class="s2">&quot;submittersname&quot;</span><span class="p">]</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;date&quot;</span><span class="p">,</span>
+        <span class="c1"># &#39;admin_user&#39;,</span>
+        <span class="s2">&quot;admin_comments&quot;</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+    <span class="c1"># inlines = [ModelAdminLog]</span>
+    <span class="c1">#</span>
+    <span class="c1"># def save_model(self, request, obj, form, change):</span>
+    <span class="c1">#     super().save_model(request, obj, form, change)</span>
+    <span class="c1">#     if change:</span>
+    <span class="c1">#         change_message = &quot;{} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {}&quot;.format(</span>
+    <span class="c1">#             obj.submittersname,</span>
+    <span class="c1">#             obj.submittersemail,</span>
+    <span class="c1">#             obj.name,</span>
+    <span class="c1">#             obj.year,</span>
+    <span class="c1">#             obj.sequence,</span>
+    <span class="c1">#             obj.bacterium,</span>
+    <span class="c1">#             obj.bacterium_textbox,</span>
+    <span class="c1">#             obj.taxonid,</span>
+    <span class="c1">#             obj.accession,</span>
+    <span class="c1">#             obj.partnerprotein,</span>
+    <span class="c1">#             obj.partnerprotein_textbox,</span>
+    <span class="c1">#             obj.toxicto,</span>
+    <span class="c1">#             obj.nontoxic,</span>
+    <span class="c1">#             obj.dnasequence,</span>
+    <span class="c1">#             obj.pdbcode,</span>
+    <span class="c1">#             obj.publication,</span>
+    <span class="c1">#             obj.admin_user,</span>
+    <span class="c1">#             obj.admin_comments,</span>
+    <span class="c1">#             obj.comment,</span>
+    <span class="c1">#             obj.uploaded,</span>
+    <span class="c1">#             obj.predict_name,</span>
+    <span class="c1">#             obj.user_provided_proteinname,</span>
+    <span class="c1">#         )</span>
+    <span class="c1">#         LogEntry.objects.create(</span>
+    <span class="c1">#             user=request.user,</span>
+    <span class="c1">#             content_type=get_content_type_for_model(obj),</span>
+    <span class="c1">#             object_id=obj.id,</span>
+    <span class="c1">#             action_flag=2,</span>
+    <span class="c1">#             change_message=change_message,</span>
+    <span class="c1">#             object_repr=obj.__str__()[:200],</span>
+    <span class="c1">#         )</span>
+
+
+<div class="viewcode-block" id="BacteriumWidget"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.BacteriumWidget">[docs]</a><span class="k">class</span> <span class="nc">BacteriumWidget</span><span class="p">(</span><span class="n">widgets</span><span class="o">.</span><span class="n">BooleanWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="BacteriumWidget.Clean"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.BacteriumWidget.Clean">[docs]</a>    <span class="k">def</span> <span class="nf">Clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;no&#39;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">value</span></div></div>
+
+
+<div class="viewcode-block" id="UserSubmissionResource"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionResource">[docs]</a><span class="k">class</span> <span class="nc">UserSubmissionResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+
+    <span class="n">partnerprotein</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">column_name</span><span class="o">=</span><span class="s1">&#39;partnerprotein&#39;</span><span class="p">,</span>
+                           <span class="n">attribute</span><span class="o">=</span><span class="s1">&#39;partnerprotein&#39;</span><span class="p">,</span>
+                           <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">BacteriumWidget</span><span class="p">())</span>
+    <span class="n">bacterium</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">column_name</span><span class="o">=</span><span class="s1">&#39;bacterium&#39;</span><span class="p">,</span>
+                      <span class="n">attribute</span><span class="o">=</span><span class="s1">&#39;bacterium&#39;</span><span class="p">,</span>
+                      <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">BacteriumWidget</span><span class="p">())</span>
+
+<div class="viewcode-block" id="UserSubmissionResource.Meta"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">UserSubmission</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;terms_conditions&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;contact_status&#39;</span><span class="p">,</span> <span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="s1">&#39;private&#39;</span><span class="p">,)</span>
+
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">import_order</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">export_order</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">import_id_fields</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">export_id_fields</span> <span class="o">=</span> <span class="n">import_order</span></div>
+
+<div class="viewcode-block" id="UserSubmissionResource.dehydrate_bacterium"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionResource.dehydrate_bacterium">[docs]</a>    <span class="k">def</span> <span class="nf">dehydrate_bacterium</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">UserSubmissionDatabase</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">UserSubmissionDatabase</span><span class="o">.</span><span class="n">bacterium</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Yes&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;No&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UserSubmissionResource.dehydrate_partnerprotein"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionResource.dehydrate_partnerprotein">[docs]</a>    <span class="k">def</span> <span class="nf">dehydrate_partnerprotein</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">UserSubmissionDatabase</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">UserSubmissionDatabase</span><span class="o">.</span><span class="n">partnerprotein</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Yes&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;No&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="UserSubmissionAdmin"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionAdmin">[docs]</a><span class="k">class</span> <span class="nc">UserSubmissionAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">UserSubmissionResource</span>
+
+    <span class="sd">&quot;&quot;&quot;Submit the sequence by user and name of the protein is predicted.&quot;&quot;&quot;</span>
+
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span> <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span> <span class="s2">&quot;accession&quot;</span><span class="p">]</span>
+    <span class="n">list_editable</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;contact_status&quot;</span><span class="p">,)</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession_url&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;naming_algorithm&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;availability&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;copy_to_public&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;copy_to_private&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;refresh&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;send_email&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;date&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;contact_status&quot;</span>
+    <span class="p">)</span>
+    <span class="n">exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;alignresults&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="UserSubmissionAdmin.accession_url"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionAdmin.accession_url">[docs]</a>    <span class="k">def</span> <span class="nf">accession_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span>
+            <span class="s1">&#39;&lt;a href=&quot;</span><span class="si">%s%s</span><span class="s1">&quot; target=&quot;_blank&quot;&gt;</span><span class="si">%s</span><span class="s1">&lt;/a&gt;&#39;</span>
+            <span class="o">%</span> <span class="p">(</span>
+                <span class="s2">&quot;https://www.ncbi.nlm.nih.gov/protein/&quot;</span><span class="p">,</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">accession</span><span class="p">,</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">accession</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="UserSubmissionAdmin.naming_algorithm"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionAdmin.naming_algorithm">[docs]</a>    <span class="k">def</span> <span class="nf">naming_algorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;&gt;&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">sequence</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">sequence</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">sequence</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="n">format_data</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">tmp_seq</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wb+&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp_seq</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">temp</span><span class="p">:</span>
+            <span class="n">temp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">format_data</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+            <span class="n">tmp_seq</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="c1"># task = namingalgorithm_task.delay(tmp_seq.name)</span>
+        <span class="c1"># #align = run_data.run_naming_algorithm.run_bug(tmp_seq.name)</span>
+        <span class="c1">#</span>
+        <span class="c1"># return HttpResponseRedirect(&quot;/run_naming_algorithm/&quot;)</span>
+
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span>
+            <span class="s1">&#39;&lt;a href=&quot;/run_naming_algorithm_celery/?name=</span><span class="si">{0}</span><span class="s1">&quot; target=&quot;_blank&quot;&gt;Naming Algorithm&lt;/a&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tmp_seq</span><span class="o">.</span><span class="n">name</span><span class="p">))</span></div>
+        <span class="c1"># return format_html(</span>
+        <span class="c1">#     &#39;&lt;a href=&quot;/run_naming_algorithm/?fulltextarea={0}&amp;submission_id={1}&quot; target=&quot;_blank&quot;&gt;Naming Algorithm&lt;/a&gt;&#39;.format(</span>
+        <span class="c1">#         obj.sequence, obj.id</span>
+        <span class="c1">#     )</span>
+        <span class="c1"># )</span>
+
+<div class="viewcode-block" id="UserSubmissionAdmin.align_results"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionAdmin.align_results">[docs]</a>    <span class="k">def</span> <span class="nf">align_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Submit the sequence by user and name of the protein is predicted.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">alignresults</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span>
+                <span class="s1">&#39;&lt;a href=&quot;/align_results/?submission_id=</span><span class="si">{0}</span><span class="s1">&quot; target=&quot;_blank&quot;&gt;View Result&lt;/a&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UserSubmissionAdmin.copy_to_public"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionAdmin.copy_to_public">[docs]</a>    <span class="k">def</span> <span class="nf">copy_to_public</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Submit the sequence by user and name of the protein is predicted.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s1">&#39;&lt;a href=&quot;/admin/database/pesticidalproteindatabase/add/?name=</span><span class="si">{0}</span><span class="s1">&amp;sequence=</span><span class="si">{1}</span><span class="s1">&amp;submittersname=</span><span class="si">{2}</span><span class="s1">&amp;submittersemail=</span><span class="si">{3}</span><span class="s1">&quot; target=&quot;_blank&quot;&gt;Copy to public&lt;/a&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">predict_name</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">submittersname</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">submittersemail</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="UserSubmissionAdmin.copy_to_private"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionAdmin.copy_to_private">[docs]</a>    <span class="k">def</span> <span class="nf">copy_to_private</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Submit the sequence by user and name of the protein is predicted.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s1">&#39;&lt;a href=&quot;/admin/database/pesticidalproteinprivatedatabase/add/?name=</span><span class="si">{0}</span><span class="s1">&amp;sequence=</span><span class="si">{1}</span><span class="s1">&amp;submittersname=</span><span class="si">{2}</span><span class="s1">&amp;submittersemail=</span><span class="si">{3}</span><span class="s1">&quot; target=&quot;_blank&quot;&gt;Copy to private&lt;/a&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">predict_name</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">submittersname</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">submittersemail</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="UserSubmissionAdmin.refresh"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionAdmin.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Submit the sequence by user and name of the protein is predicted.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s1">&#39;&lt;a href=&quot;/admin/namingalgorithm/usersubmission/&quot;&gt;refresh&lt;/a&gt;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UserSubmissionAdmin.send_email"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionAdmin.send_email">[docs]</a>    <span class="k">def</span> <span class="nf">send_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span>
+            <span class="s1">&#39;&lt;a href=&quot;/admin/contact/?submittersname=</span><span class="si">{0}</span><span class="s1">&amp;submittersemail=</span><span class="si">{1}</span><span class="s1">&amp;accession=</span><span class="si">{2}</span><span class="s1">&quot; target=&quot;_blank&quot;&gt;Send Email&lt;/a&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">submittersname</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">submittersemail</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">accession</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="UserSubmissionAdmin.availability"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionAdmin.availability">[docs]</a>    <span class="k">def</span> <span class="nf">availability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">accession_number</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">accession</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">accession_number</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s2">&quot;&lt;body&gt; &lt;p&gt;No accession number&lt;/p&gt; &lt;/body&gt;&quot;</span><span class="p">)</span>
+        <span class="n">public</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">accession</span><span class="o">=</span><span class="n">accession_number</span><span class="p">)</span>
+        <span class="n">private</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">accession</span><span class="o">=</span><span class="n">accession_number</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">public</span><span class="p">:</span>
+            <span class="c1"># print(accession_number)</span>
+            <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s1">&#39;&lt;body&gt; &lt;p style=&quot;color:#0000FF&quot;;&gt;Available in Public Database&lt;/p&gt;&lt;/body&gt;&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">private</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s1">&#39;&lt;body&gt; &lt;p style=&quot;color:#FF0000&quot;;&gt;Private Database&lt;/p&gt;&lt;/body&gt;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UserSubmissionAdmin.Pfam"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmissionAdmin.Pfam">[docs]</a>    <span class="k">def</span> <span class="nf">Pfam</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">()</span></div>
+
+    <span class="n">naming_algorithm</span><span class="o">.</span><span class="n">allow_tags</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">naming_algorithm</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Run the align link for the submission&quot;</span>
+
+    <span class="n">align_results</span><span class="o">.</span><span class="n">allow_tags</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">align_results</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;View the align results&quot;</span>
+
+    <span class="n">align_results</span><span class="o">.</span><span class="n">allow_tags</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">align_results</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Create new data in the database&quot;</span></div>
+
+
+<div class="viewcode-block" id="SendEmailAdmin"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.SendEmailAdmin">[docs]</a><span class="k">class</span> <span class="nc">SendEmailAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">inlines</span> <span class="o">=</span> <span class="p">[</span><span class="n">ModelAdminLog</span><span class="p">]</span></div>
+
+
+<span class="c1"># class ArchiveAdmin(admin.ModelAdmin):</span>
+<span class="c1">#     search_fields = (&#39;name&#39;, &#39;year&#39;, &#39;submittersname&#39;,</span>
+<span class="c1">#                      &#39;submittersemail&#39;)</span>
+<span class="c1">#     fields = (&#39;submittersname&#39;, &#39;submittersemail&#39;, &#39;name&#39;, &#39;year&#39;, &#39;sequence&#39;, &#39;bacterium&#39;, &#39;bacterium_textbox&#39;, &#39;taxonid&#39;, &#39;accession&#39;, &#39;partnerprotein&#39;, &#39;partnerprotein_textbox&#39;, &#39;toxicto&#39;, &#39;nontoxic&#39;, &#39;dnasequence&#39;, &#39;pdbcode&#39;, &#39;publication&#39;, &#39;comment&#39;, &#39;uploaded&#39;, &#39;predict_name&#39;, &#39;alignresults&#39;, &#39;terms_conditions&#39;)</span>
+<span class="c1">#     list_display = (&#39;name&#39;, &#39;submittersname&#39;,</span>
+<span class="c1">#                      &#39;accession&#39;, &#39;uploaded&#39;,)</span>
+<span class="c1">#     ordering = (&#39;-uploaded&#39;,)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">LogEntry</span><span class="p">,</span> <span class="n">LogEntryAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">UserSubmission</span><span class="p">,</span> <span class="n">UserSubmissionAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Archive</span><span class="p">,</span> <span class="n">ArchiveAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">SendEmail</span><span class="p">,</span> <span class="n">SendEmailAdmin</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,588 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Clustal Analysis &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Extra" href="extra.html" />
+    <link rel="prev" title="Association" href="association.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="association.html">Association</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clustal Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-clustalanalysis.admin">clustalanalysis.admin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-clustalanalysis.apps">clustalanalysis.apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-clustalanalysis.forms">clustalanalysis.forms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-clustalanalysis.models">clustalanalysis.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-clustalanalysis.run_clustal">clustalanalysis.run_clustal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-clustalanalysis.tasks">clustalanalysis.tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-clustalanalysis.urls">clustalanalysis.urls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-clustalanalysis.views">clustalanalysis.views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-clustalanalysis">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Clustal Analysis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="clustal-analysis">
+<h1>Clustal Analysis<a class="headerlink" href="#clustal-analysis" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-clustalanalysis.admin">
+<span id="clustalanalysis-admin"></span><h2>clustalanalysis.admin<a class="headerlink" href="#module-clustalanalysis.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="clustalanalysis.admin.StoreResultFilesAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">clustalanalysis.admin.</span></span><span class="sig-name descname"><span class="pre">StoreResultFilesAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/admin.html#StoreResultFilesAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.admin.StoreResultFilesAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.admin.StoreResultFilesAdmin.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['taskid',</span> <span class="pre">'tempfile',</span> <span class="pre">'resultfile']</span></em><a class="headerlink" href="#clustalanalysis.admin.StoreResultFilesAdmin.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="clustalanalysis.admin.StoreResultFilesAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#clustalanalysis.admin.StoreResultFilesAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-clustalanalysis.apps">
+<span id="clustalanalysis-apps"></span><h2>clustalanalysis.apps<a class="headerlink" href="#module-clustalanalysis.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="clustalanalysis.apps.ClustalanalysisConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">clustalanalysis.apps.</span></span><span class="sig-name descname"><span class="pre">ClustalanalysisConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/apps.html#ClustalanalysisConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.apps.ClustalanalysisConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.apps.ClustalanalysisConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'clustalanalysis'</span></em><a class="headerlink" href="#clustalanalysis.apps.ClustalanalysisConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-clustalanalysis.forms">
+<span id="clustalanalysis-forms"></span><h2>clustalanalysis.forms<a class="headerlink" href="#module-clustalanalysis.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="clustalanalysis.forms.AnalysisForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">clustalanalysis.forms.</span></span><span class="sig-name descname"><span class="pre">AnalysisForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#AnalysisForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.AnalysisForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.forms.Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.forms.AnalysisForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'list_cterminal':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'list_middle':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'list_mutant_names':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'list_names':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'list_nterminal':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'tool':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'userdataids':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#clustalanalysis.forms.AnalysisForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.AnalysisForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#AnalysisForm.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.AnalysisForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
+called on every field. Any ValidationError raised by this method will
+not be associated with a particular field; it will have a special-case
+association with the field named ‘__all__’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.AnalysisForm.clean_userdataids">
+<span class="sig-name descname"><span class="pre">clean_userdataids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#AnalysisForm.clean_userdataids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.AnalysisForm.clean_userdataids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.AnalysisForm.count_number_lines">
+<span class="sig-name descname"><span class="pre">count_number_lines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#AnalysisForm.count_number_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.AnalysisForm.count_number_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.forms.AnalysisForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'list_cterminal':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'list_middle':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'list_mutant_names':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'list_names':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'list_nterminal':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'tool':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'userdataids':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#clustalanalysis.forms.AnalysisForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="clustalanalysis.forms.AnalysisForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#clustalanalysis.forms.AnalysisForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.AnalysisForm.protein_detail_data">
+<span class="sig-name descname"><span class="pre">protein_detail_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#AnalysisForm.protein_detail_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.AnalysisForm.protein_detail_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.AnalysisForm.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#AnalysisForm.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.AnalysisForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.AnalysisForm.write_files_for_clustal">
+<span class="sig-name descname"><span class="pre">write_files_for_clustal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#AnalysisForm.write_files_for_clustal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.AnalysisForm.write_files_for_clustal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate protein sequence</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.AnalysisForm.write_input_file_clustal">
+<span class="sig-name descname"><span class="pre">write_input_file_clustal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#AnalysisForm.write_input_file_clustal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.AnalysisForm.write_input_file_clustal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="clustalanalysis.forms.DendogramForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">clustalanalysis.forms.</span></span><span class="sig-name descname"><span class="pre">DendogramForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#DendogramForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.DendogramForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.forms.Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.forms.DendogramForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'category_type':</span> <span class="pre">&lt;django.forms.fields.MultipleChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#clustalanalysis.forms.DendogramForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.DendogramForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#DendogramForm.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.DendogramForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
+called on every field. Any ValidationError raised by this method will
+not be associated with a particular field; it will have a special-case
+association with the field named ‘__all__’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.DendogramForm.count_number_lines">
+<span class="sig-name descname"><span class="pre">count_number_lines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#DendogramForm.count_number_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.DendogramForm.count_number_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.forms.DendogramForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'category_type':</span> <span class="pre">&lt;django.forms.fields.MultipleChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#clustalanalysis.forms.DendogramForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.DendogramForm.filter_categories">
+<span class="sig-name descname"><span class="pre">filter_categories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#DendogramForm.filter_categories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.DendogramForm.filter_categories" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="clustalanalysis.forms.DendogramForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#clustalanalysis.forms.DendogramForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.DendogramForm.open_files_for_clustal">
+<span class="sig-name descname"><span class="pre">open_files_for_clustal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#DendogramForm.open_files_for_clustal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.DendogramForm.open_files_for_clustal" title="Permalink to this definition">¶</a></dt>
+<dd><p>open files for clustal</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.DendogramForm.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#DendogramForm.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.DendogramForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.DendogramForm.write_input_file_clustal">
+<span class="sig-name descname"><span class="pre">write_input_file_clustal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#DendogramForm.write_input_file_clustal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.DendogramForm.write_input_file_clustal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="clustalanalysis.forms.UserDataForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">clustalanalysis.forms.</span></span><span class="sig-name descname"><span class="pre">UserDataForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#UserDataForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.UserDataForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.forms.Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.forms.UserDataForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'userdata':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'userfile':</span> <span class="pre">&lt;django.forms.fields.FileField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#clustalanalysis.forms.UserDataForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.forms.UserDataForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#UserDataForm.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.UserDataForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
+called on every field. Any ValidationError raised by this method will
+not be associated with a particular field; it will have a special-case
+association with the field named ‘__all__’.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.forms.UserDataForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'userdata':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'userfile':</span> <span class="pre">&lt;django.forms.fields.FileField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#clustalanalysis.forms.UserDataForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="clustalanalysis.forms.UserDataForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#clustalanalysis.forms.UserDataForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.forms.guess_if_protein">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.forms.</span></span><span class="sig-name descname"><span class="pre">guess_if_protein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#guess_if_protein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.guess_if_protein" title="Permalink to this definition">¶</a></dt>
+<dd><p>Guess if the given sequence is Protein.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.forms.is_fasta">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.forms.</span></span><span class="sig-name descname"><span class="pre">is_fasta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#is_fasta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.is_fasta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.forms.write_sequence_file">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.forms.</span></span><span class="sig-name descname"><span class="pre">write_sequence_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/forms.html#write_sequence_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.forms.write_sequence_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate protein sequence</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-clustalanalysis.models">
+<span id="clustalanalysis-models"></span><h2>clustalanalysis.models<a class="headerlink" href="#module-clustalanalysis.models" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="clustalanalysis.models.StoreResultFiles">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">clustalanalysis.models.</span></span><span class="sig-name descname"><span class="pre">StoreResultFiles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taskid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tempfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resultfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/models.html#StoreResultFiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="clustalanalysis.models.StoreResultFiles.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="clustalanalysis.models.StoreResultFiles.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.models.StoreResultFiles.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.models.StoreResultFiles.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.models.StoreResultFiles.resultfile">
+<span class="sig-name descname"><span class="pre">resultfile</span></span><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.resultfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>The descriptor for the file attribute on the model instance. Return a
+FieldFile when accessed so you can write code like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">MyModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<p>Assign a file object on assignment so you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="clustalanalysis.models.StoreResultFiles.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/models.html#StoreResultFiles.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The ‘force_insert’ and ‘force_update’ parameters can be used to insist
+that the “save” must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.models.StoreResultFiles.taskid">
+<span class="sig-name descname"><span class="pre">taskid</span></span><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.taskid" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="clustalanalysis.models.StoreResultFiles.tempfile">
+<span class="sig-name descname"><span class="pre">tempfile</span></span><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.tempfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-clustalanalysis.run_clustal">
+<span id="clustalanalysis-run-clustal"></span><h2>clustalanalysis.run_clustal<a class="headerlink" href="#module-clustalanalysis.run_clustal" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.run_clustal.cmd">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.run_clustal.</span></span><span class="sig-name descname"><span class="pre">cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/run_clustal.html#cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.run_clustal.cmd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.run_clustal.run_clustal">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.run_clustal.</span></span><span class="sig-name descname"><span class="pre">run_clustal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/run_clustal.html#run_clustal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.run_clustal.run_clustal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-clustalanalysis.tasks">
+<span id="clustalanalysis-tasks"></span><h2>clustalanalysis.tasks<a class="headerlink" href="#module-clustalanalysis.tasks" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-clustalanalysis.urls">
+<span id="clustalanalysis-urls"></span><h2>clustalanalysis.urls<a class="headerlink" href="#module-clustalanalysis.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-clustalanalysis.views">
+<span id="clustalanalysis-views"></span><h2>clustalanalysis.views<a class="headerlink" href="#module-clustalanalysis.views" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.views.celery_task_status_clustal">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.views.</span></span><span class="sig-name descname"><span class="pre">celery_task_status_clustal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/views.html#celery_task_status_clustal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.views.celery_task_status_clustal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.views.dendogram">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.views.</span></span><span class="sig-name descname"><span class="pre">dendogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/views.html#dendogram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.views.dendogram" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.views.dendogram_celery">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.views.</span></span><span class="sig-name descname"><span class="pre">dendogram_celery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/views.html#dendogram_celery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.views.dendogram_celery" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.views.dendogram_homepage">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.views.</span></span><span class="sig-name descname"><span class="pre">dendogram_homepage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/views.html#dendogram_homepage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.views.dendogram_homepage" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.views.dendogram_homepage2">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.views.</span></span><span class="sig-name descname"><span class="pre">dendogram_homepage2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/views.html#dendogram_homepage2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.views.dendogram_homepage2" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.views.domain_analysis">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.views.</span></span><span class="sig-name descname"><span class="pre">domain_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/views.html#domain_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.views.domain_analysis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.views.domain_analysis_homepage">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.views.</span></span><span class="sig-name descname"><span class="pre">domain_analysis_homepage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/views.html#domain_analysis_homepage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.views.domain_analysis_homepage" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.views.protein_analysis">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.views.</span></span><span class="sig-name descname"><span class="pre">protein_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/views.html#protein_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.views.protein_analysis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clustalanalysis.views.taskstatus_clustal_celery">
+<span class="sig-prename descclassname"><span class="pre">clustalanalysis.views.</span></span><span class="sig-name descname"><span class="pre">taskstatus_clustal_celery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clustalanalysis/views.html#taskstatus_clustal_celery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#clustalanalysis.views.taskstatus_clustal_celery" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-clustalanalysis">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-clustalanalysis" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="extra.html" class="btn btn-neutral float-right" title="Extra" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="association.html" class="btn btn-neutral float-left" title="Association" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

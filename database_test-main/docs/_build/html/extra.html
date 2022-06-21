@@ -1,0 +1,1164 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Extra &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="BPPRC tutorial" href="youtube.html" />
+    <link rel="prev" title="Clustal Analysis" href="clustalanalysis.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Extra</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-extra.admin">extra.admin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-extra.apps">extra.apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-extra.forms">extra.forms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-extra.models">extra.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-extra.urls">extra.urls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-extra.views">extra.views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-extra">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Extra</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="extra">
+<h1>Extra<a class="headerlink" href="#extra" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-extra.admin">
+<span id="extra-admin"></span><h2>extra.admin<a class="headerlink" href="#module-extra.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.FaqEditAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.admin.</span></span><span class="sig-name descname"><span class="pre">FaqEditAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#FaqEditAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.FaqEditAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.admin.ImportExportModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FaqEditAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',</span> <span class="pre">'categories',</span> <span class="pre">'questions',</span> <span class="pre">'answers')</span></em><a class="headerlink" href="#extra.admin.FaqEditAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.admin.FaqEditAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#extra.admin.FaqEditAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FaqEditAdmin.ordering">
+<span class="sig-name descname"><span class="pre">ordering</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',)</span></em><a class="headerlink" href="#extra.admin.FaqEditAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FaqEditAdmin.resource_class">
+<span class="sig-name descname"><span class="pre">resource_class</span></span><a class="headerlink" href="#extra.admin.FaqEditAdmin.resource_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#extra.admin.FaqEditResource" title="extra.admin.FaqEditResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">extra.admin.FaqEditResource</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FaqEditAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',</span> <span class="pre">'categories',</span> <span class="pre">'questions',</span> <span class="pre">'answers')</span></em><a class="headerlink" href="#extra.admin.FaqEditAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.admin.</span></span><span class="sig-name descname"><span class="pre">FaqEditResource</span></span><a class="reference internal" href="_modules/extra/admin.html#FaqEditResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.FaqEditResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.resources.ModelResource</span></code></p>
+<p>To integrate django-import-export with our FaqEdit model,
+we will create a ModelResource class in admin.py that will
+describe how this resource can be imported or exported:</p>
+<p>FaqEdit - Model name -&gt; extra.models.py
+Fields in the model are answer, and question. Category is a
+ForeignKey. One issue is when exported django-ckeditor provides
+html tag in the excel.To fix this, a custom field is created
+where we strip html tags.</p>
+<p>Related class –&gt; FaqEditAdmin</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/extra/admin.html#FaqEditResource.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.FaqEditResource.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource.Meta.exclude">
+<span class="sig-name descname"><span class="pre">exclude</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',</span> <span class="pre">'category',</span> <span class="pre">'answer',</span> <span class="pre">'question')</span></em><a class="headerlink" href="#extra.admin.FaqEditResource.Meta.exclude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource.Meta.export_id_fields">
+<span class="sig-name descname"><span class="pre">export_id_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('categories',</span> <span class="pre">'questions',</span> <span class="pre">'answers')</span></em><a class="headerlink" href="#extra.admin.FaqEditResource.Meta.export_id_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource.Meta.import_id_fields">
+<span class="sig-name descname"><span class="pre">import_id_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('categories',</span> <span class="pre">'questions',</span> <span class="pre">'answers')</span></em><a class="headerlink" href="#extra.admin.FaqEditResource.Meta.import_id_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#extra.admin.FaqEditResource.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#extra.models.FaqEdit" title="extra.models.FaqEdit"><code class="xref py py-class docutils literal notranslate"><span class="pre">extra.models.FaqEdit</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource.Meta.report_skipped">
+<span class="sig-name descname"><span class="pre">report_skipped</span></span><em class="property"> <span class="pre">=</span> <span class="pre">True</span></em><a class="headerlink" href="#extra.admin.FaqEditResource.Meta.report_skipped" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource.Meta.skip_unchanged">
+<span class="sig-name descname"><span class="pre">skip_unchanged</span></span><em class="property"> <span class="pre">=</span> <span class="pre">True</span></em><a class="headerlink" href="#extra.admin.FaqEditResource.Meta.skip_unchanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource.dehydrate_answers">
+<span class="sig-name descname"><span class="pre">dehydrate_answers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">faqedit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#FaqEditResource.dehydrate_answers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.FaqEditResource.dehydrate_answers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource.dehydrate_categories">
+<span class="sig-name descname"><span class="pre">dehydrate_categories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">faqedit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#FaqEditResource.dehydrate_categories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.FaqEditResource.dehydrate_categories" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource.dehydrate_questions">
+<span class="sig-name descname"><span class="pre">dehydrate_questions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">faqedit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#FaqEditResource.dehydrate_questions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.FaqEditResource.dehydrate_questions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FaqEditResource.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'answers':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">answers&gt;,</span> <span class="pre">'categories':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">categories&gt;,</span> <span class="pre">'questions':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">questions&gt;}</span></em><a class="headerlink" href="#extra.admin.FaqEditResource.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.FeedbackAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.admin.</span></span><span class="sig-name descname"><span class="pre">FeedbackAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#FeedbackAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.FeedbackAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.admin.ImportExportModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FeedbackAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',</span> <span class="pre">'subject',</span> <span class="pre">'email',</span> <span class="pre">'uploaded',</span> <span class="pre">'contact_status')</span></em><a class="headerlink" href="#extra.admin.FeedbackAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FeedbackAdmin.list_editable">
+<span class="sig-name descname"><span class="pre">list_editable</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('contact_status',)</span></em><a class="headerlink" href="#extra.admin.FeedbackAdmin.list_editable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.admin.FeedbackAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#extra.admin.FeedbackAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FeedbackAdmin.resource_class">
+<span class="sig-name descname"><span class="pre">resource_class</span></span><a class="headerlink" href="#extra.admin.FeedbackAdmin.resource_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#extra.admin.FeedbackResource" title="extra.admin.FeedbackResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">extra.admin.FeedbackResource</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FeedbackAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',</span> <span class="pre">'subject',</span> <span class="pre">'email',</span> <span class="pre">'uploaded')</span></em><a class="headerlink" href="#extra.admin.FeedbackAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.FeedbackResource">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.admin.</span></span><span class="sig-name descname"><span class="pre">FeedbackResource</span></span><a class="reference internal" href="_modules/extra/admin.html#FeedbackResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.FeedbackResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.resources.ModelResource</span></code></p>
+<p>To integrate django-import-export with our Feedback model,
+we will create a ModelResource class in admin.py that will
+describe how this resource can be imported or exported:</p>
+<p>Feedback - Model name -&gt; extra.models.py
+Fields in the model are name, subject, email, uploaded,
+and contact_status.</p>
+<p>Related class –&gt; LinksAdmin</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.FeedbackResource.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/extra/admin.html#FeedbackResource.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.FeedbackResource.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FeedbackResource.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#extra.admin.FeedbackResource.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#extra.models.Feedback" title="extra.models.Feedback"><code class="xref py py-class docutils literal notranslate"><span class="pre">extra.models.Feedback</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.FeedbackResource.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'contact_status':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">contact_status&gt;,</span> <span class="pre">'email':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">email&gt;,</span> <span class="pre">'id':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">id&gt;,</span> <span class="pre">'message':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">message&gt;,</span> <span class="pre">'name':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">name&gt;,</span> <span class="pre">'subject':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">subject&gt;,</span> <span class="pre">'uploaded':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">uploaded&gt;}</span></em><a class="headerlink" href="#extra.admin.FeedbackResource.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.Help">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.admin.</span></span><span class="sig-name descname"><span class="pre">Help</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#Help"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.Help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Help page in django admin. Screenshots images are
+attached for help.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.admin.Help.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#extra.admin.Help.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.admin.Help.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#extra.admin.Help.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.Help.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#extra.admin.Help.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.Help.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#extra.admin.Help.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.HelpAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.admin.</span></span><span class="sig-name descname"><span class="pre">HelpAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#HelpAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.HelpAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.admin.HelpAdmin.get_urls">
+<span class="sig-name descname"><span class="pre">get_urls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#HelpAdmin.get_urls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.HelpAdmin.get_urls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.admin.HelpAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#extra.admin.HelpAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.HelpAdmin.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#extra.admin.HelpAdmin.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#extra.admin.Help" title="extra.admin.Help"><code class="xref py py-class docutils literal notranslate"><span class="pre">extra.admin.Help</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.LinksAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.admin.</span></span><span class="sig-name descname"><span class="pre">LinksAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#LinksAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.LinksAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.admin.ImportExportModelAdmin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.admin.LinksAdmin.link_url">
+<span class="sig-name descname"><span class="pre">link_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#LinksAdmin.link_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.LinksAdmin.link_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.LinksAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',</span> <span class="pre">'names',</span> <span class="pre">'descriptions',</span> <span class="pre">'link_url')</span></em><a class="headerlink" href="#extra.admin.LinksAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.admin.LinksAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#extra.admin.LinksAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.LinksAdmin.ordering">
+<span class="sig-name descname"><span class="pre">ordering</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',)</span></em><a class="headerlink" href="#extra.admin.LinksAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.LinksAdmin.resource_class">
+<span class="sig-name descname"><span class="pre">resource_class</span></span><a class="headerlink" href="#extra.admin.LinksAdmin.resource_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#extra.admin.LinksResource" title="extra.admin.LinksResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">extra.admin.LinksResource</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.LinksAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('names',</span> <span class="pre">'descriptions',</span> <span class="pre">'link_url')</span></em><a class="headerlink" href="#extra.admin.LinksAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.LinksResource">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.admin.</span></span><span class="sig-name descname"><span class="pre">LinksResource</span></span><a class="reference internal" href="_modules/extra/admin.html#LinksResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.LinksResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.resources.ModelResource</span></code></p>
+<p>To integrate django-import-export with our Links model,
+we will create a ModelResource class in admin.py that will
+describe how this resource can be imported or exported:</p>
+<p>Links - Model name -&gt; extra.models.py
+Fields in the model are name, description and link. One issue
+is when exported django-ckeditor provides html tag in the excel.
+To fix this, a custom field is created where we strip html tags.</p>
+<p>Related class –&gt; LinksAdmin</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.LinksResource.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/extra/admin.html#LinksResource.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.LinksResource.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.LinksResource.Meta.exclude">
+<span class="sig-name descname"><span class="pre">exclude</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',</span> <span class="pre">'name',</span> <span class="pre">'description',</span> <span class="pre">'link')</span></em><a class="headerlink" href="#extra.admin.LinksResource.Meta.exclude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.LinksResource.Meta.export_id_fields">
+<span class="sig-name descname"><span class="pre">export_id_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('names',</span> <span class="pre">'descriptions',</span> <span class="pre">'links')</span></em><a class="headerlink" href="#extra.admin.LinksResource.Meta.export_id_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.LinksResource.Meta.import_id_fields">
+<span class="sig-name descname"><span class="pre">import_id_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('names',</span> <span class="pre">'descriptions',</span> <span class="pre">'links')</span></em><a class="headerlink" href="#extra.admin.LinksResource.Meta.import_id_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.LinksResource.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#extra.admin.LinksResource.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#extra.models.Links" title="extra.models.Links"><code class="xref py py-class docutils literal notranslate"><span class="pre">extra.models.Links</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.LinksResource.Meta.report_skipped">
+<span class="sig-name descname"><span class="pre">report_skipped</span></span><em class="property"> <span class="pre">=</span> <span class="pre">True</span></em><a class="headerlink" href="#extra.admin.LinksResource.Meta.report_skipped" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.LinksResource.Meta.skip_unchanged">
+<span class="sig-name descname"><span class="pre">skip_unchanged</span></span><em class="property"> <span class="pre">=</span> <span class="pre">True</span></em><a class="headerlink" href="#extra.admin.LinksResource.Meta.skip_unchanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.admin.LinksResource.dehydrate_descriptions">
+<span class="sig-name descname"><span class="pre">dehydrate_descriptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">links</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#LinksResource.dehydrate_descriptions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.LinksResource.dehydrate_descriptions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.admin.LinksResource.dehydrate_links">
+<span class="sig-name descname"><span class="pre">dehydrate_links</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">links</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#LinksResource.dehydrate_links"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.LinksResource.dehydrate_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.admin.LinksResource.dehydrate_names">
+<span class="sig-name descname"><span class="pre">dehydrate_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">links</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#LinksResource.dehydrate_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.LinksResource.dehydrate_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.LinksResource.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'descriptions':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">descriptions&gt;,</span> <span class="pre">'links':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">links&gt;,</span> <span class="pre">'names':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">names&gt;}</span></em><a class="headerlink" href="#extra.admin.LinksResource.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.admin.NCBIAvailabilityAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.admin.</span></span><span class="sig-name descname"><span class="pre">NCBIAvailabilityAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#NCBIAvailabilityAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.NCBIAvailabilityAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.admin.NCBIAvailabilityAdmin.accession_url">
+<span class="sig-name descname"><span class="pre">accession_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#NCBIAvailabilityAdmin.accession_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.NCBIAvailabilityAdmin.accession_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.NCBIAvailabilityAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',</span> <span class="pre">'accession_url',</span> <span class="pre">'availability')</span></em><a class="headerlink" href="#extra.admin.NCBIAvailabilityAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.admin.NCBIAvailabilityAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#extra.admin.NCBIAvailabilityAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.NCBIAvailabilityAdmin.ordering">
+<span class="sig-name descname"><span class="pre">ordering</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',)</span></em><a class="headerlink" href="#extra.admin.NCBIAvailabilityAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.admin.NCBIAvailabilityAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('accession',</span> <span class="pre">'availability')</span></em><a class="headerlink" href="#extra.admin.NCBIAvailabilityAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.admin.my_custom_view">
+<span class="sig-prename descclassname"><span class="pre">extra.admin.</span></span><span class="sig-name descname"><span class="pre">my_custom_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/admin.html#my_custom_view"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.admin.my_custom_view" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-extra.apps">
+<span id="extra-apps"></span><h2>extra.apps<a class="headerlink" href="#module-extra.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.apps.ExtraConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.apps.</span></span><span class="sig-name descname"><span class="pre">ExtraConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/apps.html#ExtraConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.apps.ExtraConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.apps.ExtraConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'extra'</span></em><a class="headerlink" href="#extra.apps.ExtraConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-extra.forms">
+<span id="extra-forms"></span><h2>extra.forms<a class="headerlink" href="#module-extra.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.forms.FeedbackForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.forms.</span></span><span class="sig-name descname"><span class="pre">FeedbackForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/forms.html#FeedbackForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.forms.FeedbackForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.forms.FeedbackForm.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/extra/forms.html#FeedbackForm.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.forms.FeedbackForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.forms.FeedbackForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['name',</span> <span class="pre">'subject',</span> <span class="pre">'email',</span> <span class="pre">'message']</span></em><a class="headerlink" href="#extra.forms.FeedbackForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.forms.FeedbackForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#extra.forms.FeedbackForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#extra.models.Feedback" title="extra.models.Feedback"><code class="xref py py-class docutils literal notranslate"><span class="pre">extra.models.Feedback</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.forms.FeedbackForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'message':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'subject':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#extra.forms.FeedbackForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.forms.FeedbackForm.clean_subject">
+<span class="sig-name descname"><span class="pre">clean_subject</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/forms.html#FeedbackForm.clean_subject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.forms.FeedbackForm.clean_subject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.forms.FeedbackForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'message':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'subject':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#extra.forms.FeedbackForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.forms.FeedbackForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#extra.forms.FeedbackForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.forms.SignupForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.forms.</span></span><span class="sig-name descname"><span class="pre">SignupForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">data=None</span></em>, <em class="sig-param"><span class="pre">files=None</span></em>, <em class="sig-param"><span class="pre">auto_id='id_%s'</span></em>, <em class="sig-param"><span class="pre">prefix=None</span></em>, <em class="sig-param"><span class="pre">initial=None</span></em>, <em class="sig-param"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></em>, <em class="sig-param"><span class="pre">label_suffix=None</span></em>, <em class="sig-param"><span class="pre">empty_permitted=False</span></em>, <em class="sig-param"><span class="pre">field_order=None</span></em>, <em class="sig-param"><span class="pre">use_required_attribute=None</span></em>, <em class="sig-param"><span class="pre">renderer=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/forms.html#SignupForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.forms.SignupForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.forms.Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.forms.SignupForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'first_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'last_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#extra.forms.SignupForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.forms.SignupForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'first_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'last_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#extra.forms.SignupForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.forms.SignupForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#extra.forms.SignupForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.forms.SignupForm.signup">
+<span class="sig-name descname"><span class="pre">signup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/forms.html#SignupForm.signup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.forms.SignupForm.signup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-extra.models">
+<span id="extra-models"></span><h2>extra.models<a class="headerlink" href="#module-extra.models" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.models.FaqEdit">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.models.</span></span><span class="sig-name descname"><span class="pre">FaqEdit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/models.html#FaqEdit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.models.FaqEdit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Question and answer page for adding FAQs in the admin page
+category can be chosen from the added headers. Cateogory
+is a ForeignKey</p>
+<p>Example</p>
+<p>category –&gt; Database FAQ</p>
+<p>question –&gt; Can I use the database locally on my laptop?</p>
+<p>answer –&gt; Yes. You can download from here
+<a class="reference external" href="https://github.com/bpprc/database">https://github.com/bpprc/database</a> and the installation
+instructions are provided.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.models.FaqEdit.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#extra.models.FaqEdit.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.models.FaqEdit.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#extra.models.FaqEdit.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.FaqEdit.answer">
+<span class="sig-name descname"><span class="pre">answer</span></span><a class="headerlink" href="#extra.models.FaqEdit.answer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.models.FaqEdit.answers">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">answers</span></span><a class="headerlink" href="#extra.models.FaqEdit.answers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.models.FaqEdit.categories">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">categories</span></span><a class="headerlink" href="#extra.models.FaqEdit.categories" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.FaqEdit.category">
+<span class="sig-name descname"><span class="pre">category</span></span><a class="headerlink" href="#extra.models.FaqEdit.category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.FaqEdit.category_id">
+<span class="sig-name descname"><span class="pre">category_id</span></span><a class="headerlink" href="#extra.models.FaqEdit.category_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.FaqEdit.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#extra.models.FaqEdit.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.FaqEdit.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#extra.models.FaqEdit.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.FaqEdit.question">
+<span class="sig-name descname"><span class="pre">question</span></span><a class="headerlink" href="#extra.models.FaqEdit.question" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.models.FaqEdit.questions">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">questions</span></span><a class="headerlink" href="#extra.models.FaqEdit.questions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.models.FaqEditHeading">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.models.</span></span><span class="sig-name descname"><span class="pre">FaqEditHeading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/models.html#FaqEditHeading"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.models.FaqEditHeading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Header title for FAQs</p>
+<p>Add header titles here to show up in the FaqEdit model.</p>
+<p>Example
+Category –&gt; Database FAQ</p>
+<p>Related files
+FaqEditResource  –&gt; extra.admin.py
+FaqEditAdmin  –&gt; extra.admin.py
+faq –&gt; extra.views.py
+external html file –&gt; newwebpage/faqedit.html</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.models.FaqEditHeading.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#extra.models.FaqEditHeading.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.models.FaqEditHeading.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#extra.models.FaqEditHeading.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.models.FaqEditHeading.categories">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">categories</span></span><a class="headerlink" href="#extra.models.FaqEditHeading.categories" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.FaqEditHeading.category">
+<span class="sig-name descname"><span class="pre">category</span></span><a class="headerlink" href="#extra.models.FaqEditHeading.category" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.FaqEditHeading.faqs">
+<span class="sig-name descname"><span class="pre">faqs</span></span><a class="headerlink" href="#extra.models.FaqEditHeading.faqs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.FaqEditHeading.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#extra.models.FaqEditHeading.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.FaqEditHeading.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#extra.models.FaqEditHeading.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.models.Feedback">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.models.</span></span><span class="sig-name descname"><span class="pre">Feedback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/models.html#Feedback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.models.Feedback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Users feedback for the database is stored in this model.</p>
+<p>Example</p>
+<p>name –&gt; Suresh
+Subject –&gt; Cry10Aa1
+email –&gt; suresh.pannersel at ufl.edu
+message –&gt; Link seems inactive for the protein</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.models.Feedback.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#extra.models.Feedback.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.models.Feedback.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#extra.models.Feedback.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Feedback.contact_status">
+<span class="sig-name descname"><span class="pre">contact_status</span></span><a class="headerlink" href="#extra.models.Feedback.contact_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Feedback.email">
+<span class="sig-name descname"><span class="pre">email</span></span><a class="headerlink" href="#extra.models.Feedback.email" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.models.Feedback.get_contact_status_display">
+<span class="sig-name descname"><span class="pre">get_contact_status_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">contact_status&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#extra.models.Feedback.get_contact_status_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.models.Feedback.get_next_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_next_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=True</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#extra.models.Feedback.get_next_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extra.models.Feedback.get_previous_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_previous_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=False</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#extra.models.Feedback.get_previous_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Feedback.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#extra.models.Feedback.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Feedback.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#extra.models.Feedback.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Feedback.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#extra.models.Feedback.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Feedback.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#extra.models.Feedback.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Feedback.subject">
+<span class="sig-name descname"><span class="pre">subject</span></span><a class="headerlink" href="#extra.models.Feedback.subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Feedback.uploaded">
+<span class="sig-name descname"><span class="pre">uploaded</span></span><a class="headerlink" href="#extra.models.Feedback.uploaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.models.Links">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.models.</span></span><span class="sig-name descname"><span class="pre">Links</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/models.html#Links"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.models.Links" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>django-ckeditor is used for this model. Admin users can edit
+the page to add name, description and link.
+The main advantage of this app is admin users
+can change the text size and type.</p>
+<p>Examples</p>
+<p>name –&gt; TOXiTAXi Database</p>
+<p>link –&gt; <a class="reference external" href="http://150.254.120.147:7000/">http://150.254.120.147:7000/</a></p>
+<p>description –&gt; An online database showing the activity of
+selected pesticidal proteins against a range of insects
+and highlighting antagonisitc and synergistic interactions
+between them.</p>
+<p>Related files
+LinksResource  –&gt; extra.admin.py
+LinksAdmin  –&gt; extra.admin.py
+links –&gt; extra.views.py
+external html file –&gt; newwebpage/links.html</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.models.Links.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#extra.models.Links.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.models.Links.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#extra.models.Links.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Links.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#extra.models.Links.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.models.Links.descriptions">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">descriptions</span></span><a class="headerlink" href="#extra.models.Links.descriptions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Links.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#extra.models.Links.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Links.link">
+<span class="sig-name descname"><span class="pre">link</span></span><a class="headerlink" href="#extra.models.Links.link" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.models.Links.links">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">links</span></span><a class="headerlink" href="#extra.models.Links.links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Links.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#extra.models.Links.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="extra.models.Links.names">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">names</span></span><a class="headerlink" href="#extra.models.Links.names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.Links.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#extra.models.Links.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="extra.models.NCBIAvailability">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">extra.models.</span></span><span class="sig-name descname"><span class="pre">NCBIAvailability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/models.html#NCBIAvailability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.models.NCBIAvailability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>NCBI keeps sequences private until the data are published.
+This model stores accession and NCBI availability
+i.e. whether it is private or public available.
+The NCBI availability are show in UserSubmission
+admin list display.</p>
+<p>Example</p>
+<p>accession –&gt; CAA26943 #accession number
+availability –&gt; private #NCBI database</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.models.NCBIAvailability.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#extra.models.NCBIAvailability.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="extra.models.NCBIAvailability.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#extra.models.NCBIAvailability.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.NCBIAvailability.accession">
+<span class="sig-name descname"><span class="pre">accession</span></span><a class="headerlink" href="#extra.models.NCBIAvailability.accession" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.NCBIAvailability.availability">
+<span class="sig-name descname"><span class="pre">availability</span></span><a class="headerlink" href="#extra.models.NCBIAvailability.availability" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.NCBIAvailability.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#extra.models.NCBIAvailability.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="extra.models.NCBIAvailability.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#extra.models.NCBIAvailability.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-extra.urls">
+<span id="extra-urls"></span><h2>extra.urls<a class="headerlink" href="#module-extra.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-extra.views">
+<span id="extra-views"></span><h2>extra.views<a class="headerlink" href="#module-extra.views" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.views.analytics">
+<span class="sig-prename descclassname"><span class="pre">extra.views.</span></span><span class="sig-name descname"><span class="pre">analytics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/views.html#analytics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.views.analytics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Help page for admin manipulations. FAQs page can be edited by admin</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.views.faq">
+<span class="sig-prename descclassname"><span class="pre">extra.views.</span></span><span class="sig-name descname"><span class="pre">faq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/views.html#faq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.views.faq" title="Permalink to this definition">¶</a></dt>
+<dd><p>FAQs provides list of FAQs with different type of headers.
+Each headers, questions, and answers can be updated only by
+admin users.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.views.feedback_home">
+<span class="sig-prename descclassname"><span class="pre">extra.views.</span></span><span class="sig-name descname"><span class="pre">feedback_home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/views.html#feedback_home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.views.feedback_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feedback page form as well as POST details in the same function</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.views.github_home">
+<span class="sig-prename descclassname"><span class="pre">extra.views.</span></span><span class="sig-name descname"><span class="pre">github_home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/views.html#github_home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.views.github_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the page for bpprc developers github link</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.views.help">
+<span class="sig-prename descclassname"><span class="pre">extra.views.</span></span><span class="sig-name descname"><span class="pre">help</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/views.html#help"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.views.help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Help page for admin manipulations. FAQs page can be edited by admin</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.views.help_screenshot">
+<span class="sig-prename descclassname"><span class="pre">extra.views.</span></span><span class="sig-name descname"><span class="pre">help_screenshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/views.html#help_screenshot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.views.help_screenshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Few screenshots images to help admins to see the
+avaialble functionality</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.views.links">
+<span class="sig-prename descclassname"><span class="pre">extra.views.</span></span><span class="sig-name descname"><span class="pre">links</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/views.html#links"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.views.links" title="Permalink to this definition">¶</a></dt>
+<dd><p>Link page provides (<a class="reference external" href="https://camtech-bpp.ifas.ufl.edu/links/">https://camtech-bpp.ifas.ufl.edu/links/</a>)
+list of external links in the database page.
+Only admin users can edit/add the pages in the Links model</p>
+<p>example data
+&gt;&gt;&gt; data = {‘name’: ‘hello’,</p>
+<blockquote>
+<div><blockquote>
+<div><p>‘description’: ‘An online database showing the activity of
+selected pesticidal proteins against a range of insects
+and highlighting antagonisitc and synergistic interactions
+between them’,</p>
+</div></blockquote>
+<p>‘link’: ‘<a class="reference external" href="http://150.254.120.147:7000/">http://150.254.120.147:7000/</a>’,}</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.views.page_not_found">
+<span class="sig-prename descclassname"><span class="pre">extra.views.</span></span><span class="sig-name descname"><span class="pre">page_not_found</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/views.html#page_not_found"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.views.page_not_found" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return 404 error page. For live server only</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.views.privacy_policy">
+<span class="sig-prename descclassname"><span class="pre">extra.views.</span></span><span class="sig-name descname"><span class="pre">privacy_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/views.html#privacy_policy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.views.privacy_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>privacy policy. Not used yet in the project</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.views.server_error">
+<span class="sig-prename descclassname"><span class="pre">extra.views.</span></span><span class="sig-name descname"><span class="pre">server_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/views.html#server_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.views.server_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return server error. For live server only</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extra.views.tutorial">
+<span class="sig-prename descclassname"><span class="pre">extra.views.</span></span><span class="sig-name descname"><span class="pre">tutorial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extra/views.html#tutorial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extra.views.tutorial" title="Permalink to this definition">¶</a></dt>
+<dd><p>YouTube tutorial page is linked here</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-extra">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-extra" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="youtube.html" class="btn btn-neutral float-right" title="BPPRC tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="clustalanalysis.html" class="btn btn-neutral float-left" title="Clustal Analysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

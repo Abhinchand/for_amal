@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>bestmatchfinder.views &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin.html">BPPRC admin tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>bestmatchfinder.views</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bestmatchfinder.views</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author: Suresh Pannerselvam</span>
+<span class="c1"># License: GPL v3</span>
+<span class="c1"># Copyright @ 2019 Suresh Pannerselvam</span>
+
+<span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">celery</span> <span class="kn">import</span> <span class="n">current_app</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponseRedirect</span><span class="p">,</span> <span class="n">JsonResponse</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+
+<span class="kn">from</span> <span class="nn">bestmatchfinder</span> <span class="kn">import</span> <span class="n">submit_single_sequence</span><span class="p">,</span> <span class="n">submit_two_sequences</span>
+<span class="kn">from</span> <span class="nn">bestmatchfinder.forms</span> <span class="kn">import</span> <span class="n">SearchDatabaseForm</span><span class="p">,</span> <span class="n">SequenceForm</span>
+
+<span class="kn">from</span> <span class="nn">.tasks</span> <span class="kn">import</span> <span class="n">run_needle</span>
+
+
+<div class="viewcode-block" id="bestmatchfinder_home"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.views.bestmatchfinder_home">[docs]</a><span class="k">def</span> <span class="nf">bestmatchfinder_home</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+
+    <span class="n">form</span> <span class="o">=</span> <span class="n">SequenceForm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/best_match_finder.html&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="run_needle_server"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.views.run_needle_server">[docs]</a><span class="k">def</span> <span class="nf">run_needle_server</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">SequenceForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">protein</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequence_in_form&quot;</span><span class="p">]</span>
+            <span class="n">align</span> <span class="o">=</span> <span class="n">submit_single_sequence</span><span class="o">.</span><span class="n">align</span><span class="o">.</span><span class="n">run_bug</span><span class="p">(</span><span class="n">protein</span><span class="p">)</span>
+
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="n">align</span><span class="p">}</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/needle.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/best_match_finder.html&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s2">&quot;/bestmatchfinder_home/&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="run_needle_server_celery"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.views.run_needle_server_celery">[docs]</a><span class="k">def</span> <span class="nf">run_needle_server_celery</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">SequenceForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">protein</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequence_in_form&quot;</span><span class="p">]</span>
+            <span class="c1"># align = submit_single_sequence.align.run_bug(protein)</span>
+            <span class="c1"># print(&#39;protein file name&#39;, protein)</span>
+
+            <span class="n">task</span> <span class="o">=</span> <span class="n">run_needle</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="n">protein</span><span class="p">)</span>
+            <span class="c1"># print(&#39;view task result&#39;, task)</span>
+
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;task_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">id</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;task_status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">info</span>
+
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/needle_processing.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/best_match_finder.html&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s2">&quot;/bestmatchfinder_home/&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="taskstatus_needle_celery"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.views.taskstatus_needle_celery">[docs]</a><span class="k">def</span> <span class="nf">taskstatus_needle_celery</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">task_id</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;GET&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;entering the function taskstatus&quot;</span><span class="p">)</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">AsyncResult</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;taskStatus&quot;</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;task_status&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+            <span class="s2">&quot;task_id&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="n">task</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;SUCCESS&quot;</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;align&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/needle.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;PENDING&quot;</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">task</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/needle_processing.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+        <span class="n">context</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">task</span>
+        <span class="c1"># print(task)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/needle_processing.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="celery_task_status"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.views.celery_task_status">[docs]</a><span class="k">def</span> <span class="nf">celery_task_status</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">task_id</span><span class="p">):</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;entering the function taskstatus&quot;</span><span class="p">)</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">AsyncResult</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;taskStatus&quot;</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task_status&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s2">&quot;task_id&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="bestmatchfinder_database"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.views.bestmatchfinder_database">[docs]</a><span class="k">def</span> <span class="nf">bestmatchfinder_database</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">SearchDatabaseForm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span>
+        <span class="n">request</span><span class="p">,</span>
+        <span class="s2">&quot;newwebpage/best_match_finder_database.html&quot;</span><span class="p">,</span>
+        <span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">},</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="string_replace"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.views.string_replace">[docs]</a><span class="k">def</span> <span class="nf">string_replace</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">,</span> <span class="s2">&quot;fastasequence_files/&quot;</span><span class="p">)</span>
+    <span class="n">empty</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">empty</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="bestmatchfinder_database_sequence_run"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.views.bestmatchfinder_database_sequence_run">[docs]</a><span class="k">def</span> <span class="nf">bestmatchfinder_database_sequence_run</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This runs bestmatchfinder from the database.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">SearchDatabaseForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">protein1</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;protein_id1&quot;</span><span class="p">]</span>
+            <span class="n">protein2</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;protein_id2&quot;</span><span class="p">]</span>
+            <span class="c1"># sequence1 = form.cleaned_data[&#39;sequence1_in_form&#39;]</span>
+            <span class="c1"># sequence2 = form.cleaned_data[&#39;sequence2_in_form&#39;]</span>
+            <span class="n">tool</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;tool&quot;</span><span class="p">]</span>
+            <span class="c1"># data = form.cleaned_data</span>
+            <span class="c1"># name1 = data[&#39;protein_id1&#39;] or data[&#39;sequence1_in_form&#39;]</span>
+            <span class="c1"># name2 = data[&#39;protein_id2&#39;] or data[&#39;sequence2_in_form&#39;]</span>
+            <span class="c1">#</span>
+            <span class="c1"># try:</span>
+            <span class="c1">#     query = &quot;Query: &quot; + name1.name + &#39; &#39;</span>
+            <span class="c1">#     subject = &quot;Subject: &quot; + name2.name + &#39; &#39;</span>
+            <span class="c1"># except:</span>
+            <span class="c1">#     query = &quot;Query: &quot; + name1 + &#39; &#39;</span>
+            <span class="c1">#     subject = &quot;Subject: &quot; + name2 + &#39; &#39;</span>
+
+            <span class="k">if</span> <span class="n">protein1</span><span class="p">:</span>
+                <span class="n">protein1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">,</span>
+                    <span class="n">protein1</span><span class="o">.</span><span class="n">fastasequence_file</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">protein1</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequence1_in_form&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">protein2</span><span class="p">:</span>
+                <span class="n">protein2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">,</span>
+                    <span class="n">protein2</span><span class="o">.</span><span class="n">fastasequence_file</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">protein2</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequence2_in_form&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">tool</span> <span class="o">==</span> <span class="s2">&quot;needle&quot;</span><span class="p">:</span>
+                <span class="n">align</span> <span class="o">=</span> <span class="n">submit_two_sequences</span><span class="o">.</span><span class="n">needle</span><span class="o">.</span><span class="n">needle_alignment</span><span class="p">(</span>
+                    <span class="n">protein1</span><span class="p">,</span> <span class="n">protein2</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">align</span> <span class="o">=</span> <span class="n">submit_two_sequences</span><span class="o">.</span><span class="n">needle</span><span class="o">.</span><span class="n">blast_alignment</span><span class="p">(</span>
+                    <span class="n">protein1</span><span class="p">,</span> <span class="n">protein2</span><span class="p">)</span>
+                <span class="n">removed_blast_title</span> <span class="o">=</span> <span class="n">align</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">removed_blast_title</span> <span class="o">=</span> <span class="n">removed_blast_title</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+                <span class="n">filtered_result</span> <span class="o">=</span> <span class="n">removed_blast_title</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Lambda&quot;</span><span class="p">)</span>
+                <span class="n">protein1</span> <span class="o">=</span> <span class="n">string_replace</span><span class="p">(</span><span class="n">protein1</span><span class="p">)</span>
+                <span class="n">protein2</span> <span class="o">=</span> <span class="n">string_replace</span><span class="p">(</span><span class="n">protein2</span><span class="p">)</span>
+                <span class="n">protein1</span> <span class="o">=</span> <span class="s2">&quot;Protein1 : &quot;</span> <span class="o">+</span> <span class="n">protein1</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">protein2</span> <span class="o">=</span> <span class="s2">&quot; Protein2 : &quot;</span> <span class="o">+</span> <span class="n">protein2</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">align</span> <span class="o">=</span> <span class="n">protein1</span> <span class="o">+</span> <span class="n">protein2</span> <span class="o">+</span> \
+                    <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">filtered_result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="n">align</span><span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/two_sequence_needle.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span>
+            <span class="n">request</span><span class="p">,</span>
+            <span class="s2">&quot;newwebpage/best_match_finder_database.html&quot;</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">},</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s2">&quot;/bestmatchfinder_database/&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>bestmatchfinder.needle &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin.html">BPPRC admin tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>bestmatchfinder.needle</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bestmatchfinder.needle</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+
+
+<span class="n">NEEDLE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NEEDLE_PATH&quot;</span><span class="p">)</span>
+<span class="n">BLAST_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;BLAST_PATH&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="cmdline"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.needle.cmdline">[docs]</a><span class="k">def</span> <span class="nf">cmdline</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+    <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+        <span class="n">command</span><span class="p">,</span>
+        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">out</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+    <span class="c1"># print(&quot;out&quot;, out)</span>
+    <span class="c1"># print(&quot;error&quot;, error)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+<div class="viewcode-block" id="run_needle"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.needle.run_needle">[docs]</a><span class="k">def</span> <span class="nf">run_needle</span><span class="p">(</span><span class="n">file1</span><span class="p">,</span> <span class="n">file2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">NEEDLE_PATH</span>
+        <span class="o">+</span> <span class="s2">&quot;needle -datafile EBLOSUM62 -auto Y&quot;</span>
+        <span class="o">+</span> <span class="s2">&quot; -asequence &quot;</span>
+        <span class="o">+</span> <span class="n">file1</span>
+        <span class="o">+</span> <span class="s2">&quot; -bsequence &quot;</span>
+        <span class="o">+</span> <span class="n">file2</span>
+        <span class="o">+</span> <span class="s2">&quot; -sprotein1 Y -sprotein2 Y &quot;</span>
+        <span class="o">+</span> <span class="s2">&quot; -auto -stdout&quot;</span>
+    <span class="p">)</span>
+    <span class="c1"># print(cmd)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">cmdline</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">identity</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\d{1,3}\.\d*\%&quot;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">identity</span><span class="p">:</span>
+        <span class="n">identity</span> <span class="o">=</span> <span class="n">identity</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+        <span class="n">identity</span> <span class="o">=</span> <span class="n">identity</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;%&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="run_blast"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.needle.run_blast">[docs]</a><span class="k">def</span> <span class="nf">run_blast</span><span class="p">(</span><span class="n">file1</span><span class="p">,</span> <span class="n">file2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+
+    <span class="n">cmd</span> <span class="o">=</span> <span class="n">BLAST_PATH</span> <span class="o">+</span> <span class="s2">&quot;blastp -query &quot;</span> <span class="o">+</span> <span class="n">file1</span> <span class="o">+</span> <span class="s2">&quot; -subject &quot;</span> <span class="o">+</span> <span class="n">file2</span>
+    <span class="c1"># print(&quot;cmd&quot;, cmd)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">cmdline</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+    <span class="c1"># f = open(settings.BASE_DIR + &quot;/&quot; + &quot;demofile3.csv&quot;, &quot;w&quot;)</span>
+    <span class="c1"># print(settings.BASE_DIR + &quot;/&quot; + &quot;demofile3.csv&quot;)</span>
+    <span class="c1"># f.write(cmd + &quot;\n&quot;)</span>
+    <span class="c1"># f.write(results + &quot;\n&quot;)</span>
+    <span class="c1"># f.close()</span>
+    <span class="c1"># print(&quot;type&quot;, type(results))</span>
+    <span class="c1"># identity = re.search(r&quot;\d{1,3}\.\d*\%&quot;, results)</span>
+    <span class="c1"># if identity:</span>
+    <span class="c1">#     identity = identity.group()</span>
+    <span class="c1">#     identity = identity.replace(&#39;%&#39;, &#39;&#39;)</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="string_replace"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.needle.string_replace">[docs]</a><span class="k">def</span> <span class="nf">string_replace</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">,</span> <span class="s2">&quot;fastasequence_files/&quot;</span><span class="p">)</span>
+    <span class="n">empty</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">empty</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="needle_alignment"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.needle.needle_alignment">[docs]</a><span class="k">def</span> <span class="nf">needle_alignment</span><span class="p">(</span><span class="n">file1</span><span class="p">,</span> <span class="n">file2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">run_needle</span><span class="p">(</span><span class="n">file1</span><span class="p">,</span> <span class="n">file2</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">string_replace</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="blast_alignment"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.needle.blast_alignment">[docs]</a><span class="k">def</span> <span class="nf">blast_alignment</span><span class="p">(</span><span class="n">file1</span><span class="p">,</span> <span class="n">file2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">run_blast</span><span class="p">(</span><span class="n">file1</span><span class="p">,</span> <span class="n">file2</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">string_replace</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<span class="c1"># def run_bug(query_data):</span>
+<span class="c1">#     &quot;&quot;&quot;This loads the bestmatchfinder homepage.&quot;&quot;&quot;</span>
+<span class="c1">#     start_time = time.time()</span>
+<span class="c1">#     PPD_proteins = PesticidalProteinDatabase.objects.exclude(fastasequence_file__isnull=True).exclude(fastasequence_file=&#39;&#39;)</span>
+<span class="c1">#     print(&#39;DB query time&#39;, time.time() - start_time)</span>
+<span class="c1">#     # for query in query_data:</span>
+<span class="c1">#     empty = []</span>
+<span class="c1">#     initial = 0</span>
+<span class="c1">#     align = &#39;&#39;</span>
+<span class="c1">#</span>
+<span class="c1">#     #take the scaffold sequence one by one</span>
+<span class="c1">#     for_loop_time = 0</span>
+<span class="c1">#     start_time = time.time()</span>
+<span class="c1">#     blast_sequence_time = 0</span>
+<span class="c1">#     for protein in PPD_proteins:</span>
+<span class="c1">#</span>
+<span class="c1">#         # If there is no file for this protein, ignore it.</span>
+<span class="c1">#         if not hasattr(protein, &#39;fastasequence_file&#39;):</span>
+<span class="c1">#             continue</span>
+<span class="c1">#</span>
+<span class="c1">#         #print(&#39;fastasequence_file&#39;, protein.fastasequence_file)</span>
+<span class="c1">#         s = os.path.join(settings.MEDIA_ROOT, protein.fastasequence_file.path)</span>
+<span class="c1">#         blast_start_time = time.time()</span>
+<span class="c1">#         my_blast = blast_two_sequences(query_data, s)</span>
+<span class="c1">#         blast_sequence_time += (time.time() - blast_start_time)</span>
+<span class="c1">#         identity_percentage, results = my_blast</span>
+<span class="c1">#</span>
+<span class="c1">#         try:</span>
+<span class="c1">#             identity_percentage = float(identity_percentage)</span>
+<span class="c1">#         except TypeError:</span>
+<span class="c1">#             print(&#39;Unable to convert identity_percentage {} for object {}&#39;.format(identity_percentage, protein))</span>
+<span class="c1">#             identity_percentage = 0.0</span>
+<span class="c1">#</span>
+<span class="c1">#         #this has scaffold file name , query file name and identity percentage</span>
+<span class="c1">#         l = s, query_data, identity_percentage</span>
+<span class="c1">#         # l = files[i], ordered_query_fastafiles[j], identity_percentage</span>
+<span class="c1">#</span>
+<span class="c1">#         if float(l[2]) &gt; initial:</span>
+<span class="c1">#             empty = l</span>
+<span class="c1">#             initial = float(l[2])</span>
+<span class="c1">#             align = results</span>
+<span class="c1">#             #print(l)</span>
+<span class="c1">#</span>
+<span class="c1">#     print(&#39;For loop time&#39;, time.time() - start_time)</span>
+<span class="c1">#     print(&#39;Blast sequence time&#39;, blast_sequence_time)</span>
+<span class="c1">#     return align</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

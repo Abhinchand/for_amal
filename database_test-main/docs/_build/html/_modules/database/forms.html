@@ -1,0 +1,563 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>database.forms &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin.html">BPPRC admin tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>database.forms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for database.forms</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">crispy_forms.helper</span> <span class="kn">import</span> <span class="n">FormHelper</span>
+<span class="kn">from</span> <span class="nn">crispy_forms.layout</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Column</span><span class="p">,</span>
+    <span class="n">Layout</span><span class="p">,</span>
+    <span class="n">Row</span><span class="p">,</span>
+    <span class="n">Submit</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">django.core.validators</span> <span class="kn">import</span> <span class="n">MinLengthValidator</span>
+<span class="kn">from</span> <span class="nn">Bio</span> <span class="kn">import</span> <span class="n">SeqIO</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Description</span><span class="p">,</span> <span class="n">PesticidalProteinDatabase</span>
+
+<span class="n">RECAPTCHA_PUBLIC_KEY</span> <span class="o">=</span> <span class="s2">&quot;6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT&quot;</span>
+
+<span class="n">ALLOWED_AMINOACIDS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;E&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Q&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;L&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Y&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;V&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;W&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;I&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;H&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;G&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;P&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;S&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;R&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;T&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;K&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;N&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="c1"># ALLOWED_NUCLEOTIDE = set(IUPACAmbiguousDNA.letters)</span>
+
+<span class="c1"># maximum number of query sequences in form</span>
+<span class="n">NEEDLE_MAX_NUMBER_SEQ_IN_INPUT</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># Error messages</span>
+<span class="n">NEEDLE_CORRECT_SEQ_ERROR_MSG</span> <span class="o">=</span> <span class="s2">&quot;please paste correct sequence!&quot;</span>
+<span class="n">NEEDLE_CORRECT_SEQ_TOO_SHORT_ERROR_MSG</span> <span class="o">=</span> <span class="s2">&quot;Too short sequence!&quot;</span>
+<span class="n">NEEDLE_SEQUENCE_TYPE</span> <span class="o">=</span> <span class="s2">&quot;Currently, protein sequence is allowed&quot;</span>
+<span class="n">NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG</span> <span class="o">=</span> <span class="s2">&quot;Too many sequences, maximum is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">NEEDLE_MAX_NUMBER_SEQ_IN_INPUT</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="validate_sequence"><a class="viewcode-back" href="../../database.html#database.forms.validate_sequence">[docs]</a><span class="k">def</span> <span class="nf">validate_sequence</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sequence_is_protein</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate protein sequence&quot;&quot;&quot;</span>
+    <span class="n">tmp_seq</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wb+&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">NEEDLE_CORRECT_SEQ_ERROR_MSG</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">:</span>
+        <span class="n">tmp_seq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&gt;seq1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+    <span class="n">tmp_seq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sequence</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">tmp_seq</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">records</span> <span class="o">=</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tmp_seq</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
+    <span class="n">record_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">record_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">NEEDLE_CORRECT_SEQ_ERROR_MSG</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">record_count</span> <span class="o">&gt;</span> <span class="n">NEEDLE_MAX_NUMBER_SEQ_IN_INPUT</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG</span><span class="p">)</span>
+
+    <span class="c1"># read sequence from the written temporary file</span>
+    <span class="n">sequence_in_file</span> <span class="o">=</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tmp_seq</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
+    <span class="c1"># print(sequence_in_file.seq)</span>
+    <span class="n">sequence</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">sequence_in_file</span><span class="p">:</span>
+
+        <span class="n">sequence</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">seq</span>
+
+    <span class="k">if</span> <span class="n">sequence_is_protein</span><span class="p">:</span>
+        <span class="n">check_allowed_letters</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="p">),</span> <span class="n">ALLOWED_AMINOACIDS</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">NEEDLE_SEQUENCE_TYPE</span>
+
+    <span class="k">return</span> <span class="n">tmp_seq</span><span class="o">.</span><span class="n">name</span></div>
+
+
+<div class="viewcode-block" id="check_allowed_letters"><a class="viewcode-back" href="../../database.html#database.forms.check_allowed_letters">[docs]</a><span class="k">def</span> <span class="nf">check_allowed_letters</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">allowed_letter_as_set</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate sequence: Rise an error if sequence contains undesirable letter.&quot;&quot;&quot;</span>
+
+    <span class="c1"># set of unique letters in sequence</span>
+    <span class="n">seq_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+
+    <span class="n">not_allowed_letters_in_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">seq_set</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed_letter_as_set</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">not_allowed_letters_in_seq</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+            <span class="s2">&quot;This sequence type cannot contain letters: &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">not_allowed_letters_in_seq</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="check_protein_nucleotide"><a class="viewcode-back" href="../../database.html#database.forms.check_protein_nucleotide">[docs]</a><span class="k">def</span> <span class="nf">check_protein_nucleotide</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+    <span class="n">sequence_is_protein</span> <span class="o">=</span> <span class="n">check_allowed_letters</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="p">),</span> <span class="n">ALLOWED_AMINOACIDS</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sequence_is_protein</span></div>
+
+
+<div class="viewcode-block" id="SearchForm"><a class="viewcode-back" href="../../database.html#database.forms.SearchForm">[docs]</a><span class="k">class</span> <span class="nc">SearchForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+
+    <span class="n">SEARCH_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;Name&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;old name/other name&quot;</span><span class="p">,</span> <span class="s2">&quot;Old Name/Other Name&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;accession&quot;</span><span class="p">,</span> <span class="s2">&quot;Accession&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;holotype&quot;</span><span class="p">,</span> <span class="s2">&quot;Holotype&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;structure&quot;</span><span class="p">,</span> <span class="s2">&quot;Structure&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">search_term</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Search&quot;</span><span class="p">}),</span>
+    <span class="p">)</span>
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">SEARCH_CHOICES</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;search_term&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">error_messages</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="s2">&quot;Please type a protein name&quot;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;search_term&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="n">validators</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;search_term&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">validators</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">v</span><span class="p">,</span> <span class="n">MinLengthValidator</span><span class="p">)]</span>
+        <span class="n">min_length</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">validators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MinLengthValidator</span><span class="p">(</span><span class="n">min_length</span><span class="p">))</span>
+        <span class="c1"># print(validators)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;search_term&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">validators</span> <span class="o">=</span> <span class="n">validators</span>
+
+        <span class="c1"># self.fields[&#39;search_term&#39;].min_length = 3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;search_fields&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_id</span> <span class="o">=</span> <span class="s2">&quot;id-SearchForm&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_class</span> <span class="o">=</span> <span class="s2">&quot;SearchForm&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_method</span> <span class="o">=</span> <span class="s2">&quot;post&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_action</span> <span class="o">=</span> <span class="s2">&quot;search_database&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="n">Submit</span><span class="p">(</span><span class="s2">&quot;submit&quot;</span><span class="p">,</span> <span class="s2">&quot;Submit&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span>
+            <span class="n">Row</span><span class="p">(</span>
+                <span class="n">Column</span><span class="p">(</span>
+                    <span class="s2">&quot;search_term&quot;</span><span class="p">,</span>
+                    <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-group input-group-append col-md-6&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-row&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">Row</span><span class="p">(</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;search_fields&quot;</span><span class="p">,</span> <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-group col-md-6&quot;</span><span class="p">),</span>
+                <span class="n">css_class</span><span class="o">=</span><span class="s2">&quot;form-row&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="SearchForm.clean_search_term"><a class="viewcode-back" href="../../database.html#database.forms.SearchForm.clean_search_term">[docs]</a>    <span class="k">def</span> <span class="nf">clean_search_term</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;search_term&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;Please provide the keywords to search in the database&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">!=</span> <span class="s2">&quot;R1&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;Please keep the search term under 3 characters&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data</span></div></div>
+
+
+<div class="viewcode-block" id="UserSubmittedSequenceAnalysis"><a class="viewcode-back" href="../../database.html#database.forms.UserSubmittedSequenceAnalysis">[docs]</a><span class="k">class</span> <span class="nc">UserSubmittedSequenceAnalysis</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+
+    <span class="n">sequences_in_form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;protein sequence&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="UserSubmittedSequenceAnalysis.clean_sequences_in_form"><a class="viewcode-back" href="../../database.html#database.forms.UserSubmittedSequenceAnalysis.clean_sequences_in_form">[docs]</a>    <span class="k">def</span> <span class="nf">clean_sequences_in_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sequences_in_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequences_in_form&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">sequences_in_form</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">validate_sequence</span><span class="p">(</span><span class="n">sequences_in_form</span><span class="p">,</span> <span class="n">sequence_is_protein</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sequences_in_form</span></div>
+
+<div class="viewcode-block" id="UserSubmittedSequenceAnalysis.Meta"><a class="viewcode-back" href="../../database.html#database.forms.UserSubmittedSequenceAnalysis.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;sequence&quot;</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="DownloadForm"><a class="viewcode-back" href="../../database.html#database.forms.DownloadForm">[docs]</a><span class="k">class</span> <span class="nc">DownloadForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+
+    <span class="n">category</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">MultipleChoiceField</span><span class="p">(</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DownloadForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_id</span> <span class="o">=</span> <span class="s2">&quot;category&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_class</span> <span class="o">=</span> <span class="s2">&quot;categoryform&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_method</span> <span class="o">=</span> <span class="s2">&quot;post&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_action</span> <span class="o">=</span> <span class="s2">&quot;category_download&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="n">Submit</span><span class="p">(</span><span class="s2">&quot;submit&quot;</span><span class="p">,</span> <span class="s2">&quot;Download&quot;</span><span class="p">))</span>
+
+        <span class="n">categories</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="n">Description</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">category_prefixes</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">category_description</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">category_options</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="n">category</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">category_prefixes</span><span class="p">[</span><span class="n">prefix</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">prefix</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_prefixes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">detail</span> <span class="ow">in</span> <span class="n">description</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">detail</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">category_description</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span>
+                    <span class="p">)]</span> <span class="o">=</span> <span class="n">value</span> <span class="o">+</span> <span class="s2">&quot;      :  &quot;</span> <span class="o">+</span> <span class="n">detail</span><span class="o">.</span><span class="n">description</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">category_options</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="nb">sorted</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">category_description</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+                <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">3</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_options</span>
+        <span class="c1"># self.fields[&#39;category_type&#39;].label = &#39;&#39;</span>
+        <span class="c1"># self.helper.layout = Layout(</span>
+        <span class="c1">#     &#39;category_type&#39;,</span>
+        <span class="c1">#     HTML(&#39;&lt;div class=&quot;form-group&quot;&gt;&lt;div class=&quot;g-recaptcha&quot; data-sitekey=&quot;%s&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#39; %</span>
+        <span class="c1">#          RECAPTCHA_PUBLIC_KEY),</span>
+        <span class="c1"># )</span>
+
+<div class="viewcode-block" id="DownloadForm.clean_category_type"><a class="viewcode-back" href="../../database.html#database.forms.DownloadForm.clean_category_type">[docs]</a>    <span class="k">def</span> <span class="nf">clean_category_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">category_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span></div></div>
+
+    <span class="c1"># def save(self):</span>
+    <span class="c1">#     context = {</span>
+    <span class="c1">#         &#39;proteins&#39;: PesticidalProteinDatabase.objects.all()</span>
+    <span class="c1">#     }</span>
+    <span class="c1">#</span>
+    <span class="c1">#     file = StringIO()</span>
+    <span class="c1">#     data = list(context.get(&#39;proteins&#39;))</span>
+    <span class="c1">#</span>
+    <span class="c1">#     for item in data:</span>
+    <span class="c1">#         if item.name[:3].lower() in str(category_type):</span>
+    <span class="c1">#             fasta = textwrap.fill(item.sequence, 80)</span>
+    <span class="c1">#             str_to_write = f&quot;&gt;{item.name}\n{fasta}\n&quot;</span>
+    <span class="c1">#             file.write(str_to_write)</span>
+    <span class="c1">#</span>
+    <span class="c1">#     if &#39;all&#39; in category_type:</span>
+    <span class="c1">#         for item in data:</span>
+    <span class="c1">#             fasta = textwrap.fill(item.sequence, 80)</span>
+    <span class="c1">#             str_to_write = f&quot;&gt;{item.name}\n{fasta}\n&quot;</span>
+    <span class="c1">#             file.write(str_to_write)</span>
+    <span class="c1">#</span>
+    <span class="c1">#     download_file = f&quot;{&#39;_&#39;.join(category_type)}_fasta_sequences.txt&quot;</span>
+    <span class="c1">#     return download_file</span>
+
+
+<div class="viewcode-block" id="HolotypeForm"><a class="viewcode-back" href="../../database.html#database.forms.HolotypeForm">[docs]</a><span class="k">class</span> <span class="nc">HolotypeForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">holotype</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">MultipleChoiceField</span><span class="p">(</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HolotypeForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_id</span> <span class="o">=</span> <span class="s2">&quot;holotype&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_class</span> <span class="o">=</span> <span class="s2">&quot;holotypeform&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_method</span> <span class="o">=</span> <span class="s2">&quot;post&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_action</span> <span class="o">=</span> <span class="s2">&quot;holotype_download&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="n">Submit</span><span class="p">(</span><span class="s2">&quot;submit&quot;</span><span class="p">,</span> <span class="s2">&quot;Download&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">category_options</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;holotype&quot;</span><span class="p">,</span> <span class="s2">&quot;holotype&quot;</span><span class="p">)]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;holotype&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_options</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;holotype&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ThreedomainDownloadForm"><a class="viewcode-back" href="../../database.html#database.forms.ThreedomainDownloadForm">[docs]</a><span class="k">class</span> <span class="nc">ThreedomainDownloadForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+
+    <span class="n">threedomain</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">MultipleChoiceField</span><span class="p">(</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ThreedomainDownloadForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_id</span> <span class="o">=</span> <span class="s2">&quot;threedomain&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_class</span> <span class="o">=</span> <span class="s2">&quot;threedomaindownloadform&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_method</span> <span class="o">=</span> <span class="s2">&quot;post&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_action</span> <span class="o">=</span> <span class="s2">&quot;threedomain_download&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="n">Submit</span><span class="p">(</span><span class="s2">&quot;submit&quot;</span><span class="p">,</span> <span class="s2">&quot;Download&quot;</span><span class="p">))</span>
+
+        <span class="c1"># categories = PesticidalProteinDatabase.objects.order_by(</span>
+        <span class="c1">#     &#39;name&#39;).values_list(&#39;name&#39;, flat=True)</span>
+        <span class="c1"># description = Description.objects.order_by(</span>
+        <span class="c1">#     &#39;name&#39;)</span>
+
+        <span class="c1"># self.category_prefixes = {}</span>
+        <span class="c1"># self.category_description = {}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">category_options</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># (&quot;full_length&quot;, &quot;Full_Length&quot;),</span>
+            <span class="p">(</span><span class="s2">&quot;domain1&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain1&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;domain2&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain2&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;domain3&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain3&quot;</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="c1"># for category in categories:</span>
+        <span class="c1">#     prefix = category[0:3]</span>
+        <span class="c1">#     self.category_prefixes[prefix.lower()] = prefix.title()</span>
+        <span class="c1">#</span>
+        <span class="c1"># for key, value in self.category_prefixes.items():</span>
+        <span class="c1">#     for detail in description:</span>
+        <span class="c1">#         if detail.name.lower() == key.lower():</span>
+        <span class="c1">#             self.category_description[key.lower(</span>
+        <span class="c1">#             )] = value + &quot;      :  &quot; + detail.description</span>
+        <span class="c1">#</span>
+        <span class="c1"># self.category_options.extend(</span>
+        <span class="c1">#     sorted(self.category_description.items(), key=lambda x: x[0][:3]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;threedomain&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_options</span></div>
+        <span class="c1"># self.fields[&#39;threedomain_type&#39;].label = &#39;&#39;</span>
+        <span class="c1"># self.helper.layout = Layout(</span>
+        <span class="c1">#     &#39;category_type&#39;,</span>
+        <span class="c1">#     HTML(&#39;&lt;div class=&quot;form-group&quot;&gt;&lt;div class=&quot;g-recaptcha&quot; data-sitekey=&quot;%s&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#39; %</span>
+        <span class="c1">#          RECAPTCHA_PUBLIC_KEY),</span>
+        <span class="c1"># )</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

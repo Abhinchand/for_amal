@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>BPPRC &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Database" href="database.html" />
+    <link rel="prev" title="Web Hosting" href="webhosting.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">BPPRC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-BPPRC.celery_file">BPPRC.celery_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-BPPRC.settings">BPPRC.settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-BPPRC.test_settings">BPPRC.test_settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-BPPRC.urls">BPPRC.urls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-BPPRC.wsgi">BPPRC.wsgi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-BPPRC">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>BPPRC</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bpprc">
+<h1>BPPRC<a class="headerlink" href="#bpprc" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-BPPRC.celery_file">
+<span id="bpprc-celery-file"></span><h2>BPPRC.celery_file<a class="headerlink" href="#module-BPPRC.celery_file" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-BPPRC.settings">
+<span id="bpprc-settings"></span><h2>BPPRC.settings<a class="headerlink" href="#module-BPPRC.settings" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-BPPRC.test_settings">
+<span id="bpprc-test-settings"></span><h2>BPPRC.test_settings<a class="headerlink" href="#module-BPPRC.test_settings" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-BPPRC.urls">
+<span id="bpprc-urls"></span><h2>BPPRC.urls<a class="headerlink" href="#module-BPPRC.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-BPPRC.wsgi">
+<span id="bpprc-wsgi"></span><h2>BPPRC.wsgi<a class="headerlink" href="#module-BPPRC.wsgi" title="Permalink to this headline">¶</a></h2>
+<p>WSGI config for BPPR project.</p>
+<p>It exposes the WSGI callable as a module-level variable named <code class="docutils literal notranslate"><span class="pre">application</span></code>.</p>
+<p>For more information on this file, see
+<a class="reference external" href="https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/">https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/</a></p>
+</div>
+<div class="section" id="module-BPPRC">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-BPPRC" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="database.html" class="btn btn-neutral float-right" title="Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="webhosting.html" class="btn btn-neutral float-left" title="Web Hosting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

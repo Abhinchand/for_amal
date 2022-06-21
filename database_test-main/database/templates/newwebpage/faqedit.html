@@ -1,0 +1,39 @@
+{% extends "newwebpage/base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- ======= F.A.Q Section ======= -->
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+<section id="faq" class="faq">
+  <div class="container">
+
+    <div class="section-title" data-aos="fade-up">
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div id="menu">
+      {% for category in categories %}
+      <a href=""> {{ category.category|safe }}</a><br/>
+      <div style="display: none;">
+        {% for faq in category.faqs.all %}
+          <a> {{ faq.question|safe }} </a>
+          <a> {{ faq.answer|safe }} </a>
+          {% endfor %}
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+
+</section> <!-- End F.A.Q Section -->
+  </div>
+
+{% endblock content %}
+
+{% block extrajs %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript">
+$('#menu > a').click(function(){
+    $(this).next().next().slideToggle();
+    return false;
+});
+</script>
+{% endblock extrajs %}

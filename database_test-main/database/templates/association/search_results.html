@@ -1,0 +1,265 @@
+{% extends "newwebpage/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5">
+<p><h1>Specificity data for pesticidal proteins</h1></p>
+</br>
+</br>
+</br>
+{% if proteins %}
+<div class="container">
+    <p style="text-align:left"><b>* modified protein </b></p>
+</div>
+
+    <form action="association_add_cart/" id="analysis_form" method="POST">
+    {% csrf_token %}
+		<table id="table_id" class="display table-bordered table-hover responsive nowrap" border='2' align="left" style="width=100%">
+			<thead>
+				<tr>
+            <th>Protein Name</th>
+            <th><input type="checkbox" id="selectall" class="regular-checkbox column-class1 column-class2" onchange="cbChange(this)"/>
+						<label for="selectall"></th>
+						<th>Target Species </th>
+						<th>Target Order </th>
+						<th>Activity </th>
+						<th>Life Stage</th>
+						<th>Assay Method</th>
+						<th>DOI</th>
+						<th>Other Citations (Citation, Patent, PubMed)</th>
+						<th>LC50</th>
+						<th>Units</th>
+						<th>Percentage Mortality</th>
+						<th>Instar</th>
+						<th>Assay Material</th>
+						<th>NCBI Taxon ID </th>
+						<th>Partner protein(s) required?</th>
+						<th>Partner protein name(s)</th>
+					  <th>Submitted by</th>
+            <th>Identical proteins</th>
+            <th>Comment</th>
+            <th>Report error</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for protein in proteins %}
+          <tr>
+           {% if protein.href %}
+            <td align="center"><a href={{ protein.href }} target="_blank">{{ protein.name}} {{ protein.starname|default_if_none:'' }}</a></td>
+            <td> <input type="checkbox" name={{ protein.name_href }} value="{{protein.name}}"> </td>
+           {% else %}
+            <td align="center"> {{ protein.name|default_if_none:'' }} </td>
+           <td> </td>
+           {% endif %}
+						<td align="left"><i>{{ protein.target_species|default_if_none:'' }} </i></td>
+						<td align="left">{{ protein.target_order|default_if_none:'' }}</td>
+						<td align="left" style="{% if protein.activity == "Yes" %} color:red; {% else %} color:black {% endif %}">{{ protein.activity }}</td>
+						<td align="left">{{ protein.life_stage|default_if_none:''}}</td>
+						<td align="left">{{ protein.assay_method|default_if_none:'' }}</td>
+						<td align="left"> <a href="https://doi.org/{{ protein.publication }}" target="_blank">{{ protein.publication|default_if_none:''}}</a></td>
+						<td align="left"> <a> {{ protein.other_citations|default_if_none:'' }}</td>
+						<td align="left">{{ protein.lc50|default_if_none:'' }}</td>
+						<td align="left">{{ protein.units|default_if_none:'' }}</td>
+						<td align="left"> </td>
+						<td align="left">{{ protein.instar|default_if_none:'' }}</td>
+						<td align="left">{{ protein.assay_material|default_if_none:'' }}</td>
+					  <td align="left"> <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{ protein.taxonid  }}" target="_blank"> {{ protein.taxonid|default_if_none:'' }} </a></td>
+						<td align="left">{{ protein.partnerprotein|default_if_none:''}}</td>
+            <td align="left">{{ protein.partnerprotein_textbox|default_if_none:''}}</td>
+						<td align="left">{{ protein.data_entered_by|default_if_none:'' }}</td>
+            <td align="left">
+              {% for id in protein.new_field %}
+              {% if protein.new_field|length > 1 %}
+                <a>{{ id|default_if_none:'' }},</a>
+              {% else %}
+                <a>{{ id|default_if_none:'' }}</a>
+              {% endif %}
+              {% endfor %}
+            </td>
+            <td align="left">{{ protein.comment|default_if_none:'' }}</td>
+           <td align="left"><a href="/feedback_protein/{{ protein.id }}" target="_blank">Send email</td>
+				</tr>
+      {% endfor %}
+		</tbody>
+			</table>
+      <br>
+      <button type="submit" class="btn btn-primary" > Add to Cart </button>
+      <br>
+  </form>
+
+{% elif new_search %}
+	{% for value in new_search %}
+	<p> Did you mean? </p>
+	<a href="/keyword_confirm/{{value|join:" "}}">{{ value|join:" or " }}</a>
+	{% endfor %}
+
+{% elif confirm_proteins %}
+	<p><h4>Toxicity and Non toxicity data for pesticidal proteins</h4></p>
+	</br>
+			<table id="table_id" class="display table-bordered table-hover responsive nowrap" border='2' align="left" style="width=100%">
+				<thead>
+					<tr>
+							<th>Protein Name </th>
+							<th>Target Species </th>
+							<th>Activity </th>
+							<th>Life Stage</th>
+							<th>Assay Method</th>
+							<th>DOI</th>
+							<th>Other Citations (Citation, Patent, PubMed)</th>
+							<th>LC50</th>
+							<th>Units</th>
+							<th>Percentage Mortality</th>
+							<th>Instar</th>
+							<th>Assay Material</th>
+							<th>NCBI Taxon ID </th>
+							<th>Target Order </th>
+							<th>Partner protein(s) required?</th>
+							<th>Partner protein name(s)</th>
+						  <th>Submitted by</th>
+              <th>Identical proteins</th>
+              <th>Comment</th>
+              <th>Report error</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							{% for protein in confirm_proteins %}
+	            <td align="left">{{ protein.name}}</td>
+							<td align="left"><i>{{ protein.target_species }} </i></td>
+							<td align="left" style="color:red">{{ protein.activity }}</td>
+							<td align="left">{{ protein.life_stage}}</td>
+							<td align="left">{{ protein.assay_method }}</td>
+							<td align="left"> <a href="https://doi.org/{{ protein.publication }}" target="_blank">{{ protein.publication}}</a></td>
+							<td align="left"></td>
+							<td align="left">{{ protein.lc50 }}</td>
+							<td align="left">{{ protein.units }}</td>
+							<td align="left"> </td>
+							<td align="left">{{ protein.instar }}</td>
+							<td align="left">{{ protein.assay_material }}</td>
+						  <td align="left"> <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{ protein.taxonid  }}" target="_blank"> {{ protein.taxonid }} </a></td>
+							<td align="left">{{ protein.target_order }}</td>
+							<td align="left">{{ protein.partnerprotein}}</td>
+	            <td align="left">{{ protein.partnerprotein_textbox}}</td>
+							<td align="left">{{ protein.data_entered_by }}</td>
+              <td align="left">
+                {% for id in protein.new_field %}
+                {% if protein.new_field|length > 1 %}
+                  <a>{{ id }},</a>
+                {% else %}
+                  <a>{{ id }}</a>
+                {% endif %}
+                {% endfor %}
+              </td>
+              <td align="left">{{ protein.comment }}</td>
+              <td align="left"><a href="/feedback_protein/{{ protein.id }}" target="_blank">Send email</td>
+						</tr>
+	{% endfor %}
+
+{% else %}
+    <div class="col-lg-12 pt-5 mt-5 pt-b mb-5">
+			<p> No results found for: {% for search in searches %}
+			{{ search }}
+      </p>
+      You may <a href="/home/">return to homepage</a> or try using the  <a href="/search_association/">Search</a>.
+    </div>
+			{% endfor %}
+{% endif %}
+
+
+</div>
+
+{% endblock content %}
+
+
+{% block extrahead %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'database/css/datatables.min.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'database/css/buttons.dataTables.min.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'database/css/jquery.dataTables.min.css' %}">
+
+
+{% endblock extrahead %}
+
+{% block extrajs %}
+
+<script type="text/javascript" src="{% static 'js/jquery-3.5.1.js' %}"> </script>
+
+<script type="text/javascript" src="{% static 'js/datatables.min.js' %}"> </script>
+
+<script type="text/javascript" src="{% static 'js/jquery.dataTables.min.js' %}"> </script>
+
+<script type="text/javascript" src="{% static 'js/dataTables.buttons.min.js' %}"> </script>
+
+<script type="text/javascript" src="{% static 'js/pdfmake.min.js' %}"> </script>
+
+<script type="text/javascript" src="{% static 'js/jszip.min.js' %}"> </script>
+
+<script type="text/javascript" src="{% static 'js/vfs_fonts.js' %}"> </script>
+
+<script type="text/javascript" src="{% static 'js/buttons.html5.min.js' %}"> </script>
+
+<script type="text/javascript" src="{% static 'js/buttons.print.min.js' %}"> </script>
+
+
+<script>
+$(document).ready(function(){
+    $('.check:button').toggle(function(){
+        $('input:checkbox').attr('checked','checked');
+        $(this).val('uncheck all')
+    },function(){
+        $('input:checkbox').removeAttr('checked');
+        $(this).val('check all');
+    })
+})
+
+</script>
+
+<script>// Add these function to do Natural sort
+// "aoColumns": [null, {"sType": "natural"}, null, null],
+// "aaSorting": [[ 1, "asc" ]],
+// "sScrollX": "100%",
+// columnDefs: [
+//   { type: 'natural', targets: '_all' }
+// ]
+// How to add check box?
+// https://datatables.net/extensions/select/examples/initialisation/checkbox.html
+// https://datatables.net/extensions/fixedcolumns/examples/integration/select-checkbox.html
+// $(document).ready( function () {
+// $('#table_id').DataTable(
+// {
+// dom: 'B<"clear">lfrtip',
+// buttons: {
+//     name: 'primary',
+//     buttons: [ 'copy', 'csv', 'excel','pdf','print' ]
+//
+//   },
+// columnDefs: [ {
+// orderable: false,
+// className: 'select-checkbox',
+// targets:   1
+// } ],
+// select: {
+//     style:    'os',
+//     selector: 'td:nth-child(2)'
+// },
+// } );
+// } );
+    $(document).ready( function () {
+    $('#table_id').DataTable(
+    {
+    dom: 'B<"clear">lfrtip',
+    buttons: {
+        name: 'primary',
+        buttons: [ 'copy', 'csv', 'excel','pdf','print' ]
+
+      },
+    "order": [[1, "asc"]]
+  } );
+  } );
+</script>
+
+{% endblock extrajs %}

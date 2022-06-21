@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>bestmatchfinder.forms &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin.html">BPPRC admin tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>bestmatchfinder.forms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bestmatchfinder.forms</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="kn">from</span> <span class="nn">Bio</span> <span class="kn">import</span> <span class="n">Seq</span><span class="p">,</span> <span class="n">SeqIO</span>
+<span class="kn">from</span> <span class="nn">crispy_forms.helper</span> <span class="kn">import</span> <span class="n">FormHelper</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="kn">from</span> <span class="nn">database.models</span> <span class="kn">import</span> <span class="n">PesticidalProteinDatabase</span>
+
+<span class="n">ALLOWED_AMINOACIDS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;E&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Q&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;L&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Y&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;V&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;W&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;I&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;H&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;G&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;P&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;S&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;R&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;T&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;F&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;K&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;N&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="c1"># ALLOWED_NUCLEOTIDE = set(IUPACAmbiguousDNA.letters)</span>
+
+<span class="c1"># maximum number of query sequences in form</span>
+<span class="n">NEEDLE_MAX_NUMBER_SEQ_IN_INPUT</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># Error messages</span>
+<span class="n">NEEDLE_CORRECT_SEQ_ERROR_MSG</span> <span class="o">=</span> <span class="s2">&quot;please paste correct sequence!&quot;</span>
+<span class="n">NEEDLE_CORRECT_SEQ_TOO_SHORT_ERROR_MSG</span> <span class="o">=</span> <span class="s2">&quot;Too short sequence!&quot;</span>
+<span class="n">NEEDLE_SEQUENCE_TYPE</span> <span class="o">=</span> <span class="s2">&quot;Currently, protein sequence is allowed&quot;</span>
+<span class="n">NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG</span> <span class="o">=</span> <span class="s2">&quot;Too many sequences, maximum is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">NEEDLE_MAX_NUMBER_SEQ_IN_INPUT</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="write_sequence_file"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.forms.write_sequence_file">[docs]</a><span class="k">def</span> <span class="nf">write_sequence_file</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate protein sequence&quot;&quot;&quot;</span>
+
+    <span class="c1"># open a temperorary file</span>
+    <span class="n">tmp_seq</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wb+&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># if sequence is none raise the ValidationError</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">NEEDLE_CORRECT_SEQ_ERROR_MSG</span><span class="p">)</span>
+
+    <span class="c1"># Write fasta sequence</span>
+    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">:</span>
+        <span class="n">tmp_seq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&gt;seq1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+    <span class="n">tmp_seq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sequence</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">tmp_seq</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c1"># Return name of the temporary file</span>
+    <span class="k">return</span> <span class="n">tmp_seq</span><span class="o">.</span><span class="n">name</span></div>
+
+
+<div class="viewcode-block" id="guess_if_protein"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.forms.guess_if_protein">[docs]</a><span class="k">def</span> <span class="nf">guess_if_protein</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.99</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Guess if the given sequence is Protein.&quot;&quot;&quot;</span>
+    <span class="c1"># protein_letters = [&#39;C&#39;, &#39;D&#39;, &#39;S&#39;, &#39;Q&#39;, &#39;K&#39;,&#39;I&#39;,&#39;P&#39;,&#39;T&#39;,&#39;F&#39;,&#39;N&#39;,&#39;G&#39;,</span>
+    <span class="c1">#                &#39;H&#39;,&#39;L&#39;,&#39;R&#39;,&#39;W&#39;,&#39;A&#39;,&#39;V&#39;,&#39;E&#39;,&#39;Y&#39;,&#39;M&#39;]</span>
+    <span class="n">dna_letters</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="s2">&quot;fasta&quot;</span><span class="p">):</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">seq</span>
+
+    <span class="n">seq</span> <span class="o">=</span> <span class="n">seq</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="n">protein_alpha_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">dna_letters</span><span class="p">:</span>
+        <span class="n">protein_alpha_count</span> <span class="o">+=</span> <span class="n">seq</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">float</span><span class="p">(</span><span class="n">protein_alpha_count</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="n">thresh</span></div>
+
+
+<div class="viewcode-block" id="SequenceForm"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.forms.SequenceForm">[docs]</a><span class="k">class</span> <span class="nc">SequenceForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">sequence_in_form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;sequence_in_form&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<div class="viewcode-block" id="SequenceForm.clean_sequence_in_form"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.forms.SequenceForm.clean_sequence_in_form">[docs]</a>    <span class="k">def</span> <span class="nf">clean_sequence_in_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sequence_in_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequence_in_form&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">sequence_in_form</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">write_sequence_file</span><span class="p">(</span><span class="n">sequence_in_form</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sequence_in_form</span></div>
+
+<div class="viewcode-block" id="SequenceForm.clean"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.forms.SequenceForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sequence_in_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequence_in_form&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">sequence_in_form</span><span class="p">:</span>
+            <span class="n">sequence_is_protein</span> <span class="o">=</span> <span class="n">guess_if_protein</span><span class="p">(</span><span class="n">sequence_in_form</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">sequence_in_form</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Please paste valid protein sequences&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sequence_is_protein</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Currently, it supports only protein sequences&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span></div></div>
+
+
+<div class="viewcode-block" id="SearchDatabaseForm"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.forms.SearchDatabaseForm">[docs]</a><span class="k">class</span> <span class="nc">SearchDatabaseForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+
+    <span class="n">protein_id1</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelChoiceField</span><span class="p">(</span>
+        <span class="n">queryset</span><span class="o">=</span><span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Database protein 1&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">sequence1_in_form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Or user-supplied sequence 1 (plain or fasta format)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">protein_id2</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelChoiceField</span><span class="p">(</span>
+        <span class="n">queryset</span><span class="o">=</span><span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Database protein 2&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">sequence2_in_form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Or user-supplied sequence 2 (plain or fasta format)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">tool</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;needle&quot;</span><span class="p">,</span> <span class="s2">&quot;Needle&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;blastp&quot;</span><span class="p">,</span> <span class="s2">&quot;BLASTP&quot;</span><span class="p">)],</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="SearchDatabaseForm.clean_sequence1_in_form"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.forms.SearchDatabaseForm.clean_sequence1_in_form">[docs]</a>    <span class="k">def</span> <span class="nf">clean_sequence1_in_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">sequence1_in_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequence1_in_form&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">sequence1_in_form</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">write_sequence_file</span><span class="p">(</span><span class="n">sequence1_in_form</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">sequence1_in_form</span></div>
+
+<div class="viewcode-block" id="SearchDatabaseForm.clean_sequence2_in_form"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.forms.SearchDatabaseForm.clean_sequence2_in_form">[docs]</a>    <span class="k">def</span> <span class="nf">clean_sequence2_in_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">sequence2_in_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequence2_in_form&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">sequence2_in_form</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">write_sequence_file</span><span class="p">(</span><span class="n">sequence2_in_form</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">sequence2_in_form</span></div>
+
+<div class="viewcode-block" id="SearchDatabaseForm.clean"><a class="viewcode-back" href="../../bestmatchfinder.html#bestmatchfinder.forms.SearchDatabaseForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">protein1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;protein_id1&quot;</span><span class="p">]</span>
+        <span class="n">protein2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;protein_id2&quot;</span><span class="p">]</span>
+        <span class="n">sequence1_in_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequence1_in_form&quot;</span><span class="p">]</span>
+        <span class="n">sequence2_in_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sequence2_in_form&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">sequence1_in_form</span><span class="p">:</span>
+            <span class="n">sequence_is_protein</span> <span class="o">=</span> <span class="n">guess_if_protein</span><span class="p">(</span><span class="n">sequence1_in_form</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">sequence_is_protein</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Currently, it supports only protein sequences&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sequence2_in_form</span><span class="p">:</span>
+            <span class="n">sequence_is_protein</span> <span class="o">=</span> <span class="n">guess_if_protein</span><span class="p">(</span><span class="n">sequence2_in_form</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">sequence_is_protein</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Currently, it supports only protein sequences&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">protein1</span> <span class="ow">and</span> <span class="n">sequence1_in_form</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Please select only one of Sequence / Choice&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">protein1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">sequence1_in_form</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Please select only one of Sequence / Choice&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">protein2</span> <span class="ow">and</span> <span class="n">sequence2_in_form</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Please select only one of Sequence / Choice&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">protein2</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">sequence2_in_form</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Please select only one of Sequence / Choice&quot;</span><span class="p">)</span>
+
+        <span class="c1"># if not sequence_is_protein1 and not sequence_is_protein2:</span>
+        <span class="c1">#     raise forms.ValidationError(&quot;Currently, it supports only protien sequences&quot;)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

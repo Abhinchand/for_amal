@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Best Match Finder &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Naming Algorithm" href="namingalgorithm.html" />
+    <link rel="prev" title="Database" href="database.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Best Match Finder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.admin">bestmatchfinder.admin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.align">bestmatchfinder.align</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.apps">bestmatchfinder.apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.forms">bestmatchfinder.forms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.models">bestmatchfinder.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.needle">bestmatchfinder.needle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.run_bestmatchfinder">bestmatchfinder.run_bestmatchfinder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.submit_single_sequence">bestmatchfinder.submit_single_sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.submit_two_sequences">bestmatchfinder.submit_two_sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.tasks">bestmatchfinder.tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.urls">bestmatchfinder.urls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder.views">bestmatchfinder.views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bestmatchfinder">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Best Match Finder</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="best-match-finder">
+<h1>Best Match Finder<a class="headerlink" href="#best-match-finder" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-bestmatchfinder.admin">
+<span id="bestmatchfinder-admin"></span><h2>bestmatchfinder.admin<a class="headerlink" href="#module-bestmatchfinder.admin" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-bestmatchfinder.align">
+<span id="bestmatchfinder-align"></span><h2>bestmatchfinder.align<a class="headerlink" href="#module-bestmatchfinder.align" title="Permalink to this headline">¶</a></h2>
+<p>This loads the bestmatchfinder homepage.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.align.blast_two_sequences">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.align.</span></span><span class="sig-name descname"><span class="pre">blast_two_sequences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/align.html#blast_two_sequences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.align.blast_two_sequences" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.align.cmdline">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.align.</span></span><span class="sig-name descname"><span class="pre">cmdline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/align.html#cmdline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.align.cmdline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.align.run_bug">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.align.</span></span><span class="sig-name descname"><span class="pre">run_bug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/align.html#run_bug"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.align.run_bug" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-bestmatchfinder.apps">
+<span id="bestmatchfinder-apps"></span><h2>bestmatchfinder.apps<a class="headerlink" href="#module-bestmatchfinder.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="bestmatchfinder.apps.BestmatchfinderConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">bestmatchfinder.apps.</span></span><span class="sig-name descname"><span class="pre">BestmatchfinderConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/apps.html#BestmatchfinderConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.apps.BestmatchfinderConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bestmatchfinder.apps.BestmatchfinderConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'bestmatchfinder'</span></em><a class="headerlink" href="#bestmatchfinder.apps.BestmatchfinderConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-bestmatchfinder.forms">
+<span id="bestmatchfinder-forms"></span><h2>bestmatchfinder.forms<a class="headerlink" href="#module-bestmatchfinder.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SearchDatabaseForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">bestmatchfinder.forms.</span></span><span class="sig-name descname"><span class="pre">SearchDatabaseForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">data=None</span></em>, <em class="sig-param"><span class="pre">files=None</span></em>, <em class="sig-param"><span class="pre">auto_id='id_%s'</span></em>, <em class="sig-param"><span class="pre">prefix=None</span></em>, <em class="sig-param"><span class="pre">initial=None</span></em>, <em class="sig-param"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></em>, <em class="sig-param"><span class="pre">label_suffix=None</span></em>, <em class="sig-param"><span class="pre">empty_permitted=False</span></em>, <em class="sig-param"><span class="pre">field_order=None</span></em>, <em class="sig-param"><span class="pre">use_required_attribute=None</span></em>, <em class="sig-param"><span class="pre">renderer=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/forms.html#SearchDatabaseForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.forms.SearchDatabaseForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.forms.Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SearchDatabaseForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'protein_id1':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'protein_id2':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'sequence1_in_form':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'sequence2_in_form':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'tool':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#bestmatchfinder.forms.SearchDatabaseForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SearchDatabaseForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/forms.html#SearchDatabaseForm.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.forms.SearchDatabaseForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
+called on every field. Any ValidationError raised by this method will
+not be associated with a particular field; it will have a special-case
+association with the field named ‘__all__’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SearchDatabaseForm.clean_sequence1_in_form">
+<span class="sig-name descname"><span class="pre">clean_sequence1_in_form</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/forms.html#SearchDatabaseForm.clean_sequence1_in_form"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.forms.SearchDatabaseForm.clean_sequence1_in_form" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SearchDatabaseForm.clean_sequence2_in_form">
+<span class="sig-name descname"><span class="pre">clean_sequence2_in_form</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/forms.html#SearchDatabaseForm.clean_sequence2_in_form"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.forms.SearchDatabaseForm.clean_sequence2_in_form" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SearchDatabaseForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'protein_id1':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'protein_id2':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'sequence1_in_form':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'sequence2_in_form':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'tool':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#bestmatchfinder.forms.SearchDatabaseForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SearchDatabaseForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#bestmatchfinder.forms.SearchDatabaseForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SequenceForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">bestmatchfinder.forms.</span></span><span class="sig-name descname"><span class="pre">SequenceForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/forms.html#SequenceForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.forms.SequenceForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.forms.Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SequenceForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'sequence_in_form':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#bestmatchfinder.forms.SequenceForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SequenceForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/forms.html#SequenceForm.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.forms.SequenceForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
+called on every field. Any ValidationError raised by this method will
+not be associated with a particular field; it will have a special-case
+association with the field named ‘__all__’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SequenceForm.clean_sequence_in_form">
+<span class="sig-name descname"><span class="pre">clean_sequence_in_form</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/forms.html#SequenceForm.clean_sequence_in_form"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.forms.SequenceForm.clean_sequence_in_form" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SequenceForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'sequence_in_form':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#bestmatchfinder.forms.SequenceForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.SequenceForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#bestmatchfinder.forms.SequenceForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.guess_if_protein">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.forms.</span></span><span class="sig-name descname"><span class="pre">guess_if_protein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/forms.html#guess_if_protein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.forms.guess_if_protein" title="Permalink to this definition">¶</a></dt>
+<dd><p>Guess if the given sequence is Protein.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.forms.write_sequence_file">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.forms.</span></span><span class="sig-name descname"><span class="pre">write_sequence_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/forms.html#write_sequence_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.forms.write_sequence_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate protein sequence</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-bestmatchfinder.models">
+<span id="bestmatchfinder-models"></span><h2>bestmatchfinder.models<a class="headerlink" href="#module-bestmatchfinder.models" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-bestmatchfinder.needle">
+<span id="bestmatchfinder-needle"></span><h2>bestmatchfinder.needle<a class="headerlink" href="#module-bestmatchfinder.needle" title="Permalink to this headline">¶</a></h2>
+<p>This loads the bestmatchfinder homepage.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.needle.blast_alignment">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.needle.</span></span><span class="sig-name descname"><span class="pre">blast_alignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/needle.html#blast_alignment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.needle.blast_alignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.needle.cmdline">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.needle.</span></span><span class="sig-name descname"><span class="pre">cmdline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/needle.html#cmdline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.needle.cmdline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.needle.needle_alignment">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.needle.</span></span><span class="sig-name descname"><span class="pre">needle_alignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/needle.html#needle_alignment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.needle.needle_alignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.needle.run_blast">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.needle.</span></span><span class="sig-name descname"><span class="pre">run_blast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/needle.html#run_blast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.needle.run_blast" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.needle.run_needle">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.needle.</span></span><span class="sig-name descname"><span class="pre">run_needle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/needle.html#run_needle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.needle.run_needle" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.needle.string_replace">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.needle.</span></span><span class="sig-name descname"><span class="pre">string_replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/needle.html#string_replace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.needle.string_replace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-bestmatchfinder.run_bestmatchfinder">
+<span id="bestmatchfinder-run-bestmatchfinder"></span><h2>bestmatchfinder.run_bestmatchfinder<a class="headerlink" href="#module-bestmatchfinder.run_bestmatchfinder" title="Permalink to this headline">¶</a></h2>
+<p>This loads the bestmatchfinder homepage.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.run_bestmatchfinder.blast_two_sequences">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.run_bestmatchfinder.</span></span><span class="sig-name descname"><span class="pre">blast_two_sequences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/run_bestmatchfinder.html#blast_two_sequences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.run_bestmatchfinder.blast_two_sequences" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.run_bestmatchfinder.cmdline">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.run_bestmatchfinder.</span></span><span class="sig-name descname"><span class="pre">cmdline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/run_bestmatchfinder.html#cmdline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.run_bestmatchfinder.cmdline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.run_bestmatchfinder.run_bug">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.run_bestmatchfinder.</span></span><span class="sig-name descname"><span class="pre">run_bug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/run_bestmatchfinder.html#run_bug"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.run_bestmatchfinder.run_bug" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-bestmatchfinder.submit_single_sequence">
+<span id="bestmatchfinder-submit-single-sequence"></span><h2>bestmatchfinder.submit_single_sequence<a class="headerlink" href="#module-bestmatchfinder.submit_single_sequence" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-bestmatchfinder.submit_two_sequences">
+<span id="bestmatchfinder-submit-two-sequences"></span><h2>bestmatchfinder.submit_two_sequences<a class="headerlink" href="#module-bestmatchfinder.submit_two_sequences" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-bestmatchfinder.tasks">
+<span id="bestmatchfinder-tasks"></span><h2>bestmatchfinder.tasks<a class="headerlink" href="#module-bestmatchfinder.tasks" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-bestmatchfinder.urls">
+<span id="bestmatchfinder-urls"></span><h2>bestmatchfinder.urls<a class="headerlink" href="#module-bestmatchfinder.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-bestmatchfinder.views">
+<span id="bestmatchfinder-views"></span><h2>bestmatchfinder.views<a class="headerlink" href="#module-bestmatchfinder.views" title="Permalink to this headline">¶</a></h2>
+<p>This loads the bestmatchfinder homepage.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.views.bestmatchfinder_database">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.views.</span></span><span class="sig-name descname"><span class="pre">bestmatchfinder_database</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/views.html#bestmatchfinder_database"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.views.bestmatchfinder_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.views.bestmatchfinder_database_sequence_run">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.views.</span></span><span class="sig-name descname"><span class="pre">bestmatchfinder_database_sequence_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/views.html#bestmatchfinder_database_sequence_run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.views.bestmatchfinder_database_sequence_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>This runs bestmatchfinder from the database.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.views.bestmatchfinder_home">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.views.</span></span><span class="sig-name descname"><span class="pre">bestmatchfinder_home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/views.html#bestmatchfinder_home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.views.bestmatchfinder_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.views.celery_task_status">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.views.</span></span><span class="sig-name descname"><span class="pre">celery_task_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/views.html#celery_task_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.views.celery_task_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.views.run_needle_server">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.views.</span></span><span class="sig-name descname"><span class="pre">run_needle_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/views.html#run_needle_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.views.run_needle_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.views.run_needle_server_celery">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.views.</span></span><span class="sig-name descname"><span class="pre">run_needle_server_celery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/views.html#run_needle_server_celery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.views.run_needle_server_celery" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.views.string_replace">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.views.</span></span><span class="sig-name descname"><span class="pre">string_replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/views.html#string_replace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.views.string_replace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bestmatchfinder.views.taskstatus_needle_celery">
+<span class="sig-prename descclassname"><span class="pre">bestmatchfinder.views.</span></span><span class="sig-name descname"><span class="pre">taskstatus_needle_celery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bestmatchfinder/views.html#taskstatus_needle_celery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bestmatchfinder.views.taskstatus_needle_celery" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-bestmatchfinder">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-bestmatchfinder" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="namingalgorithm.html" class="btn btn-neutral float-right" title="Naming Algorithm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="database.html" class="btn btn-neutral float-left" title="Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

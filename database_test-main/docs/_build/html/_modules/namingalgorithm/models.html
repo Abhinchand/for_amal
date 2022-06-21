@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>namingalgorithm.models &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>namingalgorithm.models</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for namingalgorithm.models</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.signals</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">user_logged_in</span><span class="p">,</span>
+    <span class="n">user_logged_out</span><span class="p">,</span>
+    <span class="n">user_login_failed</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="kn">import</span> <span class="n">send_mail</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.db.models.signals</span> <span class="kn">import</span> <span class="n">post_save</span>
+<span class="kn">from</span> <span class="nn">django.dispatch</span> <span class="kn">import</span> <span class="n">receiver</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+
+<span class="n">TYPES_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s1">&#39;pending&#39;</span><span class="p">,</span> <span class="s1">&#39;Pending&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;emailed&#39;</span><span class="p">,</span> <span class="s1">&#39;Emailed&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="c1"># https://stackoverflow.com/questions/37618473/how-can-i-log-both-successful-and-failed-login-and-logout-attempts-in-django</span>
+
+
+<div class="viewcode-block" id="AuditEntry"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.AuditEntry">[docs]</a><span class="k">class</span> <span class="nc">AuditEntry</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+    <span class="n">ip</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">GenericIPAddressField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> - </span><span class="si">{1}</span><span class="s2"> - </span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ip</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> - </span><span class="si">{1}</span><span class="s2"> - </span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ip</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">verbose_name</span> <span class="o">=</span> <span class="s2">&quot;Audit Entry&quot;</span>
+        <span class="n">verbose_name_plural</span> <span class="o">=</span> <span class="s2">&quot;Audit entries&quot;</span></div>
+
+
+<div class="viewcode-block" id="user_logged_in_callback"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.user_logged_in_callback">[docs]</a><span class="nd">@receiver</span><span class="p">(</span><span class="n">user_logged_in</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">user_logged_in_callback</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">x_forwarded_for</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HTTP_X_FORWARDED_FOR&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">x_forwarded_for</span><span class="p">:</span>
+        <span class="n">ip</span> <span class="o">=</span> <span class="n">x_forwarded_for</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ip</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;REMOTE_ADDR&quot;</span><span class="p">)</span>
+    <span class="c1"># ip = request.META.get(&#39;REMOTE_ADDR&#39;)</span>
+    <span class="n">AuditEntry</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;user_logged_in&quot;</span><span class="p">,</span>
+                              <span class="n">ip</span><span class="o">=</span><span class="n">ip</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="user_logged_out_callback"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.user_logged_out_callback">[docs]</a><span class="nd">@receiver</span><span class="p">(</span><span class="n">user_logged_out</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">user_logged_out_callback</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">ip</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;REMOTE_ADDR&quot;</span><span class="p">)</span>
+    <span class="n">AuditEntry</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;user_logged_out&quot;</span><span class="p">,</span>
+                              <span class="n">ip</span><span class="o">=</span><span class="n">ip</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="user_login_failed_callback"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.user_login_failed_callback">[docs]</a><span class="nd">@receiver</span><span class="p">(</span><span class="n">user_login_failed</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">user_login_failed_callback</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">AuditEntry</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;user_login_failed&quot;</span><span class="p">,</span>
+        <span class="n">username</span><span class="o">=</span><span class="n">credentials</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+<span class="n">TRUE_FALSE_CHOICES</span> <span class="o">=</span> <span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Yes&quot;</span><span class="p">),</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;No&quot;</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="AbstractModel"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.AbstractModel">[docs]</a><span class="k">class</span> <span class="nc">AbstractModel</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">submittersname</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">submittersemail</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">predict_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s2">&quot;Predicted Name&quot;</span><span class="p">)</span>
+    <span class="n">sequence</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s2">&quot;Protein Sequence&quot;</span><span class="p">)</span>
+    <span class="n">bacterium</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">TRUE_FALSE_CHOICES</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">bacterium_textbox</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">taxonid</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">accession</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">verbose_name</span><span class="o">=</span><span class="s2">&quot;NCBI accession number&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">partnerprotein</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">TRUE_FALSE_CHOICES</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">partnerprotein_textbox</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">toxicto</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">nontoxic</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">dnasequence</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">pdbcode</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">publication</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">user_comments</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s2">&quot;User comments&quot;</span><span class="p">)</span>
+    <span class="c1"># uploaded = models.DateTimeField(&#39;Uploaded&#39;, default=timezone.now)</span>
+    <span class="c1"># alignresults = models.TextField(null=True, blank=True)</span>
+    <span class="c1"># name = models.CharField(</span>
+    <span class="c1">#     max_length=25,</span>
+    <span class="c1">#     null=True,</span>
+    <span class="c1">#     blank=True,</span>
+    <span class="c1">#     verbose_name=&quot;User Provided Protein Name&quot;,</span>
+    <span class="c1"># )</span>
+    <span class="n">terms_conditions</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">TRUE_FALSE_CHOICES</span><span class="p">)</span>
+    <span class="n">admin_user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">AUTH_USER_MODEL</span><span class="p">,</span>
+        <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">admin_comments</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># public_or_private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)</span>
+    <span class="n">private</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">TRUE_FALSE_CHOICES</span><span class="p">)</span>
+    <span class="n">public</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span>
+        <span class="s1">&#39;Uploaded date&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">uploaded</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="s2">&quot;Uploaded&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+    <span class="n">user_provided_proteinname</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">105</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">contact_status</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">TYPES_CHOICES</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">TYPES_CHOICES</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;User submission &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">accession</span>
+
+<div class="viewcode-block" id="AbstractModel.Meta"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.AbstractModel.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">abstract</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;-date&quot;</span><span class="p">,)</span></div>
+
+<div class="viewcode-block" id="AbstractModel.publish"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.AbstractModel.publish">[docs]</a>    <span class="k">def</span> <span class="nf">publish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">published_date</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="UserSubmission"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.UserSubmission">[docs]</a><span class="k">class</span> <span class="nc">UserSubmission</span><span class="p">(</span><span class="n">AbstractModel</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Archive"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.Archive">[docs]</a><span class="k">class</span> <span class="nc">Archive</span><span class="p">(</span><span class="n">AbstractModel</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="save_archive"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.save_archive">[docs]</a><span class="k">def</span> <span class="nf">save_archive</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">archive</span> <span class="o">=</span> <span class="n">Archive</span><span class="p">()</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">submittersname</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">submittersname</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">submittersemail</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">submittersemail</span>
+    <span class="c1"># archive.name = instance.name</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">sequence</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">sequence</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">bacterium</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">bacterium</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">bacterium_textbox</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">bacterium_textbox</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">taxonid</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">taxonid</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">year</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">accession</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">accession</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">partnerprotein</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">partnerprotein</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">partnerprotein_textbox</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">partnerprotein_textbox</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">toxicto</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">toxicto</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">nontoxic</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">nontoxic</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">dnasequence</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">dnasequence</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">pdbcode</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">pdbcode</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">publication</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">publication</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">user_comments</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">user_comments</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">date</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">uploaded</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">uploaded</span>
+    <span class="c1"># archive.alignresults = instance.alignresults</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">predict_name</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">predict_name</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">terms_conditions</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">terms_conditions</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">admin_user</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">admin_user</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">admin_comments</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">admin_comments</span>
+    <span class="c1"># if archive.created_by:</span>
+    <span class="c1">#     archive.created_by = instance.created_by</span>
+    <span class="c1"># if archive.created_on:</span>
+    <span class="c1"># archive.created_on = instance.created_on</span>
+    <span class="c1"># archive.edited_by = instance.edited_by</span>
+    <span class="c1"># archive.edited_on = instance.edited_on</span>
+    <span class="c1"># archive.published = instance.published</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SendEmail"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.SendEmail">[docs]</a><span class="k">class</span> <span class="nc">SendEmail</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">submittersname</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">submittersemail</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">accession</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Email sent to: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">submittersemail</span></div>
+
+
+<span class="k">def</span> <span class="nf">_trigger_email_everyday</span><span class="p">():</span>
+
+    <span class="n">sequence_message</span> <span class="o">=</span> <span class="s2">&quot;The bot is monitoring the sequence submission in the bpprc database for a day. If there is a new submission you will be notified through this email.&quot;</span>
+
+    <span class="n">send_mail</span><span class="p">(</span>
+        <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;New Sequence submission in the database&quot;</span><span class="p">,</span>
+        <span class="n">message</span><span class="o">=</span><span class="n">sequence_message</span><span class="p">,</span>
+        <span class="n">from_email</span><span class="o">=</span><span class="s2">&quot;admin@bpprc.org&quot;</span><span class="p">,</span>
+        <span class="n">recipient_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sureshcbt@gmail.com&quot;</span><span class="p">],</span>
+        <span class="n">fail_silently</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="save_post"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.save_post">[docs]</a><span class="k">def</span> <span class="nf">save_post</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">sequence_message</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Dear Dr.Neil Crickmore and Dr.Colin Berry,</span>
+<span class="s2">There is a new sequence submission in the database. Please check the database admin page for more details.&quot;&quot;&quot;</span>
+
+    <span class="n">send_mail</span><span class="p">(</span>
+        <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;New Submission for the database&quot;</span><span class="p">,</span>
+        <span class="n">message</span><span class="o">=</span><span class="n">sequence_message</span><span class="p">,</span>
+        <span class="n">from_email</span><span class="o">=</span><span class="s2">&quot;admin@bpprc.org&quot;</span><span class="p">,</span>
+        <span class="n">recipient_list</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;sureshcbt@gmail.com&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="n">fail_silently</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="send_notification"><a class="viewcode-back" href="../../namingalgorithm.html#namingalgorithm.admin.send_notification">[docs]</a><span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">created</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">created</span><span class="p">:</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;instance&#39;</span><span class="p">]</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">submittersemail</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">submittersname</span>
+
+        <span class="n">sequence_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Dear </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">, </span><span class="se">\n\n</span><span class="s2"> Your sequence has successfully been submitted to the Bacterial Pesticidal Protein Resource Center (BPPRC). The naming committee will be in touch with you shortly.</span><span class="se">\n\n</span><span class="s2"> BPPRC Team&quot;</span>
+
+        <span class="n">send_mail</span><span class="p">(</span>
+            <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;Sequence submission to BPPRC&quot;</span><span class="p">,</span>
+            <span class="n">message</span><span class="o">=</span><span class="n">sequence_message</span><span class="p">,</span>
+            <span class="n">from_email</span><span class="o">=</span><span class="s2">&quot;admin@bpprc.org&quot;</span><span class="p">,</span>
+            <span class="n">recipient_list</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">email</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">fail_silently</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<span class="n">post_save</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">save_archive</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">UserSubmission</span><span class="p">)</span>
+<span class="n">post_save</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">send_notification</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">UserSubmission</span><span class="p">)</span>
+<span class="c1"># post_save.connect(save_post, sender=UserSubmission)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

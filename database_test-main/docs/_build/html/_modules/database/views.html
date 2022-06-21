@@ -1,0 +1,1603 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>database.views &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>database.views</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for database.views</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Pesticidal Protein Database related view functions.&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="kn">from</span> <span class="nn">clustalanalysis.forms</span> <span class="kn">import</span> <span class="n">AnalysisForm</span><span class="p">,</span> <span class="n">UserDataForm</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">messages</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Q</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span><span class="p">,</span> <span class="n">HttpResponseRedirect</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.csrf</span> <span class="kn">import</span> <span class="n">csrf_exempt</span>
+<span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
+<span class="kn">from</span> <span class="nn">database.extract_ncbi</span> <span class="kn">import</span> <span class="n">_ncbi_domain_extract</span>
+<span class="kn">from</span> <span class="nn">association.models</span> <span class="kn">import</span> <span class="n">Association</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<span class="kn">from</span> <span class="nn">database.admin</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">OldnameNewnameTableLeftResource</span><span class="p">,</span>
+    <span class="n">OldnameNewnameTableRightResource</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">association.models</span> <span class="kn">import</span> <span class="n">IdenticalProteins</span><span class="p">,</span> <span class="n">MutantProteinDatabase</span>
+<span class="kn">from</span> <span class="nn">association.forms</span> <span class="kn">import</span> <span class="n">DownloadMutantForm</span>
+<span class="kn">from</span> <span class="nn">database.filter_results</span> <span class="kn">import</span> <span class="n">Search</span><span class="p">,</span> <span class="n">filter_one_name</span>
+<span class="kn">from</span> <span class="nn">database.forms</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DownloadForm</span><span class="p">,</span>
+    <span class="n">HolotypeForm</span><span class="p">,</span>
+    <span class="n">SearchForm</span><span class="p">,</span>
+    <span class="n">ThreedomainDownloadForm</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">database.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Description</span><span class="p">,</span>
+    <span class="n">OldnameNewnameTableLeft</span><span class="p">,</span>
+    <span class="n">OldnameNewnameTableRight</span><span class="p">,</span>
+    <span class="n">PesticidalProteinDatabase</span><span class="p">,</span>
+    <span class="n">PesticidalProteinPrivateDatabase</span><span class="p">,</span>
+    <span class="n">ProteinDetail</span><span class="p">,</span>
+    <span class="n">StructureDatabase</span><span class="p">,</span>
+    <span class="n">UserUploadData</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="cite"><a class="viewcode-back" href="../../database.html#database.views.cite">[docs]</a><span class="k">def</span> <span class="nf">cite</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># return render(request, &#39;database/about_page.html&#39;)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/about.html&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="funding"><a class="viewcode-back" href="../../database.html#database.views.funding">[docs]</a><span class="k">def</span> <span class="nf">funding</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># return render(request, &#39;database/about_page.html&#39;)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/about.html&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="about"><a class="viewcode-back" href="../../database.html#database.views.about">[docs]</a><span class="k">def</span> <span class="nf">about</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># return render(request, &#39;database/about_page.html&#39;)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/about.html&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="home"><a class="viewcode-back" href="../../database.html#database.views.home">[docs]</a><span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># return render(request, &#39;database/about_page.html&#39;)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/about.html&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="homepage"><a class="viewcode-back" href="../../database.html#database.views.homepage">[docs]</a><span class="k">def</span> <span class="nf">homepage</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># return render(request, &#39;database/about_page.html&#39;)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/about.html&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="about_page"><a class="viewcode-back" href="../../database.html#database.views.about_page">[docs]</a><span class="k">def</span> <span class="nf">about_page</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;database/about_page.html&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="about_protein"><a class="viewcode-back" href="../../database.html#database.views.about_protein">[docs]</a><span class="k">def</span> <span class="nf">about_protein</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Categorize the protein database with unqiue and first three letter pattern.</span>
+
+<span class="sd">    Filters the protein based on these categories from public database as well as from private database</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arg: str</span>
+<span class="sd">        First three letter protein structural class (e.g. Cry)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    django model queryset:</span>
+<span class="sd">        Filtered list of proteins based on the three letter protein</span>
+<span class="sd">        structural class</span>
+<span class="sd">    django model queryset:</span>
+<span class="sd">        Three letter descriptions for the category</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Public database filtered to display list of proteins based on the pattern</span>
+    <span class="n">protein</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">name__istartswith</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+    <span class="c1"># Private database filtered to display list of proteins based on the pattern</span>
+    <span class="n">private</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">name__istartswith</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+
+    <span class="c1"># Combine the list to show in a single table</span>
+    <span class="n">protein_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">protein</span><span class="p">)</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">private</span><span class="p">)</span>
+
+    <span class="c1"># Protein names contains numbers, uppercase, and lowercase</span>
+    <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">protein_list</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Category description explanation to display on the html</span>
+    <span class="c1"># Based on the three letter pattern</span>
+    <span class="n">descriptions</span> <span class="o">=</span> <span class="n">Description</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">name__istartswith</span><span class="o">=</span><span class="n">category</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="n">proteins</span><span class="p">,</span>
+        <span class="s2">&quot;descriptions&quot;</span><span class="p">:</span> <span class="n">descriptions</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;list_protein.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="statistics"><a class="viewcode-back" href="../../database.html#database.views.statistics">[docs]</a><span class="k">def</span> <span class="nf">statistics</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the number of categories in the database</span>
+<span class="sd">    and its corresponding count.</span>
+
+<span class="sd">    Holotype is a protein name ends in 1. Example: Cry1Aa1</span>
+<span class="sd">    A holotype is a single protein name used to name the lower rank based on identity. Cry1Aa2 is named based on the identity to Cry1Aa1</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">category_count</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">category_holotype_count</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">category_prefixes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">total_holotype</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">categories</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+        <span class="n">cat</span> <span class="o">=</span> <span class="n">category</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">category</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">category</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="n">total_holotype</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">category_holotype_count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">category_holotype_count</span><span class="p">[</span><span class="n">cat</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+
+    <span class="n">category_count</span><span class="p">[</span><span class="s2">&quot;Holotype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">total_holotype</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+
+    <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">category</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">category_prefixes</span><span class="p">:</span>
+            <span class="n">category_prefixes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">category_prefixes</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">name__istartswith</span><span class="o">=</span><span class="n">category</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="n">category_count</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">count</span><span class="p">,</span>
+            <span class="n">category_holotype_count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">]</span>
+
+    <span class="n">prefix_count_dictionary</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">category_prefixes</span><span class="p">:</span>
+        <span class="n">prefix_count_dictionary</span><span class="p">[</span><span class="n">prefix</span><span class="p">]</span> <span class="o">=</span> <span class="n">category_count</span><span class="p">[</span><span class="n">prefix</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">prefix_count_dictionary</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;Holotype&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;category_prefixes&quot;</span><span class="p">:</span> <span class="n">category_prefixes</span><span class="p">,</span>
+        <span class="s2">&quot;category_count&quot;</span><span class="p">:</span> <span class="n">category_count</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/statistics.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_sorted_nicely</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sort the given iterable in the way that humans expect.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># https://blog.codinghorror.com/sorting-for-humans-natural-sort-order/</span>
+    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">text</span>
+
+    <span class="k">if</span> <span class="n">sort_key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="k">def</span> <span class="nf">alphanum_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">convert</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;([0-9]+)&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">)]</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="k">def</span> <span class="nf">alphanum_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">convert</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;([0-9]+)&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">sort_key</span><span class="p">))]</span>
+
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">alphanum_key</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="categorize_database"><a class="viewcode-back" href="../../database.html#database.views.categorize_database">[docs]</a><span class="k">def</span> <span class="nf">categorize_database</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Categorize the protein database with unqiue and first three letter pattern. Filters the protein based on these categories from public database as well as from private database</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arg: str</span>
+<span class="sd">        First three letter structural class (e.g. App)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    django model queryset:</span>
+<span class="sd">        Filtered list of proteins based on the three letter</span>
+<span class="sd">        protein structural class</span>
+<span class="sd">    django model queryset:</span>
+<span class="sd">        Three letter descriptions for the category</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Public database filtered to display list of proteins based on the pattern</span>
+    <span class="n">protein</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">name__istartswith</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+    <span class="c1"># Private database filtered to display list of proteins based on the pattern</span>
+    <span class="n">private</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">name__istartswith</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+    <span class="c1"># Combine the list to show in a single table</span>
+    <span class="n">protein_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">protein</span><span class="p">)</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">private</span><span class="p">)</span>
+
+    <span class="c1"># Protein names contains numbers, uppercase, and lowercase</span>
+    <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">protein_list</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Have to display checkboxes for Cry three domain proteins in html table</span>
+    <span class="c1"># Users will chose the desired Cry domains (N-terminal, Middle domain and  C-terminal)</span>
+    <span class="c1"># Other proteins don&#39;t have three domains and don&#39;t need that checkboxes</span>
+    <span class="n">show_extra_data</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">cry_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">proteins</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">protein</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Cry&quot;</span><span class="p">):</span>
+            <span class="n">cry_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">protein</span><span class="o">.</span><span class="n">show_extra_data</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">cry_count</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">proteins</span><span class="p">):</span>
+        <span class="n">show_extra_data</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Category description explanation to display on the html</span>
+    <span class="c1"># Based on the three letter pattern</span>
+    <span class="n">descriptions</span> <span class="o">=</span> <span class="n">Description</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">name__istartswith</span><span class="o">=</span><span class="n">category</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="n">proteins</span><span class="p">,</span>
+        <span class="s2">&quot;show_extra_data&quot;</span><span class="p">:</span> <span class="n">show_extra_data</span><span class="p">,</span>
+        <span class="s2">&quot;descriptions&quot;</span><span class="p">:</span> <span class="n">descriptions</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/category_display.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="database"><a class="viewcode-back" href="../../database.html#database.views.database">[docs]</a><span class="k">def</span> <span class="nf">database</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The idea here is to list the three letter categories</span>
+<span class="sd">    along with the checkboxes. The user can select</span>
+<span class="sd">    the desired category and click the download button.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    django model queryset:</span>
+<span class="sd">        Filtered list of proteins based on the three letter</span>
+<span class="sd">        protein structural class</span>
+<span class="sd">    django model queryset:</span>
+<span class="sd">        Descriptions of the three letter structural class</span>
+<span class="sd">    django form1:</span>
+<span class="sd">        Download all other protein sequences based on three letter pattern</span>
+<span class="sd">    django form2:</span>
+<span class="sd">        Download all the 3-domain sequences (i.e. Cry)</span>
+<span class="sd">    django form3:</span>
+<span class="sd">        Download all the holotype sequences</span>
+<span class="sd">        See more details from the database.forms.py</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Filter distinct proteins by name</span>
+    <span class="n">categories</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+    <span class="n">category_prefixes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Categories the filtered results based on the three letter pattern</span>
+    <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">category</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">category_prefixes</span><span class="p">:</span>
+            <span class="n">category_prefixes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+
+    <span class="n">form1</span> <span class="o">=</span> <span class="n">DownloadForm</span><span class="p">()</span>
+    <span class="n">form2</span> <span class="o">=</span> <span class="n">ThreedomainDownloadForm</span><span class="p">()</span>
+    <span class="n">form3</span> <span class="o">=</span> <span class="n">HolotypeForm</span><span class="p">()</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;category_prefixes&quot;</span><span class="p">:</span> <span class="n">category_prefixes</span><span class="p">,</span>
+        <span class="s2">&quot;descriptions&quot;</span><span class="p">:</span> <span class="n">Description</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
+        <span class="s2">&quot;form1&quot;</span><span class="p">:</span> <span class="n">form1</span><span class="p">,</span>
+        <span class="s2">&quot;form2&quot;</span><span class="p">:</span> <span class="n">form2</span><span class="p">,</span>
+        <span class="s2">&quot;form3&quot;</span><span class="p">:</span> <span class="n">form3</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/database.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="search_database_home"><a class="viewcode-back" href="../../database.html#database.views.search_database_home">[docs]</a><span class="k">def</span> <span class="nf">search_database_home</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arg:</span>
+<span class="sd">        param1 (str) Keywords e.g. Cry. Single or multiple keywords</span>
+<span class="sd">        separated by comma, or space or semicolon</span>
+<span class="sd">        param1 (str) Search Feilds e.g. Name, Old Name, Accession, Holotype</span>
+<span class="sd">        and Structure</span>
+
+<span class="sd">        Holotype is a protein name ends in 1. Example: Cry1Aa1</span>
+<span class="sd">        A holotype is a single protein name used to name the lower</span>
+<span class="sd">        rank based on identity. Cry1Aa2 is named based on the</span>
+<span class="sd">        identity to Cry1Aa1.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Search form:</span>
+<span class="sd">        Unbound search form. See database.forms.py</span>
+<span class="sd">    Anonymous session items:</span>
+<span class="sd">        User selected items in the cart for further analysis</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">items_in_cart</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_names&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">selected_cterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;list_cterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">selected_nterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;list_nterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">selected_middle</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_middle&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">selected_association</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;list_activity_name&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">selected_mutant</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;list_mutant_names&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">selected_association</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">OrderedDict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">selected_association</span><span class="p">))</span>
+    <span class="n">items_in_cart</span> <span class="o">+=</span> <span class="n">selected_association</span>
+    <span class="n">items_in_cart</span> <span class="o">+=</span> <span class="n">selected_mutant</span>
+    <span class="n">items_in_cart</span> <span class="o">+=</span> <span class="n">selected_nterminal</span>
+    <span class="n">items_in_cart</span> <span class="o">+=</span> <span class="n">selected_cterminal</span>
+    <span class="n">items_in_cart</span> <span class="o">+=</span> <span class="n">selected_middle</span>
+    <span class="n">items_in_cart</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">items_in_cart</span><span class="p">))</span>
+
+    <span class="n">dataids</span> <span class="o">=</span> <span class="n">UserUploadData</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">session_key</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_key</span><span class="p">)</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">length_userdata</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataids</span><span class="p">)</span>
+    <span class="n">length_items_in_cart</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">items_in_cart</span><span class="p">)</span>
+    <span class="n">total_cart</span> <span class="o">=</span> <span class="n">length_userdata</span> <span class="o">+</span> <span class="n">length_items_in_cart</span>
+
+    <span class="n">form</span> <span class="o">=</span> <span class="n">SearchForm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/search_page.html&quot;</span><span class="p">,</span>
+                  <span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span>
+                   <span class="s2">&quot;total_cart&quot;</span><span class="p">:</span> <span class="n">total_cart</span><span class="p">,</span> <span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="search_database"><a class="viewcode-back" href="../../database.html#database.views.search_database">[docs]</a><span class="k">def</span> <span class="nf">search_database</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class filtering user search keywords. Returns the boolean</span>
+<span class="sd">    value based on the search query. Keywords may contain numeric,</span>
+<span class="sd">    uppercase, lowercase. eg. Protein name: Cry1Aa1.</span>
+<span class="sd">    User can able to use keywords like following</span>
+
+<span class="sd">    Cry10* -&gt; wildcard search should work</span>
+
+<span class="sd">    Cry -&gt; should list all cry category</span>
+
+<span class="sd">    Cry1 -&gt; must not return Cry10. Only Cry1&#39;s.</span>
+
+<span class="sd">    Cry10 -&gt; must not return Cry1. Only Cry10&#39;s</span>
+
+<span class="sd">    Cry10A -&gt; must return all Cry10A i.e Cry10Aa to Cry10Az</span>
+
+<span class="sd">    Cry10Aa -&gt; must return all Cry10Aa i.e Cry10Aa1 to Cry10Aa100</span>
+
+<span class="sd">    Cry10Aa1 -&gt; must return only Cry10Aa1</span>
+
+<span class="sd">    There is also an option to select the searches and add to cart</span>
+<span class="sd">    using the checkboxes on the search page. With the help of</span>
+<span class="sd">    anonymous session we can retrive the names</span>
+<span class="sd">    in the &#39;search_database_home&#39;.</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arg:</span>
+<span class="sd">        param1 (str) Keywords e.g. Cry. Single or multiple keywords</span>
+<span class="sd">        separated by comma, or space or semicolon</span>
+<span class="sd">        param1 (str) Search Feilds e.g. Name, Old Name, Accession, Holotype</span>
+<span class="sd">        and Structure</span>
+
+<span class="sd">        Holotype is a protein name ends in 1. Example: Cry1Aa1</span>
+<span class="sd">        A holotype is a single protein name used to name the lower</span>
+<span class="sd">        rank based on identity. Cry1Aa2 is named based on the</span>
+<span class="sd">        identity to Cry1Aa1.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    django model queryset:</span>
+<span class="sd">        filtered list of proteins based on the search term</span>
+<span class="sd">    show extra data:</span>
+<span class="sd">        if search term is Cry (three-domain protein) three checkboxes should</span>
+<span class="sd">        be display in the table. True for success, False otherwise</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        See `database.filter_results` for more information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">SearchForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="n">proteins</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">private</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">single_digit</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;search_term&quot;</span><span class="p">]</span>
+            <span class="n">field_type</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;search_fields&quot;</span><span class="p">]</span>
+
+            <span class="c1"># searches = re.split(r&#39;:|, ?|\s |_ |. |; |\n&#39;, query)</span>
+            <span class="n">searches</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;:|, ?|\s* |\n|;&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">field_type</span> <span class="o">==</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span>
+                <span class="n">q_objects</span> <span class="o">=</span> <span class="n">Q</span><span class="p">()</span>
+                <span class="n">q_search</span> <span class="o">=</span> <span class="n">Q</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">search</span> <span class="ow">in</span> <span class="n">searches</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Search</span><span class="p">(</span><span class="n">search</span><span class="p">)</span><span class="o">.</span><span class="n">is_wildcard</span><span class="p">():</span>
+                        <span class="n">search</span> <span class="o">=</span> <span class="n">search</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">search</span> <span class="o">=</span> <span class="n">search</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="n">Search</span><span class="p">(</span><span class="n">search</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_fullname</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__iexact</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_uppercase</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_lowercase</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_single_digit</span><span class="p">():</span>
+                            <span class="n">single_digit</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">q_search</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_double_digit</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_triple_digit</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_three_letter</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_three_letter_case</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                <span class="n">proteins1</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
+                <span class="n">proteins2</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
+                <span class="n">proteins3</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
+                <span class="n">proteins4</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">q_objects</span><span class="p">:</span>
+                    <span class="n">proteins1</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                        <span class="n">q_objects</span><span class="p">)</span>
+                    <span class="n">proteins3</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                        <span class="n">q_objects</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">q_search</span><span class="p">:</span>
+                    <span class="n">proteins2</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                        <span class="n">q_search</span><span class="p">)</span>
+                    <span class="n">proteins4</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                        <span class="n">q_search</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">proteins1</span> <span class="ow">and</span> <span class="n">proteins2</span><span class="p">:</span>
+                    <span class="n">filtered_protein</span> <span class="o">=</span> <span class="n">filter_one_name</span><span class="p">(</span><span class="n">proteins2</span><span class="p">)</span>
+                    <span class="n">proteins2</span> <span class="o">=</span> <span class="n">filtered_protein</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">proteins1</span><span class="p">)</span> <span class="o">+</span> <span class="n">proteins2</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">proteins1</span><span class="p">:</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins1</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">proteins2</span><span class="p">:</span>
+                    <span class="n">filtered_protein</span> <span class="o">=</span> <span class="n">filter_one_name</span><span class="p">(</span><span class="n">proteins2</span><span class="p">)</span>
+                    <span class="n">proteins2</span> <span class="o">=</span> <span class="n">filtered_protein</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins2</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">proteins3</span> <span class="ow">and</span> <span class="n">proteins4</span><span class="p">:</span>
+                    <span class="n">filtered_protein</span> <span class="o">=</span> <span class="n">filter_one_name</span><span class="p">(</span><span class="n">proteins4</span><span class="p">)</span>
+                    <span class="n">proteins4</span> <span class="o">=</span> <span class="n">filtered_protein</span>
+                    <span class="n">private</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">proteins3</span><span class="p">)</span> <span class="o">+</span> <span class="n">proteins4</span>
+                    <span class="n">private</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">private</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">proteins3</span><span class="p">:</span>
+                    <span class="n">private</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins3</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">proteins4</span><span class="p">:</span>
+                    <span class="n">filtered_protein</span> <span class="o">=</span> <span class="n">filter_one_name</span><span class="p">(</span><span class="n">proteins4</span><span class="p">)</span>
+                    <span class="n">proteins4</span> <span class="o">=</span> <span class="n">filtered_protein</span>
+                    <span class="n">private</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins4</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">field_type</span> <span class="o">==</span> <span class="s2">&quot;old name/other name&quot;</span><span class="p">:</span>
+                <span class="n">q_objects</span> <span class="o">=</span> <span class="n">Q</span><span class="p">()</span>
+                <span class="n">q_search</span> <span class="o">=</span> <span class="n">Q</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">search</span> <span class="ow">in</span> <span class="n">searches</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Search</span><span class="p">(</span><span class="n">search</span><span class="p">)</span><span class="o">.</span><span class="n">is_wildcard</span><span class="p">():</span>
+                        <span class="n">search</span> <span class="o">=</span> <span class="n">search</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">search</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;axmi&#39;</span><span class="p">:</span>
+                        <span class="n">search</span> <span class="o">=</span> <span class="n">search</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">search</span> <span class="o">=</span> <span class="n">search</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="n">Search</span><span class="p">(</span><span class="n">search</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_fullname</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">oldname__iexact</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">othernames__iexact</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">fulltext</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">oldname__iexact</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                                <span class="n">Q</span><span class="p">(</span><span class="n">othernames__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_uppercase</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">oldname__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                                <span class="n">Q</span><span class="p">(</span><span class="n">othernames__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_lowercase</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">oldname__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                                <span class="n">Q</span><span class="p">(</span><span class="n">othernames__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_single_digit</span><span class="p">():</span>
+                            <span class="n">single_digit</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">q_search</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">oldname__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                                <span class="n">Q</span><span class="p">(</span><span class="n">othernames__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_double_digit</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">oldname__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                                <span class="n">Q</span><span class="p">(</span><span class="n">othernames__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_triple_digit</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">oldname__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                                <span class="n">Q</span><span class="p">(</span><span class="n">othernames__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_three_letter</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">oldname__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                                <span class="n">Q</span><span class="p">(</span><span class="n">othernames__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_three_letter_case</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">oldname__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                                <span class="n">Q</span><span class="p">(</span><span class="n">othernames__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">bthur0001_55730</span><span class="p">():</span>
+                            <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">othernames__iexact</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">othernames__iexact</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                        <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">oldname__iexact</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+
+                <span class="n">proteins1</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
+                <span class="n">proteins2</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">q_objects</span><span class="p">:</span>
+                    <span class="n">proteins1</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                        <span class="n">q_objects</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">q_search</span><span class="p">:</span>
+                    <span class="n">proteins2</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                        <span class="n">q_search</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">proteins1</span> <span class="ow">and</span> <span class="n">proteins2</span><span class="p">:</span>
+                    <span class="n">filtered_protein</span> <span class="o">=</span> <span class="n">filter_one_name</span><span class="p">(</span><span class="n">proteins2</span><span class="p">)</span>
+                    <span class="n">proteins2</span> <span class="o">=</span> <span class="n">filtered_protein</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">proteins1</span><span class="p">)</span> <span class="o">+</span> <span class="n">proteins2</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">proteins1</span><span class="p">:</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins1</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">proteins2</span><span class="p">:</span>
+                    <span class="n">filtered_protein</span> <span class="o">=</span> <span class="n">filter_one_name</span><span class="p">(</span><span class="n">proteins2</span><span class="p">)</span>
+                    <span class="n">proteins2</span> <span class="o">=</span> <span class="n">filtered_protein</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins2</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">field_type</span> <span class="o">==</span> <span class="s2">&quot;accession&quot;</span><span class="p">:</span>
+                <span class="n">q_objects</span> <span class="o">=</span> <span class="n">Q</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">search</span> <span class="ow">in</span> <span class="n">searches</span><span class="p">:</span>
+                    <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">accession__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+
+                <span class="n">proteins</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">q_objects</span><span class="p">)</span>
+                <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">field_type</span> <span class="o">==</span> <span class="s2">&quot;holotype&quot;</span><span class="p">:</span>
+                <span class="c1"># categories = \</span>
+                <span class="c1">#     PesticidalProteinDatabase.objects.order_by(</span>
+                <span class="c1">#         &#39;name&#39;).values_list(&#39;name&#39;, flat=True).distinct()</span>
+                <span class="n">q_objects</span> <span class="o">=</span> <span class="n">Q</span><span class="p">()</span>
+                <span class="n">filtered_q_objects</span> <span class="o">=</span> <span class="n">Q</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">search</span> <span class="ow">in</span> <span class="n">searches</span><span class="p">:</span>
+                    <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+
+                <span class="n">categories</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                    <span class="n">q_objects</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">category</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">category</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                        <span class="n">filtered_q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="n">name__iexact</span><span class="o">=</span><span class="n">category</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                <span class="n">proteins</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                    <span class="n">filtered_q_objects</span><span class="p">)</span>
+                <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">field_type</span> <span class="o">==</span> <span class="s2">&quot;structure&quot;</span><span class="p">:</span>
+                <span class="n">q_objects</span> <span class="o">=</span> <span class="n">Q</span><span class="p">()</span>
+                <span class="n">q_search</span> <span class="o">=</span> <span class="n">Q</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">search</span> <span class="ow">in</span> <span class="n">searches</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Search</span><span class="p">(</span><span class="n">search</span><span class="p">)</span><span class="o">.</span><span class="n">is_wildcard</span><span class="p">():</span>
+                        <span class="n">search</span> <span class="o">=</span> <span class="n">search</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">search</span> <span class="o">=</span> <span class="n">search</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="n">Search</span><span class="p">(</span><span class="n">search</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_fullname</span><span class="p">():</span>
+                        <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__iexact</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_uppercase</span><span class="p">():</span>
+                        <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_lowercase</span><span class="p">():</span>
+                        <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_single_digit</span><span class="p">():</span>
+                        <span class="n">single_digit</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">q_search</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_double_digit</span><span class="p">():</span>
+                        <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_triple_digit</span><span class="p">():</span>
+                        <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_three_letter</span><span class="p">():</span>
+                        <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">is_three_letter_case</span><span class="p">():</span>
+                        <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">q_objects</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">name__iexact</span><span class="o">=</span><span class="n">search</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+                <span class="n">proteins1</span> <span class="o">=</span> <span class="n">StructureDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
+                <span class="n">proteins2</span> <span class="o">=</span> <span class="n">StructureDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">q_objects</span><span class="p">:</span>
+                    <span class="n">proteins1</span> <span class="o">=</span> <span class="n">StructureDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">q_objects</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">q_search</span><span class="p">:</span>
+                    <span class="n">proteins2</span> <span class="o">=</span> <span class="n">StructureDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">q_search</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">proteins1</span> <span class="ow">and</span> <span class="n">proteins2</span><span class="p">:</span>
+                    <span class="n">filtered_protein</span> <span class="o">=</span> <span class="n">filter_one_name</span><span class="p">(</span><span class="n">proteins2</span><span class="p">)</span>
+                    <span class="n">proteins2</span> <span class="o">=</span> <span class="n">filtered_protein</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">proteins1</span><span class="p">)</span> <span class="o">+</span> <span class="n">proteins2</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">proteins1</span><span class="p">:</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins1</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">proteins2</span><span class="p">:</span>
+                    <span class="n">filtered_protein</span> <span class="o">=</span> <span class="n">filter_one_name</span><span class="p">(</span><span class="n">proteins2</span><span class="p">)</span>
+                    <span class="n">proteins2</span> <span class="o">=</span> <span class="n">filtered_protein</span>
+                    <span class="n">proteins</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins2</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+                <span class="n">structures</span> <span class="o">=</span> <span class="n">_sorted_nicely</span><span class="p">(</span><span class="n">proteins</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">render</span><span class="p">(</span>
+                    <span class="n">request</span><span class="p">,</span>
+                    <span class="s2">&quot;newwebpage/filter_structures.html&quot;</span><span class="p">,</span>
+                    <span class="p">{</span><span class="s2">&quot;structures&quot;</span><span class="p">:</span> <span class="n">structures</span><span class="p">},</span>
+                <span class="p">)</span>
+
+        <span class="n">show_extra_data</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">cry_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">proteins</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">protein</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Cry&quot;</span><span class="p">):</span>
+                <span class="n">cry_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">protein</span><span class="o">.</span><span class="n">show_extra_data</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">cry_count</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">proteins</span><span class="p">):</span>
+            <span class="n">show_extra_data</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">proteins</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">protein</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span>
+            <span class="n">request</span><span class="p">,</span>
+            <span class="s2">&quot;newwebpage/search_results.html&quot;</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="n">proteins</span><span class="p">,</span>
+                <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="n">private</span><span class="p">,</span>
+                <span class="s2">&quot;show_extra_data&quot;</span><span class="p">:</span> <span class="n">show_extra_data</span><span class="p">,</span>
+                <span class="s2">&quot;searches&quot;</span><span class="p">:</span> <span class="n">searches</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s2">&quot;/search_database_home/&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_cart"><a class="viewcode-back" href="../../database.html#database.views.add_cart">[docs]</a><span class="k">def</span> <span class="nf">add_cart</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add the search keywords to the cart.</span>
+
+<span class="sd">    Search results provides list of proteins where user&#39;s have an option</span>
+<span class="sd">    to select and add proteins to the cart.</span>
+
+<span class="sd">    Add to cart uses &#39;request.session&#39; to add the selected values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+
+        <span class="n">selected_values</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">previously_selected_values</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_names&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">previously_selected_values</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">selected_values</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s2">&quot;list_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">previously_selected_values</span>
+
+        <span class="n">selected_nterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s2">&quot;nterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">previously_selected_nterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;list_nterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">previously_selected_nterminal</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">selected_nterminal</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s2">&quot;list_nterminal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">previously_selected_nterminal</span>
+
+        <span class="n">selected_middle</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s2">&quot;middle&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">previously_selected_middle</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_middle&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">previously_selected_middle</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">selected_middle</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s2">&quot;list_middle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">previously_selected_middle</span>
+
+        <span class="n">selected_cterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s2">&quot;cterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">previously_selected_cterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;list_cterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">previously_selected_cterminal</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">selected_cterminal</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s2">&quot;list_cterminal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">previously_selected_cterminal</span>
+
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;search_database_home&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="structures"><a class="viewcode-back" href="../../database.html#database.views.structures">[docs]</a><span class="k">def</span> <span class="nf">structures</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    List of proteins that has solved structure in the</span>
+<span class="sd">    protein data bank database.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    django model queryset:</span>
+<span class="sd">        List of structures available in the structure database</span>
+<span class="sd">        ordered by name</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">structures</span> <span class="o">=</span> <span class="n">StructureDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;structures&quot;</span><span class="p">:</span> <span class="n">structures</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/structures.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="structure_pdbid"><a class="viewcode-back" href="../../database.html#database.views.structure_pdbid">[docs]</a><span class="k">def</span> <span class="nf">structure_pdbid</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">pdbid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Categorize the protein database with unqiue, first three letter pattern.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pdbid: Protein Data Bank ID</span>
+<span class="sd">        More information: https://www.rcsb.org/docs/general-help/identifiers-in-pdb</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - List of proteins in the structure database</span>
+<span class="sd">        - Specific protein filtered through pdbid</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        This function is not used in the database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">protein</span> <span class="o">=</span> <span class="n">StructureDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pdbid__istartswith</span><span class="o">=</span><span class="n">pdbid</span><span class="p">)</span>
+    <span class="n">structures</span> <span class="o">=</span> <span class="n">StructureDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="n">protein</span><span class="p">,</span> <span class="s2">&quot;structures&quot;</span><span class="p">:</span> <span class="n">structures</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;database/display_structure_pdbid.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="clear_session_database"><a class="viewcode-back" href="../../database.html#database.views.clear_session_database">[docs]</a><span class="k">def</span> <span class="nf">clear_session_database</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    As the name suggest, it clears the selected proteins in the cart using database session.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">session_key</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">session_key</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;view_cart&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="remove_cart"><a class="viewcode-back" href="../../database.html#database.views.remove_cart">[docs]</a><span class="k">def</span> <span class="nf">remove_cart</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">database_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove the selected proteins one by one from the cart.</span>
+<span class="sd">    Assume you have selected proteins in search page and</span>
+<span class="sd">    if you view the cart page, there is a table that shows selected prteins.</span>
+<span class="sd">    These proteins can be removed from the cart using the</span>
+<span class="sd">    trash-can/delete icon.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        database_id:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">protein</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">database_id</span><span class="p">)</span>
+
+    <span class="n">selected_values</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_names&quot;</span><span class="p">)</span>
+    <span class="n">nterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_nterminal&quot;</span><span class="p">)</span>
+    <span class="n">middle</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_middle&quot;</span><span class="p">)</span>
+    <span class="n">cterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_cterminal&quot;</span><span class="p">)</span>
+    <span class="n">selected_association</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;list_activity_name&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">selected_values</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">protein</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">nterminal</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">protein</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">middle</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">protein</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cterminal</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">protein</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">selected_association</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">protein</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">modified</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># if selected_values:</span>
+    <span class="c1">#     return redirect(&quot;view_cart&quot;)</span>
+    <span class="c1"># message_profile = &quot;Please add sequences to the cart&quot;</span>
+    <span class="c1"># messages.success(request, message_profile)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;view_cart&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="cart_value"><a class="viewcode-back" href="../../database.html#database.views.cart_value">[docs]</a><span class="k">def</span> <span class="nf">cart_value</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;In the search page (link below)</span>
+<span class="sd">    https://camtech-bpp.ifas.ufl.edu/search_database_home/</span>
+
+<span class="sd">    There is a cart value on top right of the search box.</span>
+<span class="sd">    The cart function counts the select items in the cart and are</span>
+<span class="sd">    shown.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Full name proteins (all the category proteins)</span>
+    <span class="n">selected_values</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_names&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="c1"># N-terminal Cry domain proteins</span>
+    <span class="n">nterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_nterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="c1"># Middle domain Cry proteins</span>
+    <span class="n">middle</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_middle&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="c1"># C-terminal Cry domain proteins</span>
+    <span class="n">cterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_cterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="c1"># Association proteins (Specificity/Metadatabase)</span>
+    <span class="n">selected_association</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;list_activity_name&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">nterminal</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">nterminal</span>
+    <span class="k">if</span> <span class="n">middle</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">middle</span>
+    <span class="k">if</span> <span class="n">cterminal</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">cterminal</span>
+    <span class="k">if</span> <span class="n">selected_values</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">selected_values</span>
+    <span class="k">if</span> <span class="n">selected_association</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">selected_association</span>
+
+    <span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">values</span><span class="p">:</span>
+        <span class="n">number_of_proteins</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;number_of_proteins&quot;</span><span class="p">:</span> <span class="n">number_of_proteins</span><span class="p">}),</span>
+            <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;number_of_proteins&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}),</span>
+            <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="view_cart"><a class="viewcode-back" href="../../database.html#database.views.view_cart">[docs]</a><span class="k">def</span> <span class="nf">view_cart</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    View the selected proteins in the session and user uploaded sequences.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">selected_values</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_names&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">selected_nterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_nterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">selected_middle</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_middle&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">selected_cterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_cterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">userdata</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;userdataids&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="c1"># selected_associations = request.session.get(</span>
+    <span class="c1">#     &quot;list_activity_names&quot;, [])</span>
+    <span class="n">selected_mutants</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;list_mutant_names&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">selected_mutants_all</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">form_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;list_names&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">selected_values</span><span class="p">),</span>
+        <span class="s2">&quot;list_nterminal&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">selected_nterminal</span><span class="p">),</span>
+        <span class="s2">&quot;list_middle&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">selected_middle</span><span class="p">),</span>
+        <span class="s2">&quot;list_cterminal&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">selected_cterminal</span><span class="p">),</span>
+        <span class="s2">&quot;userdata&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">userdata</span><span class="p">),</span>
+        <span class="s2">&quot;list_mutant_names&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">selected_mutants</span><span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="n">analysisform</span> <span class="o">=</span> <span class="n">AnalysisForm</span><span class="p">(</span><span class="n">form_data</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
+    <span class="n">userform</span> <span class="o">=</span> <span class="n">UserDataForm</span><span class="p">()</span>
+    <span class="n">analysisform</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">selected_nterminal</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">selected_nterminal</span>
+    <span class="k">if</span> <span class="n">selected_middle</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">selected_middle</span>
+    <span class="k">if</span> <span class="n">selected_cterminal</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">selected_cterminal</span>
+    <span class="k">if</span> <span class="n">selected_values</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">selected_values</span>
+    <span class="k">if</span> <span class="n">selected_mutants</span><span class="p">:</span>
+        <span class="n">selected_mutants_all</span> <span class="o">+=</span> <span class="n">selected_mutants</span>
+
+    <span class="n">userdata</span> <span class="o">=</span> <span class="n">UserUploadData</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">session_key</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_key</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">userform</span> <span class="o">=</span> <span class="n">UserDataForm</span><span class="p">(</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">userform</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">userform</span> <span class="o">=</span> <span class="n">UserDataForm</span><span class="p">()</span>
+
+    <span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">OrderedDict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+    <span class="n">selected_mutants_all</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">OrderedDict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">selected_mutants_all</span><span class="p">))</span>
+    <span class="n">proteins</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__in</span><span class="o">=</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">modified</span> <span class="o">=</span> <span class="n">MutantProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">name__in</span><span class="o">=</span><span class="n">selected_mutants_all</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="n">proteins</span><span class="p">,</span>
+        <span class="s2">&quot;selected_mutants&quot;</span><span class="p">:</span> <span class="n">modified</span><span class="p">,</span>
+        <span class="s2">&quot;userdata&quot;</span><span class="p">:</span> <span class="n">userdata</span><span class="p">,</span>
+        <span class="s2">&quot;analysisform&quot;</span><span class="p">:</span> <span class="n">analysisform</span><span class="p">,</span>
+        <span class="s2">&quot;userform&quot;</span><span class="p">:</span> <span class="n">userform</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/search_user_data_update.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="clear_session_user_data"><a class="viewcode-back" href="../../database.html#database.views.clear_session_user_data">[docs]</a><span class="k">def</span> <span class="nf">clear_session_user_data</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Remove all the user uploaded proteins from the cart.&quot;&quot;&quot;</span>
+
+    <span class="n">UserUploadData</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">session_key</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_key</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;view_cart&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="user_data_remove"><a class="viewcode-back" href="../../database.html#database.views.user_data_remove">[docs]</a><span class="k">def</span> <span class="nf">user_data_remove</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Remove the user uploaded proteins individually&quot;&quot;&quot;</span>
+
+    <span class="n">instance</span> <span class="o">=</span> <span class="n">UserUploadData</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">session_key</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_key</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">instance</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;view_cart&quot;</span><span class="p">)</span></div>
+
+
+<span class="c1"># def user_data(request):</span>
+<span class="c1">#     &quot;&quot;&quot;A user will upload the protein sequences in fasta format</span>
+<span class="c1">#     and stored temporarily using the session.&quot;&quot;&quot;</span>
+<span class="c1">#</span>
+<span class="c1">#     if request.method == &#39;POST&#39;:</span>
+<span class="c1">#         file = request.POST[&#39;fulltextarea&#39;]</span>
+<span class="c1">#         if not file:</span>
+<span class="c1">#             message_profile = &quot;Please add some sequences&quot;</span>
+<span class="c1">#             messages.success(request, message_profile)</span>
+<span class="c1">#             return redirect(&quot;view_cart&quot;)</span>
+<span class="c1">#</span>
+<span class="c1">#         content = ContentFile(file)</span>
+<span class="c1">#         content = filter(None, content)</span>
+<span class="c1">#</span>
+<span class="c1">#         for rec in SeqIO.parse(content, &quot;fasta&quot;):</span>
+<span class="c1">#             name = rec.id</span>
+<span class="c1">#             sequence = str(rec.seq)</span>
+<span class="c1">#             UserUploadData.objects.create(</span>
+<span class="c1">#                 session_key=request.session.session_key,</span>
+<span class="c1">#                 name=name, sequence=sequence)</span>
+<span class="c1">#         message_profile = &quot;Added the user sequences&quot;</span>
+<span class="c1">#         messages.info(request, message_profile)</span>
+<span class="c1">#</span>
+<span class="c1">#     return redirect(&quot;view_cart&quot;)</span>
+
+
+<div class="viewcode-block" id="user_data"><a class="viewcode-back" href="../../database.html#database.views.user_data">[docs]</a><span class="k">def</span> <span class="nf">user_data</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A user will upload the protein sequences in fasta format</span>
+<span class="sd">    and stored temporarily using the session.&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">UserDataForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">,</span>
+                            <span class="n">session</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="c1"># print(&quot;form&quot;)</span>
+            <span class="n">messages</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;file upload successful&quot;</span><span class="p">)</span>
+        <span class="c1"># print(form.errors)</span>
+
+    <span class="c1"># return redirect(&quot;view_cart&quot;)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/search_user_data_update.html&quot;</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="download_sequences"><a class="viewcode-back" href="../../database.html#database.views.download_sequences">[docs]</a><span class="o">@</span> <span class="n">csrf_exempt</span>
+<span class="k">def</span> <span class="nf">download_sequences</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Download the selected and/or user uploaded protein sequences.&quot;&quot;&quot;</span>
+
+    <span class="n">selected_values</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_names&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">list_nterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_nterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">list_middle</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_middle&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">list_cterminal</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list_cterminal&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">selected_association</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;list_activity_name&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">list_nterminal</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">list_nterminal</span>
+    <span class="k">if</span> <span class="n">list_middle</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">list_middle</span>
+    <span class="k">if</span> <span class="n">list_cterminal</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">list_cterminal</span>
+    <span class="k">if</span> <span class="n">selected_values</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">selected_values</span>
+    <span class="k">if</span> <span class="n">selected_association</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">+=</span> <span class="n">selected_association</span>
+    <span class="k">if</span> <span class="n">selected_association</span><span class="p">:</span>
+        <span class="n">selected_association</span> <span class="o">+=</span> <span class="n">selected_association</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__in</span><span class="o">=</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">modfied_data</span> <span class="o">=</span> <span class="n">MutantProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">name__in</span><span class="o">=</span><span class="n">selected_association</span><span class="p">)</span>
+
+    <span class="n">userdata</span> <span class="o">=</span> <span class="n">UserUploadData</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">session_key</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_key</span><span class="p">)</span>
+
+    <span class="n">combined_selection</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">list_nterminal</span><span class="p">:</span>
+        <span class="n">combined_selection</span> <span class="o">+=</span> <span class="n">list_nterminal</span>
+    <span class="k">if</span> <span class="n">list_middle</span><span class="p">:</span>
+        <span class="n">combined_selection</span> <span class="o">+=</span> <span class="n">list_middle</span>
+    <span class="k">if</span> <span class="n">list_cterminal</span><span class="p">:</span>
+        <span class="n">combined_selection</span> <span class="o">+=</span> <span class="n">list_cterminal</span>
+    <span class="k">if</span> <span class="n">selected_values</span><span class="p">:</span>
+        <span class="n">combined_selection</span> <span class="o">+=</span> <span class="n">selected_values</span>
+    <span class="k">if</span> <span class="n">selected_association</span><span class="p">:</span>
+        <span class="n">combined_selection</span> <span class="o">+=</span> <span class="n">selected_association</span>
+    <span class="k">if</span> <span class="n">selected_association</span><span class="p">:</span>
+        <span class="n">selected_association</span> <span class="o">+=</span> <span class="n">selected_association</span>
+
+    <span class="n">accession</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">name__in</span><span class="o">=</span><span class="n">combined_selection</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">accession</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">accession</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+
+    <span class="n">protein_detail</span> <span class="o">=</span> <span class="n">ProteinDetail</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">accession__in</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">accession</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+    <span class="n">file</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="c1"># buffer = BytesIO()</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">item_name</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span>
+        <span class="c1"># print(&quot;item_name&quot;, item_name)</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">list_nterminal</span><span class="p">:</span>
+            <span class="n">nterminal</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">protein</span> <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">protein_detail</span> <span class="k">if</span> <span class="n">protein</span><span class="o">.</span><span class="n">accession</span> <span class="o">==</span> <span class="n">item</span><span class="o">.</span><span class="n">accession</span><span class="p">]</span>
+            <span class="n">item_name</span> <span class="o">+=</span> <span class="s2">&quot;_d1&quot;</span>
+            <span class="k">for</span> <span class="n">item1</span> <span class="ow">in</span> <span class="n">nterminal</span><span class="p">:</span>
+                <span class="n">output</span> <span class="o">+=</span> <span class="n">item1</span><span class="o">.</span><span class="n">get_endotoxin_n</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">list_middle</span><span class="p">:</span>
+            <span class="n">middle</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">protein</span> <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">protein_detail</span> <span class="k">if</span> <span class="n">protein</span><span class="o">.</span><span class="n">accession</span> <span class="o">==</span> <span class="n">item</span><span class="o">.</span><span class="n">accession</span><span class="p">]</span>
+            <span class="n">item_name</span> <span class="o">+=</span> <span class="s2">&quot;_d2&quot;</span>
+            <span class="k">for</span> <span class="n">item1</span> <span class="ow">in</span> <span class="n">middle</span><span class="p">:</span>
+                <span class="n">output</span> <span class="o">+=</span> <span class="n">item1</span><span class="o">.</span><span class="n">get_endotoxin_m</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">list_cterminal</span><span class="p">:</span>
+            <span class="n">cterminal</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">protein</span> <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">protein_detail</span> <span class="k">if</span> <span class="n">protein</span><span class="o">.</span><span class="n">accession</span> <span class="o">==</span> <span class="n">item</span><span class="o">.</span><span class="n">accession</span><span class="p">]</span>
+            <span class="c1"># print(cterminal)</span>
+            <span class="n">item_name</span> <span class="o">+=</span> <span class="s2">&quot;_d3&quot;</span>
+            <span class="k">for</span> <span class="n">item1</span> <span class="ow">in</span> <span class="n">cterminal</span><span class="p">:</span>
+                <span class="n">output</span> <span class="o">+=</span> <span class="n">item1</span><span class="o">.</span><span class="n">get_endotoxin_c</span><span class="p">()</span>
+                <span class="c1"># print(&quot;download output&quot;, output)</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">selected_values</span><span class="p">:</span>
+            <span class="n">fasta</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="n">fasta</span>
+            <span class="c1"># print(str_to_write)</span>
+            <span class="c1"># file.write(str_to_write)</span>
+
+        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+            <span class="n">str_to_write</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="n">item_name</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">str_to_write</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">userdata</span><span class="p">:</span>
+        <span class="n">fasta</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+        <span class="n">str_to_write</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">fasta</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">str_to_write</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">modfied_data</span><span class="p">:</span>
+        <span class="n">fasta</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+        <span class="n">str_to_write</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">fasta</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">str_to_write</span><span class="p">)</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/plain&quot;</span><span class="p">)</span>
+    <span class="n">download_file</span> <span class="o">=</span> <span class="s2">&quot;cart_fasta_sequences.txt&quot;</span>
+    <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Disposition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;attachment;filename=&quot;</span> <span class="o">+</span> <span class="n">download_file</span>
+    <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">response</span></div>
+
+
+<div class="viewcode-block" id="download_data"><a class="viewcode-back" href="../../database.html#database.views.download_data">[docs]</a><span class="k">def</span> <span class="nf">download_data</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;List the categories for download.&quot;&quot;&quot;</span>
+
+    <span class="n">categories</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+
+    <span class="n">category_prefixes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">category</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">category_prefixes</span><span class="p">:</span>
+            <span class="n">category_prefixes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
+        <span class="s2">&quot;category_prefixes&quot;</span><span class="p">:</span> <span class="n">category_prefixes</span><span class="p">,</span>
+        <span class="s2">&quot;descriptions&quot;</span><span class="p">:</span> <span class="n">Description</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">),</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/download_category.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="download_single_sequence"><a class="viewcode-back" href="../../database.html#database.views.download_single_sequence">[docs]</a><span class="k">def</span> <span class="nf">download_single_sequence</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">proteinname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Download the fasta sequence by name.&quot;&quot;&quot;</span>
+
+    <span class="n">protein</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">proteinname</span><span class="p">)</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">fasta</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">protein</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="n">str_to_write</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="n">protein</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">fasta</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">str_to_write</span><span class="p">)</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/plain&quot;</span><span class="p">)</span>
+    <span class="n">download_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">proteinname</span><span class="si">}</span><span class="s2">_fasta_sequence.txt&quot;</span>
+    <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Disposition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;attachment;filename=&quot;</span> <span class="o">+</span> <span class="n">download_file</span>
+    <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">response</span></div>
+
+
+<div class="viewcode-block" id="download_category_form"><a class="viewcode-back" href="../../database.html#database.views.download_category_form">[docs]</a><span class="k">def</span> <span class="nf">download_category_form</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+
+    <span class="n">form</span> <span class="o">=</span> <span class="n">DownloadForm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/download_form.html&quot;</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="download_category"><a class="viewcode-back" href="../../database.html#database.views.download_category">[docs]</a><span class="k">def</span> <span class="nf">download_category</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Download the fasta sequences for the category.&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">DownloadForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="n">category</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
+                <span class="s2">&quot;descriptions&quot;</span><span class="p">:</span> <span class="n">Description</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">),</span>
+            <span class="p">}</span>
+
+            <span class="n">file</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;proteins&quot;</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                    <span class="n">fasta</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+                    <span class="n">str_to_write</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">fasta</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">str_to_write</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+            <span class="k">if</span> <span class="s2">&quot;All&quot;</span> <span class="ow">in</span> <span class="n">category</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="n">fasta</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+                    <span class="n">str_to_write</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">fasta</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">str_to_write</span><span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/plain&quot;</span><span class="p">)</span>
+            <span class="n">download_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">_fasta_sequences.txt&quot;</span>
+            <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Disposition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;attachment;filename=&quot;</span> <span class="o">+</span> \
+                <span class="n">download_file</span>
+            <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">response</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">DownloadForm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/download_form.html&quot;</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="category_form"><a class="viewcode-back" href="../../database.html#database.views.category_form">[docs]</a><span class="k">def</span> <span class="nf">category_form</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">form1</span> <span class="o">=</span> <span class="n">DownloadForm</span><span class="p">()</span>
+    <span class="n">form2</span> <span class="o">=</span> <span class="n">ThreedomainDownloadForm</span><span class="p">()</span>
+    <span class="n">form3</span> <span class="o">=</span> <span class="n">HolotypeForm</span><span class="p">()</span>
+    <span class="n">download</span> <span class="o">=</span> <span class="n">DownloadMutantForm</span><span class="p">()</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;form1&quot;</span><span class="p">:</span> <span class="n">form1</span><span class="p">,</span>
+        <span class="s2">&quot;form2&quot;</span><span class="p">:</span> <span class="n">form2</span><span class="p">,</span>
+        <span class="s2">&quot;form3&quot;</span><span class="p">:</span> <span class="n">form3</span><span class="p">,</span>
+        <span class="s2">&quot;download&quot;</span><span class="p">:</span> <span class="n">download</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/download_form.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="category_download"><a class="viewcode-back" href="../../database.html#database.views.category_download">[docs]</a><span class="k">def</span> <span class="nf">category_download</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()}</span>
+
+        <span class="n">file</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;proteins&quot;</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;All&quot;</span> <span class="ow">in</span> <span class="n">categories</span> <span class="ow">or</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">categories</span><span class="p">):</span>
+                <span class="n">fasta</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+                <span class="n">str_to_write</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">fasta</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">str_to_write</span><span class="p">)</span>
+
+        <span class="c1"># if :</span>
+        <span class="c1">#     for item in data:</span>
+        <span class="c1">#         fasta = textwrap.fill(item.sequence, 80)</span>
+        <span class="c1">#         str_to_write = f&quot;&gt;{item.name}\n{fasta}\n&quot;</span>
+        <span class="c1">#         file.write(str_to_write)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/plain&quot;</span><span class="p">)</span>
+        <span class="n">download_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span><span class="si">}</span><span class="s2">_fasta_sequences.txt&quot;</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Disposition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;attachment;filename=&quot;</span> <span class="o">+</span> <span class="n">download_file</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span></div>
+
+
+<div class="viewcode-block" id="threedomain_download"><a class="viewcode-back" href="../../database.html#database.views.threedomain_download">[docs]</a><span class="k">def</span> <span class="nf">threedomain_download</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">type_option</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s2">&quot;threedomain&quot;</span><span class="p">)</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+
+        <span class="n">accession</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">name__istartswith</span><span class="o">=</span><span class="s2">&quot;cry&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="c1"># if item.name[-1] == &#39;1&#39; and not item.name[-2].isdigit():</span>
+                <span class="n">accession</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">accession</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+
+        <span class="n">protein_detail</span> <span class="o">=</span> <span class="n">ProteinDetail</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">accession__in</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">accession</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+        <span class="n">protein_data</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">accession__in</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">accession</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">protein_data</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">domain_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">if</span> <span class="s2">&quot;domain1&quot;</span> <span class="ow">in</span> <span class="n">type_option</span><span class="p">:</span>
+                <span class="n">nterminal</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">protein</span> <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">protein_detail</span> <span class="k">if</span> <span class="n">protein</span><span class="o">.</span><span class="n">accession</span> <span class="o">==</span> <span class="n">item</span><span class="o">.</span><span class="n">accession</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">item1</span> <span class="ow">in</span> <span class="n">nterminal</span><span class="p">:</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">output</span> <span class="o">+=</span> <span class="n">item1</span><span class="o">.</span><span class="n">get_endotoxin_n</span><span class="p">()</span>
+                    <span class="n">domain_name</span> <span class="o">+=</span> <span class="s2">&quot;_d1&quot;</span>
+            <span class="k">if</span> <span class="s2">&quot;domain2&quot;</span> <span class="ow">in</span> <span class="n">type_option</span><span class="p">:</span>
+                <span class="n">nterminal</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">protein</span> <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">protein_detail</span> <span class="k">if</span> <span class="n">protein</span><span class="o">.</span><span class="n">accession</span> <span class="o">==</span> <span class="n">item</span><span class="o">.</span><span class="n">accession</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">item1</span> <span class="ow">in</span> <span class="n">nterminal</span><span class="p">:</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">output</span> <span class="o">+=</span> <span class="n">item1</span><span class="o">.</span><span class="n">get_endotoxin_m</span><span class="p">()</span>
+                    <span class="n">domain_name</span> <span class="o">+=</span> <span class="s2">&quot;_d2&quot;</span>
+            <span class="k">if</span> <span class="s2">&quot;domain3&quot;</span> <span class="ow">in</span> <span class="n">type_option</span><span class="p">:</span>
+                <span class="n">nterminal</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">protein</span> <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">protein_detail</span> <span class="k">if</span> <span class="n">protein</span><span class="o">.</span><span class="n">accession</span> <span class="o">==</span> <span class="n">item</span><span class="o">.</span><span class="n">accession</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">item1</span> <span class="ow">in</span> <span class="n">nterminal</span><span class="p">:</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">output</span> <span class="o">+=</span> <span class="n">item1</span><span class="o">.</span><span class="n">get_endotoxin_c</span><span class="p">()</span>
+                    <span class="n">domain_name</span> <span class="o">+=</span> <span class="s2">&quot;_d3&quot;</span>
+            <span class="c1"># if &quot;full_length&quot; in type_option:</span>
+            <span class="c1">#     nterminal = [</span>
+            <span class="c1">#         protein for protein in protein_detail if protein.accession == item.accession]</span>
+            <span class="c1">#     for item1 in nterminal:</span>
+            <span class="c1">#         count += 1</span>
+            <span class="c1">#         output += item1.sequence</span>
+            <span class="c1">#         domain_name += &quot;_full_length&quot;</span>
+            <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+                <span class="n">str_to_write</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}{</span><span class="n">domain_name</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">str_to_write</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/plain&quot;</span><span class="p">)</span>
+        <span class="n">download_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">type_option</span><span class="p">)</span><span class="si">}</span><span class="s2">_threedomain_fasta_sequences.txt&quot;</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Disposition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;attachment;filename=&quot;</span> <span class="o">+</span> <span class="n">download_file</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span></div>
+
+
+<div class="viewcode-block" id="holotype_download"><a class="viewcode-back" href="../../database.html#database.views.holotype_download">[docs]</a><span class="k">def</span> <span class="nf">holotype_download</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">type_option</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s2">&quot;holotype&quot;</span><span class="p">)</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+
+        <span class="n">accession</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">name__istartswith</span><span class="o">=</span><span class="s2">&quot;cry&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                    <span class="n">str_to_write</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">sequence</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">str_to_write</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/plain&quot;</span><span class="p">)</span>
+        <span class="n">download_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">type_option</span><span class="p">)</span><span class="si">}</span><span class="s2">_fasta_sequences.txt&quot;</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Disposition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;attachment;filename=&quot;</span> <span class="o">+</span> <span class="n">download_file</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span></div>
+
+
+<div class="viewcode-block" id="protein_detail"><a class="viewcode-back" href="../../database.html#database.views.protein_detail">[docs]</a><span class="k">def</span> <span class="nf">protein_detail</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+
+    <span class="n">q_objects1</span> <span class="o">=</span> <span class="n">Q</span><span class="p">()</span>
+    <span class="n">q_objects1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">proteins__icontains</span><span class="o">=</span><span class="n">name</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+    <span class="n">identical_proteins</span> <span class="o">=</span> <span class="n">IdenticalProteins</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">q_objects1</span><span class="p">)</span>
+
+    <span class="n">proteins</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">proteins</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;protein&#39;</span><span class="p">,</span> <span class="n">protein</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">identical_proteins</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">protein</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">proteins</span><span class="p">:</span>
+                <span class="n">protein</span><span class="o">.</span><span class="n">new_field</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">proteins</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="n">proteins</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/protein_detail.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="old_name_new_name"><a class="viewcode-back" href="../../database.html#database.views.old_name_new_name">[docs]</a><span class="k">def</span> <span class="nf">old_name_new_name</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">table1</span> <span class="o">=</span> <span class="n">OldnameNewnameTableLeft</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">table2</span> <span class="o">=</span> <span class="n">OldnameNewnameTableRight</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;table1&quot;</span><span class="p">:</span> <span class="n">table1</span><span class="p">,</span>
+        <span class="s2">&quot;table2&quot;</span><span class="p">:</span> <span class="n">table2</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/old_name_new_name.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="export_new_name_table"><a class="viewcode-back" href="../../database.html#database.views.export_new_name_table">[docs]</a><span class="k">def</span> <span class="nf">export_new_name_table</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">left_resource</span> <span class="o">=</span> <span class="n">OldnameNewnameTableLeftResource</span><span class="p">()</span>
+    <span class="n">dataset_left</span> <span class="o">=</span> <span class="n">left_resource</span><span class="o">.</span><span class="n">export</span><span class="p">()</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">dataset_left</span><span class="o">.</span><span class="n">xlsx</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/csv&quot;</span><span class="p">)</span>
+    <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Disposition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;attachment; filename=&quot;organized_newname.xlsx&quot;&#39;</span>
+    <span class="k">return</span> <span class="n">response</span></div>
+
+
+<div class="viewcode-block" id="export_old_name_table"><a class="viewcode-back" href="../../database.html#database.views.export_old_name_table">[docs]</a><span class="k">def</span> <span class="nf">export_old_name_table</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">right_resource</span> <span class="o">=</span> <span class="n">OldnameNewnameTableRightResource</span><span class="p">()</span>
+    <span class="n">dataset_right</span> <span class="o">=</span> <span class="n">right_resource</span><span class="o">.</span><span class="n">export</span><span class="p">()</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">dataset_right</span><span class="o">.</span><span class="n">xlsx</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/csv&quot;</span><span class="p">)</span>
+    <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Content-Disposition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;attachment; filename=&quot;organized_oldname.xlsx&quot;&#39;</span>
+    <span class="k">return</span> <span class="n">response</span></div>
+
+<span class="c1"># def ncbi_domain(request, accession):</span>
+<span class="c1">#     return render(request, &quot;newwebpage/ncbi_domains.html&quot;)</span>
+
+
+<div class="viewcode-block" id="ncbi_domain"><a class="viewcode-back" href="../../database.html#database.views.ncbi_domain">[docs]</a><span class="k">def</span> <span class="nf">ncbi_domain</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">accession</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;runs accession&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_ncbi_domain_extract</span><span class="p">(</span><span class="n">accession</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hi accession&quot;</span><span class="p">)</span>
+        <span class="n">Endotoxin_N</span><span class="p">,</span> <span class="n">Endotoxin_N_start</span><span class="p">,</span> <span class="n">Endotoxin_N_end</span><span class="p">,</span> <span class="n">Endotoxin_M</span><span class="p">,</span> <span class="n">Endotoxin_M_start</span><span class="p">,</span> <span class="n">Endotoxin_M_end</span><span class="p">,</span> <span class="n">Endotoxin_C</span><span class="p">,</span> <span class="n">Endotoxin_C_start</span><span class="p">,</span> <span class="n">Endotoxin_C_end</span> <span class="o">=</span> <span class="n">_ncbi_domain_extract</span><span class="p">(</span>
+            <span class="n">accession</span><span class="p">)</span>
+
+        <span class="c1"># Update three domain model using accession, name etc...</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Endotoxin_N&quot;</span><span class="p">:</span> <span class="n">Endotoxin_N</span><span class="p">,</span>
+            <span class="s2">&quot;Endotoxin_N_start&quot;</span><span class="p">:</span> <span class="n">Endotoxin_N_start</span><span class="p">,</span>
+            <span class="s2">&quot;Endotoxin_N_end&quot;</span><span class="p">:</span> <span class="n">Endotoxin_N_end</span><span class="p">,</span>
+            <span class="s2">&quot;Endotoxin_M&quot;</span><span class="p">:</span> <span class="n">Endotoxin_N</span><span class="p">,</span>
+            <span class="s2">&quot;Endotoxin_M_start&quot;</span><span class="p">:</span> <span class="n">Endotoxin_N_start</span><span class="p">,</span>
+            <span class="s2">&quot;Endotoxin_M_end&quot;</span><span class="p">:</span> <span class="n">Endotoxin_N_end</span><span class="p">,</span>
+            <span class="s2">&quot;Endotoxin_C&quot;</span><span class="p">:</span> <span class="n">Endotoxin_C</span><span class="p">,</span>
+            <span class="s2">&quot;Endotoxin_C_start&quot;</span><span class="p">:</span> <span class="n">Endotoxin_C_start</span><span class="p">,</span>
+            <span class="s2">&quot;Endotoxin_C_end&quot;</span><span class="p">:</span> <span class="n">Endotoxin_C_end</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;none&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;newwebpage/ncbi_domains.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

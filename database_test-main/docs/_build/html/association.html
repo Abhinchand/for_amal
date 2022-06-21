@@ -1,0 +1,1607 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Association &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Clustal Analysis" href="clustalanalysis.html" />
+    <link rel="prev" title="Naming Algorithm" href="namingalgorithm.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Association</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-association.admin">association.admin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-association.apps">association.apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-association.forms">association.forms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-association.models">association.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-association.tasks">association.tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-association.urls">association.urls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-association.views">association.views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-association">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Association</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="association">
+<h1>Association<a class="headerlink" href="#association" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-association.admin">
+<span id="association-admin"></span><h2>association.admin<a class="headerlink" href="#module-association.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.AssociationAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.admin.</span></span><span class="sig-name descname"><span class="pre">AssociationAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/admin.html#AssociationAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.AssociationAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.admin.ImportExportModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.AssociationAdmin.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',</span> <span class="pre">'partnerprotein',</span> <span class="pre">'partnerprotein_textbox',</span> <span class="pre">'target_order',</span> <span class="pre">'target_species',</span> <span class="pre">'activity',</span> <span class="pre">'taxonid',</span> <span class="pre">'lc50',</span> <span class="pre">'units',</span> <span class="pre">'percentage_mortality',</span> <span class="pre">'publication',</span> <span class="pre">'other_citations',</span> <span class="pre">'life_stage',</span> <span class="pre">'instar',</span> <span class="pre">'assay_material',</span> <span class="pre">'assay_method',</span> <span class="pre">'comment',</span> <span class="pre">'data_entered_by')</span></em><a class="headerlink" href="#association.admin.AssociationAdmin.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.AssociationAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',</span> <span class="pre">'partnerprotein',</span> <span class="pre">'partnerprotein_textbox',</span> <span class="pre">'target_order',</span> <span class="pre">'target_species',</span> <span class="pre">'activity',</span> <span class="pre">'taxonid',</span> <span class="pre">'lc50',</span> <span class="pre">'units',</span> <span class="pre">'percentage_mortality',</span> <span class="pre">'publication',</span> <span class="pre">'other_citations',</span> <span class="pre">'life_stage',</span> <span class="pre">'instar',</span> <span class="pre">'assay_material',</span> <span class="pre">'assay_method',</span> <span class="pre">'comment',</span> <span class="pre">'data_entered_by',</span> <span class="pre">'date')</span></em><a class="headerlink" href="#association.admin.AssociationAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="association.admin.AssociationAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#association.admin.AssociationAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.AssociationAdmin.resource_class">
+<span class="sig-name descname"><span class="pre">resource_class</span></span><a class="headerlink" href="#association.admin.AssociationAdmin.resource_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#association.admin.AssociationResource" title="association.admin.AssociationResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">association.admin.AssociationResource</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.AssociationAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',</span> <span class="pre">'partnerprotein',</span> <span class="pre">'partnerprotein_textbox',</span> <span class="pre">'target_order',</span> <span class="pre">'target_species',</span> <span class="pre">'activity',</span> <span class="pre">'taxonid',</span> <span class="pre">'lc50',</span> <span class="pre">'units',</span> <span class="pre">'percentage_mortality',</span> <span class="pre">'publication',</span> <span class="pre">'other_citations',</span> <span class="pre">'life_stage',</span> <span class="pre">'instar',</span> <span class="pre">'assay_material',</span> <span class="pre">'assay_method',</span> <span class="pre">'data_entered_by')</span></em><a class="headerlink" href="#association.admin.AssociationAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.AssociationResource">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.admin.</span></span><span class="sig-name descname"><span class="pre">AssociationResource</span></span><a class="reference internal" href="_modules/association/admin.html#AssociationResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.AssociationResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.resources.ModelResource</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.AssociationResource.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/association/admin.html#AssociationResource.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.AssociationResource.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.AssociationResource.Meta.export_id_fields">
+<span class="sig-name descname"><span class="pre">export_id_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('sequence',</span> <span class="pre">'name',</span> <span class="pre">'partnerprotein',</span> <span class="pre">'partnerprotein_textbox',</span> <span class="pre">'target_order',</span> <span class="pre">'target_species',</span> <span class="pre">'activity',</span> <span class="pre">'taxonid',</span> <span class="pre">'lc50',</span> <span class="pre">'units',</span> <span class="pre">'percentage_mortality',</span> <span class="pre">'publication',</span> <span class="pre">'other_citations',</span> <span class="pre">'life_stage',</span> <span class="pre">'instar',</span> <span class="pre">'assay_material',</span> <span class="pre">'assay_method',</span> <span class="pre">'comment',</span> <span class="pre">'data_entered_by')</span></em><a class="headerlink" href="#association.admin.AssociationResource.Meta.export_id_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.AssociationResource.Meta.import_id_fields">
+<span class="sig-name descname"><span class="pre">import_id_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',)</span></em><a class="headerlink" href="#association.admin.AssociationResource.Meta.import_id_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.AssociationResource.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#association.admin.AssociationResource.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#association.models.Association" title="association.models.Association"><code class="xref py py-class docutils literal notranslate"><span class="pre">association.models.Association</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.admin.AssociationResource.dehydrate_sequence">
+<span class="sig-name descname"><span class="pre">dehydrate_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">association</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/admin.html#AssociationResource.dehydrate_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.AssociationResource.dehydrate_sequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.AssociationResource.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'activity':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">activity&gt;,</span> <span class="pre">'assay_material':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">assay_material&gt;,</span> <span class="pre">'assay_method':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">assay_method&gt;,</span> <span class="pre">'comment':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">comment&gt;,</span> <span class="pre">'data_entered_by':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">data_entered_by&gt;,</span> <span class="pre">'date':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">date&gt;,</span> <span class="pre">'id':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">id&gt;,</span> <span class="pre">'instar':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">instar&gt;,</span> <span class="pre">'lc50':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">lc50&gt;,</span> <span class="pre">'life_stage':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">life_stage&gt;,</span> <span class="pre">'name':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">name&gt;,</span> <span class="pre">'non_toxic':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">non_toxic&gt;,</span> <span class="pre">'other_citations':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">other_citations&gt;,</span> <span class="pre">'partnerprotein':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">partnerprotein&gt;,</span> <span class="pre">'partnerprotein_textbox':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">partnerprotein_textbox&gt;,</span> <span class="pre">'percentage_mortality':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">percentage_mortality&gt;,</span> <span class="pre">'publication':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">publication&gt;,</span> <span class="pre">'sequence':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">sequence&gt;,</span> <span class="pre">'target_order':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">target_order&gt;,</span> <span class="pre">'target_species':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">target_species&gt;,</span> <span class="pre">'taxonid':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">taxonid&gt;,</span> <span class="pre">'units':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">units&gt;}</span></em><a class="headerlink" href="#association.admin.AssociationResource.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.admin.</span></span><span class="sig-name descname"><span class="pre">FeedbackProteinErrorAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/admin.html#FeedbackProteinErrorAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.FeedbackProteinErrorAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.admin.ImportExportModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorAdmin.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',</span> <span class="pre">'subject',</span> <span class="pre">'email',</span> <span class="pre">'message',</span> <span class="pre">'uploaded')</span></em><a class="headerlink" href="#association.admin.FeedbackProteinErrorAdmin.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',</span> <span class="pre">'subject',</span> <span class="pre">'email',</span> <span class="pre">'message',</span> <span class="pre">'uploaded')</span></em><a class="headerlink" href="#association.admin.FeedbackProteinErrorAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#association.admin.FeedbackProteinErrorAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorAdmin.resource_class">
+<span class="sig-name descname"><span class="pre">resource_class</span></span><a class="headerlink" href="#association.admin.FeedbackProteinErrorAdmin.resource_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#association.admin.FeedbackProteinErrorResource" title="association.admin.FeedbackProteinErrorResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">association.admin.FeedbackProteinErrorResource</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',</span> <span class="pre">'subject',</span> <span class="pre">'email',</span> <span class="pre">'message',</span> <span class="pre">'uploaded')</span></em><a class="headerlink" href="#association.admin.FeedbackProteinErrorAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorResource">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.admin.</span></span><span class="sig-name descname"><span class="pre">FeedbackProteinErrorResource</span></span><a class="reference internal" href="_modules/association/admin.html#FeedbackProteinErrorResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.FeedbackProteinErrorResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.resources.ModelResource</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorResource.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/association/admin.html#FeedbackProteinErrorResource.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.FeedbackProteinErrorResource.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorResource.Meta.exclude">
+<span class="sig-name descname"><span class="pre">exclude</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',)</span></em><a class="headerlink" href="#association.admin.FeedbackProteinErrorResource.Meta.exclude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorResource.Meta.import_id_fields">
+<span class="sig-name descname"><span class="pre">import_id_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',)</span></em><a class="headerlink" href="#association.admin.FeedbackProteinErrorResource.Meta.import_id_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorResource.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#association.admin.FeedbackProteinErrorResource.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#association.models.FeedbackProteinError" title="association.models.FeedbackProteinError"><code class="xref py py-class docutils literal notranslate"><span class="pre">association.models.FeedbackProteinError</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.FeedbackProteinErrorResource.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'email':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">email&gt;,</span> <span class="pre">'message':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">message&gt;,</span> <span class="pre">'name':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">name&gt;,</span> <span class="pre">'subject':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">subject&gt;,</span> <span class="pre">'uploaded':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">uploaded&gt;}</span></em><a class="headerlink" href="#association.admin.FeedbackProteinErrorResource.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.admin.</span></span><span class="sig-name descname"><span class="pre">IdenticalProteinsAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/admin.html#IdenticalProteinsAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.IdenticalProteinsAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.admin.ImportExportModelAdmin</span></code></p>
+<p>The protein detail page shows the IdenticalProteins model.</p>
+<p>Example link below
+e.g. <a class="reference external" href="https://camtech-bpp.test.ifas.ufl.edu/protein_detail/Cry1Aa9/">https://camtech-bpp.test.ifas.ufl.edu/protein_detail/Cry1Aa9/</a></p>
+<p>The django management command</p>
+<p>database.management.commands -&gt; identical_proteins.py</p>
+<p>runs biweekly to compare the public database proteins and report only
+the identical proteins in a csv file. Then csv file will be uploaded
+automatically.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsAdmin.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('proteins',)</span></em><a class="headerlink" href="#association.admin.IdenticalProteinsAdmin.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('proteins',)</span></em><a class="headerlink" href="#association.admin.IdenticalProteinsAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#association.admin.IdenticalProteinsAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsAdmin.resource_class">
+<span class="sig-name descname"><span class="pre">resource_class</span></span><a class="headerlink" href="#association.admin.IdenticalProteinsAdmin.resource_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#association.admin.IdenticalProteinsResource" title="association.admin.IdenticalProteinsResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">association.admin.IdenticalProteinsResource</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('proteins',)</span></em><a class="headerlink" href="#association.admin.IdenticalProteinsAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsResource">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.admin.</span></span><span class="sig-name descname"><span class="pre">IdenticalProteinsResource</span></span><a class="reference internal" href="_modules/association/admin.html#IdenticalProteinsResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.IdenticalProteinsResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.resources.ModelResource</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsResource.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/association/admin.html#IdenticalProteinsResource.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.IdenticalProteinsResource.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsResource.Meta.exclude">
+<span class="sig-name descname"><span class="pre">exclude</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',)</span></em><a class="headerlink" href="#association.admin.IdenticalProteinsResource.Meta.exclude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsResource.Meta.import_id_fields">
+<span class="sig-name descname"><span class="pre">import_id_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('proteins',)</span></em><a class="headerlink" href="#association.admin.IdenticalProteinsResource.Meta.import_id_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsResource.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#association.admin.IdenticalProteinsResource.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#association.models.IdenticalProteins" title="association.models.IdenticalProteins"><code class="xref py py-class docutils literal notranslate"><span class="pre">association.models.IdenticalProteins</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.IdenticalProteinsResource.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'proteins':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">proteins&gt;}</span></em><a class="headerlink" href="#association.admin.IdenticalProteinsResource.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsAdmin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.admin.</span></span><span class="sig-name descname"><span class="pre">MutantProteinsAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/admin.html#MutantProteinsAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.MutantProteinsAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.admin.ImportExportModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsAdmin.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('submittersname',</span> <span class="pre">'submittersemail',</span> <span class="pre">'name',</span> <span class="pre">'oldname',</span> <span class="pre">'othernames',</span> <span class="pre">'accession',</span> <span class="pre">'year',</span> <span class="pre">'sequence',</span> <span class="pre">'bacterium',</span> <span class="pre">'bacterium_textbox',</span> <span class="pre">'taxonid',</span> <span class="pre">'partnerprotein',</span> <span class="pre">'partnerprotein_textbox',</span> <span class="pre">'toxicto',</span> <span class="pre">'nontoxic',</span> <span class="pre">'dnasequence',</span> <span class="pre">'pdbcode',</span> <span class="pre">'publication',</span> <span class="pre">'comment',</span> <span class="pre">'admin_user',</span> <span class="pre">'admin_comments',</span> <span class="pre">'date',</span> <span class="pre">'terms_conditions')</span></em><a class="headerlink" href="#association.admin.MutantProteinsAdmin.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',</span> <span class="pre">'sequence',</span> <span class="pre">'comment')</span></em><a class="headerlink" href="#association.admin.MutantProteinsAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsAdmin.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#association.admin.MutantProteinsAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsAdmin.resource_class">
+<span class="sig-name descname"><span class="pre">resource_class</span></span><a class="headerlink" href="#association.admin.MutantProteinsAdmin.resource_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#association.admin.MutantProteinsResource" title="association.admin.MutantProteinsResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">association.admin.MutantProteinsResource</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',</span> <span class="pre">'comment')</span></em><a class="headerlink" href="#association.admin.MutantProteinsAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsResource">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.admin.</span></span><span class="sig-name descname"><span class="pre">MutantProteinsResource</span></span><a class="reference internal" href="_modules/association/admin.html#MutantProteinsResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.MutantProteinsResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">import_export.resources.ModelResource</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsResource.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/association/admin.html#MutantProteinsResource.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.admin.MutantProteinsResource.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsResource.Meta.exclude">
+<span class="sig-name descname"><span class="pre">exclude</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('id',)</span></em><a class="headerlink" href="#association.admin.MutantProteinsResource.Meta.exclude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsResource.Meta.import_id_fields">
+<span class="sig-name descname"><span class="pre">import_id_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('name',</span> <span class="pre">'sequence',</span> <span class="pre">'comment')</span></em><a class="headerlink" href="#association.admin.MutantProteinsResource.Meta.import_id_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsResource.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#association.admin.MutantProteinsResource.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#association.models.MutantProteinDatabase" title="association.models.MutantProteinDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">association.models.MutantProteinDatabase</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.admin.MutantProteinsResource.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'accession':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">accession&gt;,</span> <span class="pre">'admin_comments':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">admin_comments&gt;,</span> <span class="pre">'admin_user':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">admin_user&gt;,</span> <span class="pre">'bacterium':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">bacterium&gt;,</span> <span class="pre">'bacterium_textbox':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">bacterium_textbox&gt;,</span> <span class="pre">'comment':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">comment&gt;,</span> <span class="pre">'created_by':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">created_by&gt;,</span> <span class="pre">'created_on':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">created_on&gt;,</span> <span class="pre">'date':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">date&gt;,</span> <span class="pre">'dnasequence':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">dnasequence&gt;,</span> <span class="pre">'edited_by':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">edited_by&gt;,</span> <span class="pre">'edited_on':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">edited_on&gt;,</span> <span class="pre">'name':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">name&gt;,</span> <span class="pre">'name_category':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">name_category&gt;,</span> <span class="pre">'nontoxic':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">nontoxic&gt;,</span> <span class="pre">'oldname':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">oldname&gt;,</span> <span class="pre">'othernames':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">othernames&gt;,</span> <span class="pre">'partnerprotein':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">partnerprotein&gt;,</span> <span class="pre">'partnerprotein_textbox':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">partnerprotein_textbox&gt;,</span> <span class="pre">'pdbcode':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">pdbcode&gt;,</span> <span class="pre">'predict_name':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">predict_name&gt;,</span> <span class="pre">'publication':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">publication&gt;,</span> <span class="pre">'published':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">published&gt;,</span> <span class="pre">'sequence':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">sequence&gt;,</span> <span class="pre">'submittersemail':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">submittersemail&gt;,</span> <span class="pre">'submittersname':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">submittersname&gt;,</span> <span class="pre">'taxonid':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">taxonid&gt;,</span> <span class="pre">'terms_conditions':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">terms_conditions&gt;,</span> <span class="pre">'toxicto':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">toxicto&gt;,</span> <span class="pre">'uploaded':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">uploaded&gt;,</span> <span class="pre">'year':</span> <span class="pre">&lt;import_export.fields.Field:</span> <span class="pre">year&gt;}</span></em><a class="headerlink" href="#association.admin.MutantProteinsResource.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-association.apps">
+<span id="association-apps"></span><h2>association.apps<a class="headerlink" href="#module-association.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="association.apps.AssociationConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.apps.</span></span><span class="sig-name descname"><span class="pre">AssociationConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/apps.html#AssociationConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.apps.AssociationConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.apps.AssociationConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'association'</span></em><a class="headerlink" href="#association.apps.AssociationConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.apps.AssociationConfig.verbose_name">
+<span class="sig-name descname"><span class="pre">verbose_name</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Metadatabase'</span></em><a class="headerlink" href="#association.apps.AssociationConfig.verbose_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-association.forms">
+<span id="association-forms"></span><h2>association.forms<a class="headerlink" href="#module-association.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="association.forms.DownloadMutantForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.forms.</span></span><span class="sig-name descname"><span class="pre">DownloadMutantForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/forms.html#DownloadMutantForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.forms.DownloadMutantForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.forms.Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.forms.DownloadMutantForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'mutant':</span> <span class="pre">&lt;django.forms.fields.MultipleChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#association.forms.DownloadMutantForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.forms.DownloadMutantForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'mutant':</span> <span class="pre">&lt;django.forms.fields.MultipleChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#association.forms.DownloadMutantForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="association.forms.DownloadMutantForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#association.forms.DownloadMutantForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.forms.FeedbackProteinForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.forms.</span></span><span class="sig-name descname"><span class="pre">FeedbackProteinForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/forms.html#FeedbackProteinForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.forms.FeedbackProteinForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<p>Toxicity and Non toxicity data for pesticidal proteins
+lists the protein based on the search_term and search_fields</p>
+<p>Each protein data have an option where users can report
+errors in it. Report error send email url option picks up the
+data id and redirects this form where users can submit their
+name, email and a message. Admin data are stored as
+“Metadatabase Reported Protein Error”</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="association.forms.FeedbackProteinForm.Meta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/association/forms.html#FeedbackProteinForm.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.forms.FeedbackProteinForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.forms.FeedbackProteinForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'__all__'</span></em><a class="headerlink" href="#association.forms.FeedbackProteinForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.forms.FeedbackProteinForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#association.forms.FeedbackProteinForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#association.models.FeedbackProteinError" title="association.models.FeedbackProteinError"><code class="xref py py-class docutils literal notranslate"><span class="pre">association.models.FeedbackProteinError</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.forms.FeedbackProteinForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'message':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'subject':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'uploaded':</span> <span class="pre">&lt;django.forms.fields.DateTimeField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#association.forms.FeedbackProteinForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.forms.FeedbackProteinForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/forms.html#FeedbackProteinForm.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.forms.FeedbackProteinForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
+called on every field. Any ValidationError raised by this method will
+not be associated with a particular field; it will have a special-case
+association with the field named ‘__all__’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.forms.FeedbackProteinForm.clean_subject">
+<span class="sig-name descname"><span class="pre">clean_subject</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/forms.html#FeedbackProteinForm.clean_subject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.forms.FeedbackProteinForm.clean_subject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.forms.FeedbackProteinForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'message':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'subject':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#association.forms.FeedbackProteinForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="association.forms.FeedbackProteinForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#association.forms.FeedbackProteinForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.forms.SearchForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.forms.</span></span><span class="sig-name descname"><span class="pre">SearchForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/forms.html#SearchForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.forms.SearchForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.forms.Form</span></code></p>
+<p>Search Toxicity and Non toxicity data for pesticidal
+proteins.</p>
+<p>Either check localserver or
+<a class="reference external" href="http://127.0.0.1:8000/search_association/">http://127.0.0.1:8000/search_association/</a>
+Live server link
+<a class="reference external" href="https://camtech-bpp.ifas.ufl.edu/search_data_association/">https://camtech-bpp.ifas.ufl.edu/search_data_association/</a></p>
+<dl class="simple">
+<dt>One CharField for search_term</dt><dd><ul class="simple">
+<li><p>e.g. Cry1Aa1 (Pesticidal Protein Name)</p></li>
+<li><p>e.g. 689277 (Target species taxon id)</p></li>
+<li><p>e.g. Chrysodeixis includens (Target Species)</p></li>
+<li><p>e.g. Lepidoptera (Target Order)</p></li>
+</ul>
+</dd>
+<dt>Four ChoiceField for search_fields</dt><dd><ul class="simple">
+<li><p>Pesticidal Protein Name</p></li>
+<li><p>Target species taxon id</p></li>
+<li><p>Target Species</p></li>
+<li><p>Target Order</p></li>
+</ul>
+</dd>
+</dl>
+<p>django-crispy-forms are used here.</p>
+<p>See association.views for more information.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.forms.SearchForm.SEARCH_CHOICES">
+<span class="sig-name descname"><span class="pre">SEARCH_CHOICES</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(('pesticidal</span> <span class="pre">protein</span> <span class="pre">name',</span> <span class="pre">'Pesticidal</span> <span class="pre">Protein</span> <span class="pre">Name'),</span> <span class="pre">('target</span> <span class="pre">species</span> <span class="pre">taxon</span> <span class="pre">id',</span> <span class="pre">'Target</span> <span class="pre">species</span> <span class="pre">taxon</span> <span class="pre">id'),</span> <span class="pre">('target</span> <span class="pre">species',</span> <span class="pre">'Target</span> <span class="pre">Species'),</span> <span class="pre">('target</span> <span class="pre">order',</span> <span class="pre">'Target</span> <span class="pre">Order'))</span></em><a class="headerlink" href="#association.forms.SearchForm.SEARCH_CHOICES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.forms.SearchForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'search_fields':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'search_term':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#association.forms.SearchForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.forms.SearchForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'search_fields':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'search_term':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#association.forms.SearchForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="association.forms.SearchForm.media">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#association.forms.SearchForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-association.models">
+<span id="association-models"></span><h2>association.models<a class="headerlink" href="#module-association.models" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="association.models.Association">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.models.</span></span><span class="sig-name descname"><span class="pre">Association</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partnerprotein</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partnerprotein_textbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxonid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lc50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">non_toxic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentage_mortality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publication</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_citations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">life_stage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assay_material</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assay_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_entered_by</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#Association"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.Association" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="association.models.Association.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#association.models.Association.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="association.models.Association.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#association.models.Association.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.activity">
+<span class="sig-name descname"><span class="pre">activity</span></span><a class="headerlink" href="#association.models.Association.activity" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.assay_material">
+<span class="sig-name descname"><span class="pre">assay_material</span></span><a class="headerlink" href="#association.models.Association.assay_material" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.assay_method">
+<span class="sig-name descname"><span class="pre">assay_method</span></span><a class="headerlink" href="#association.models.Association.assay_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.comment">
+<span class="sig-name descname"><span class="pre">comment</span></span><a class="headerlink" href="#association.models.Association.comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.data_entered_by">
+<span class="sig-name descname"><span class="pre">data_entered_by</span></span><a class="headerlink" href="#association.models.Association.data_entered_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.date">
+<span class="sig-name descname"><span class="pre">date</span></span><a class="headerlink" href="#association.models.Association.date" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.Association.get_sequence">
+<span class="sig-name descname"><span class="pre">get_sequence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#Association.get_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.Association.get_sequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.Association.get_target_order">
+<span class="sig-name descname"><span class="pre">get_target_order</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#Association.get_target_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.Association.get_target_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.Association.get_target_species">
+<span class="sig-name descname"><span class="pre">get_target_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#Association.get_target_species"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.Association.get_target_species" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.Association.href">
+<span class="sig-name descname"><span class="pre">href</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#Association.href"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.Association.href" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#association.models.Association.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.instar">
+<span class="sig-name descname"><span class="pre">instar</span></span><a class="headerlink" href="#association.models.Association.instar" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.lc50">
+<span class="sig-name descname"><span class="pre">lc50</span></span><a class="headerlink" href="#association.models.Association.lc50" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.life_stage">
+<span class="sig-name descname"><span class="pre">life_stage</span></span><a class="headerlink" href="#association.models.Association.life_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.Association.mutant">
+<span class="sig-name descname"><span class="pre">mutant</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#Association.mutant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.Association.mutant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#association.models.Association.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.Association.name_href">
+<span class="sig-name descname"><span class="pre">name_href</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#Association.name_href"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.Association.name_href" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.non_toxic">
+<span class="sig-name descname"><span class="pre">non_toxic</span></span><a class="headerlink" href="#association.models.Association.non_toxic" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#association.models.Association.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.other_citations">
+<span class="sig-name descname"><span class="pre">other_citations</span></span><a class="headerlink" href="#association.models.Association.other_citations" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.partnerprotein">
+<span class="sig-name descname"><span class="pre">partnerprotein</span></span><a class="headerlink" href="#association.models.Association.partnerprotein" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.partnerprotein_textbox">
+<span class="sig-name descname"><span class="pre">partnerprotein_textbox</span></span><a class="headerlink" href="#association.models.Association.partnerprotein_textbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.percentage_mortality">
+<span class="sig-name descname"><span class="pre">percentage_mortality</span></span><a class="headerlink" href="#association.models.Association.percentage_mortality" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.publication">
+<span class="sig-name descname"><span class="pre">publication</span></span><a class="headerlink" href="#association.models.Association.publication" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.Association.starname">
+<span class="sig-name descname"><span class="pre">starname</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#Association.starname"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.Association.starname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.target_order">
+<span class="sig-name descname"><span class="pre">target_order</span></span><a class="headerlink" href="#association.models.Association.target_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.target_species">
+<span class="sig-name descname"><span class="pre">target_species</span></span><a class="headerlink" href="#association.models.Association.target_species" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.taxonid">
+<span class="sig-name descname"><span class="pre">taxonid</span></span><a class="headerlink" href="#association.models.Association.taxonid" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.Association.units">
+<span class="sig-name descname"><span class="pre">units</span></span><a class="headerlink" href="#association.models.Association.units" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.models.</span></span><span class="sig-name descname"><span class="pre">FeedbackProteinError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#FeedbackProteinError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.FeedbackProteinError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#association.models.FeedbackProteinError.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#association.models.FeedbackProteinError.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError.email">
+<span class="sig-name descname"><span class="pre">email</span></span><a class="headerlink" href="#association.models.FeedbackProteinError.email" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError.get_next_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_next_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=True</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#association.models.FeedbackProteinError.get_next_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError.get_previous_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_previous_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=False</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#association.models.FeedbackProteinError.get_previous_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#association.models.FeedbackProteinError.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#association.models.FeedbackProteinError.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#association.models.FeedbackProteinError.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#association.models.FeedbackProteinError.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError.subject">
+<span class="sig-name descname"><span class="pre">subject</span></span><a class="headerlink" href="#association.models.FeedbackProteinError.subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.FeedbackProteinError.uploaded">
+<span class="sig-name descname"><span class="pre">uploaded</span></span><a class="headerlink" href="#association.models.FeedbackProteinError.uploaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.models.IdenticalProteins">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.models.</span></span><span class="sig-name descname"><span class="pre">IdenticalProteins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proteins</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#IdenticalProteins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.IdenticalProteins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="association.models.IdenticalProteins.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#association.models.IdenticalProteins.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="association.models.IdenticalProteins.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#association.models.IdenticalProteins.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.IdenticalProteins.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#association.models.IdenticalProteins.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.IdenticalProteins.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#association.models.IdenticalProteins.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.IdenticalProteins.proteins">
+<span class="sig-name descname"><span class="pre">proteins</span></span><a class="headerlink" href="#association.models.IdenticalProteins.proteins" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">association.models.</span></span><span class="sig-name descname"><span class="pre">MutantProteinDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submittersname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submittersemail</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oldname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">othernames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bacterium</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxonid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bacterium_textbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partnerprotein</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partnerprotein_textbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toxicto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nontoxic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dnasequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publication</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uploaded</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdbcode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terms_conditions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_comments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_by</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_on</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edited_by</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edited_on</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">published</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.accession">
+<span class="sig-name descname"><span class="pre">accession</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.accession" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.admin_comments">
+<span class="sig-name descname"><span class="pre">admin_comments</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.admin_comments" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.admin_user">
+<span class="sig-name descname"><span class="pre">admin_user</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.admin_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.admin_user_id">
+<span class="sig-name descname"><span class="pre">admin_user_id</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.admin_user_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.bacterium">
+<span class="sig-name descname"><span class="pre">bacterium</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.bacterium" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.bacterium_textbox">
+<span class="sig-name descname"><span class="pre">bacterium_textbox</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.bacterium_textbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.category_name">
+<span class="sig-name descname"><span class="pre">category_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase.category_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase.category_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.comment">
+<span class="sig-name descname"><span class="pre">comment</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.created_by">
+<span class="sig-name descname"><span class="pre">created_by</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.created_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.created_by_id">
+<span class="sig-name descname"><span class="pre">created_by_id</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.created_by_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.created_on">
+<span class="sig-name descname"><span class="pre">created_on</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.created_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.date">
+<span class="sig-name descname"><span class="pre">date</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.date" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.dnasequence">
+<span class="sig-name descname"><span class="pre">dnasequence</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.dnasequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.edited_by">
+<span class="sig-name descname"><span class="pre">edited_by</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.edited_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.edited_by_id">
+<span class="sig-name descname"><span class="pre">edited_by_id</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.edited_by_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.edited_on">
+<span class="sig-name descname"><span class="pre">edited_on</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.edited_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_bacterium_display">
+<span class="sig-name descname"><span class="pre">get_bacterium_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">bacterium&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#association.models.MutantProteinDatabase.get_bacterium_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_fastasequence">
+<span class="sig-name descname"><span class="pre">get_fastasequence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase.get_fastasequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase.get_fastasequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_next_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_next_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=True</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#association.models.MutantProteinDatabase.get_next_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_partnerprotein_display">
+<span class="sig-name descname"><span class="pre">get_partnerprotein_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">partnerprotein&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#association.models.MutantProteinDatabase.get_partnerprotein_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_previous_by_uploaded">
+<span class="sig-name descname"><span class="pre">get_previous_by_uploaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">uploaded&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=False</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#association.models.MutantProteinDatabase.get_previous_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_published_display">
+<span class="sig-name descname"><span class="pre">get_published_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">published&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#association.models.MutantProteinDatabase.get_published_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_secondary_structure">
+<span class="sig-name descname"><span class="pre">get_secondary_structure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase.get_secondary_structure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase.get_secondary_structure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_sequence_aromaticity">
+<span class="sig-name descname"><span class="pre">get_sequence_aromaticity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase.get_sequence_aromaticity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase.get_sequence_aromaticity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_sequence_count_aminoacids">
+<span class="sig-name descname"><span class="pre">get_sequence_count_aminoacids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase.get_sequence_count_aminoacids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase.get_sequence_count_aminoacids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_sequence_get_amino_acids_percent">
+<span class="sig-name descname"><span class="pre">get_sequence_get_amino_acids_percent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase.get_sequence_get_amino_acids_percent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase.get_sequence_get_amino_acids_percent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_sequence_instability_index">
+<span class="sig-name descname"><span class="pre">get_sequence_instability_index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase.get_sequence_instability_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase.get_sequence_instability_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_sequence_isoelectric_point">
+<span class="sig-name descname"><span class="pre">get_sequence_isoelectric_point</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase.get_sequence_isoelectric_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase.get_sequence_isoelectric_point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_sequence_length">
+<span class="sig-name descname"><span class="pre">get_sequence_length</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase.get_sequence_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase.get_sequence_length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_sequence_molecular_weight">
+<span class="sig-name descname"><span class="pre">get_sequence_molecular_weight</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase.get_sequence_molecular_weight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase.get_sequence_molecular_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.get_terms_conditions_display">
+<span class="sig-name descname"><span class="pre">get_terms_conditions_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.BooleanField:</span> <span class="pre">terms_conditions&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#association.models.MutantProteinDatabase.get_terms_conditions_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.id_regex">
+<span class="sig-name descname"><span class="pre">id_regex</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.core.validators.RegexValidator</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#association.models.MutantProteinDatabase.id_regex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.name_category">
+<span class="sig-name descname"><span class="pre">name_category</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.name_category" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.nontoxic">
+<span class="sig-name descname"><span class="pre">nontoxic</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.nontoxic" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#association.models.MutantProteinDatabase.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.oldname">
+<span class="sig-name descname"><span class="pre">oldname</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.oldname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.othernames">
+<span class="sig-name descname"><span class="pre">othernames</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.othernames" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.partnerprotein">
+<span class="sig-name descname"><span class="pre">partnerprotein</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.partnerprotein" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.partnerprotein_textbox">
+<span class="sig-name descname"><span class="pre">partnerprotein_textbox</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.partnerprotein_textbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.pdbcode">
+<span class="sig-name descname"><span class="pre">pdbcode</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.pdbcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.predict_name">
+<span class="sig-name descname"><span class="pre">predict_name</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.predict_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.publication">
+<span class="sig-name descname"><span class="pre">publication</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.publication" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.publish">
+<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/models.html#MutantProteinDatabase.publish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.models.MutantProteinDatabase.publish" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.published">
+<span class="sig-name descname"><span class="pre">published</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.published" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.sequence">
+<span class="sig-name descname"><span class="pre">sequence</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.submittersemail">
+<span class="sig-name descname"><span class="pre">submittersemail</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.submittersemail" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.submittersname">
+<span class="sig-name descname"><span class="pre">submittersname</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.submittersname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.taxonid">
+<span class="sig-name descname"><span class="pre">taxonid</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.taxonid" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.terms_conditions">
+<span class="sig-name descname"><span class="pre">terms_conditions</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.terms_conditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.toxicto">
+<span class="sig-name descname"><span class="pre">toxicto</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.toxicto" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.uploaded">
+<span class="sig-name descname"><span class="pre">uploaded</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.uploaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="association.models.MutantProteinDatabase.year">
+<span class="sig-name descname"><span class="pre">year</span></span><a class="headerlink" href="#association.models.MutantProteinDatabase.year" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-association.tasks">
+<span id="association-tasks"></span><h2>association.tasks<a class="headerlink" href="#module-association.tasks" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-association.urls">
+<span id="association-urls"></span><h2>association.urls<a class="headerlink" href="#module-association.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-association.views">
+<span id="association-views"></span><h2>association.views<a class="headerlink" href="#module-association.views" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.alphanumeric_sort">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">alphanumeric_sort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objects_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#alphanumeric_sort"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.alphanumeric_sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort a list of objects by a given key
+This function sort a list of objects by a given
+key common across the objects
+Sorting can be implemented on keys that are either
+alphabets, integers or both</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.association_add_cart">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">association_add_cart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#association_add_cart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.association_add_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the search keywords to the cart.</p>
+<p>Search results provides list of proteins where user’s have an option
+to select and add proteins to the cart.</p>
+<p>Add to cart uses ‘request.session’ to add the selected values.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.data_association_links">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">data_association_links</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#data_association_links"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.data_association_links" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is not used in the database</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.data_teams">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">data_teams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#data_teams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.data_teams" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is not used in the database</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.display_protein_data">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">display_protein_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#display_protein_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.display_protein_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is not used in the database</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.download_association">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">download_association</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#download_association"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.download_association" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download specificity data (metdatabase). Added two options
+1) Download specificity data without sequence
+2) Download specificity data</p>
+<p>Linked href’s are export_association and export_association_seq</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.example_content">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">example_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#example_content"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.example_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is not used in the database</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.export_association">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">export_association</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#export_association"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.export_association" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides the Association data for the users to download.
+This is the same functionality from the admin export option.
+The only difference is that sequence column is removed from the file.</p>
+<p>Related model Association from association
+The association resource is imported from association.admin</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Returns the csv file</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dataset csv file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.export_association_seq">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">export_association_seq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#export_association_seq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.export_association_seq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides the Association data for the users to download.
+This is the same functionality from the admin export option.</p>
+<p>Related model Association from association
+The association resource is imported from association.admin</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Returns the csv file</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dataset csv file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.feedback_protein">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">feedback_protein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protein_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#feedback_protein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.feedback_protein" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.heatmap_activity">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">heatmap_activity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#heatmap_activity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.heatmap_activity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.home">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.home" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.keyword_confirm">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">keyword_confirm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#keyword_confirm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.keyword_confirm" title="Permalink to this definition">¶</a></dt>
+<dd><p>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.list_proteins">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">list_proteins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#list_proteins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.list_proteins" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is not used in the database</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.metadatabase_protein_detail">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">metadatabase_protein_detail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#metadatabase_protein_detail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.metadatabase_protein_detail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters a protein from specificity metadatabase
+based on the input protein name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<em>str</em>) – protein name (e.g. Cry2Aa1)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Filtered queryset of a protein based on the protein name
+from association database</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>django model queryset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.mutant_download">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">mutant_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#mutant_download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.mutant_download" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.mutant_proteins">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">mutant_proteins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protein_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#mutant_proteins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.mutant_proteins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters a mutant protein from mutant database protein based
+on the input protein name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<em>str</em>) – Mutant protein name (e.g. Cry2Aa)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Filtered queryset of a protein based on the protein name</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>django model queryset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.remove_cart_association">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">remove_cart_association</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protein_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#remove_cart_association"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.remove_cart_association" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the selected proteins one by one from the cart.
+Assume you have selected proteins in search page and
+if you view the cart page, there is a table that shows selected prteins.
+These proteins can be removed from the cart using the
+trash-can/delete icon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>database_id</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.search_association">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">search_association</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#search_association"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.search_association" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ubound search form from association.forms</p>
+<p>Keywords may contain numbers, uppercase, lowercase.
+eg. Protein name: Cry1Aa1.</p>
+<p>Users can able to search against the following fields
+- Pesticidal Protein Name
+- Target species taxon id
+- Target Species
+- Target Order</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>See more details from the association.forms.py</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Search form</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.search_data_association">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">search_data_association</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#search_data_association"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.search_data_association" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filtering user search keywords. Returns the boolean
+value based on the search query. Keywords may contain numeric,
+uppercase, lowercase. eg. Protein name: Cry1Aa1.
+User can able to use keywords like following
+Cry10* -&gt; wildcard search should work
+Cry -&gt; should list all cry category
+Cry1 -&gt; must not return Cry10. Only Cry1’s.
+Cry10 -&gt; must not return Cry1. Only Cry10’s
+Cry10A -&gt; must return all Cry10A i.e Cry10Aa to Cry10Az
+Cry10Aa -&gt; must return all Cry10Aa i.e Cry10Aa1 to Cry10Aa100
+Cry10Aa1 -&gt; must return only Cry10Aa1
+There is also an option to select the searches and add to cart
+using the checkboxes on the search page. With the help of
+anonymous session we can retrive the names
+in the ‘search_database_home’.
+:param arg: param1 (str) Keywords e.g. Cry. Single or multiple keywords</p>
+<blockquote>
+<div><p>separated by comma, or space or semicolon
+param1 (str) Search Feilds e.g. Name, Old Name, Accession, Holotype
+and Structure</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>Search form</em> – Download all the holotype sequences
+See more details from the association.forms.py
+(“pesticidal protein name”, “Pesticidal Protein Name”),
+(“target species taxon id”, “Target species taxon id”),
+(“target species”, “Target Species”),
+(“target order”, “Target Order”),</p></li>
+<li><p><em>)</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="association.views.taskstatus_search_celery">
+<span class="sig-prename descclassname"><span class="pre">association.views.</span></span><span class="sig-name descname"><span class="pre">taskstatus_search_celery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/association/views.html#taskstatus_search_celery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#association.views.taskstatus_search_celery" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-association">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-association" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="clustalanalysis.html" class="btn btn-neutral float-right" title="Clustal Analysis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="namingalgorithm.html" class="btn btn-neutral float-left" title="Naming Algorithm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

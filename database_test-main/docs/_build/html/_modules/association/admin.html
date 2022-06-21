@@ -1,0 +1,464 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>association.admin &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>association.admin</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for association.admin</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">import_export</span> <span class="kn">import</span> <span class="n">resources</span>
+<span class="kn">from</span> <span class="nn">import_export.admin</span> <span class="kn">import</span> <span class="n">ImportExportModelAdmin</span>
+<span class="kn">from</span> <span class="nn">import_export.fields</span> <span class="kn">import</span> <span class="n">Field</span>
+<span class="kn">from</span> <span class="nn">association.models</span> <span class="kn">import</span> <span class="n">Association</span><span class="p">,</span> <span class="n">IdenticalProteins</span><span class="p">,</span> <span class="n">MutantProteinDatabase</span><span class="p">,</span> <span class="n">FeedbackProteinError</span>
+
+
+<span class="n">allowed_fields</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oldname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;othernames&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bacterium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bacterium_textbox&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;taxonid&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;partnerprotein&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;partnerprotein_textbox&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;toxicto&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nontoxic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dnasequence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pdbcode&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;admin_user&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;admin_comments&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;date&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;terms_conditions&quot;</span><span class="p">,)</span>
+
+
+<div class="viewcode-block" id="AssociationResource"><a class="viewcode-back" href="../../association.html#association.admin.AssociationResource">[docs]</a><span class="k">class</span> <span class="nc">AssociationResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+    <span class="n">sequence</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+
+<div class="viewcode-block" id="AssociationResource.Meta"><a class="viewcode-back" href="../../association.html#association.admin.AssociationResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Association</span>
+        <span class="c1"># skip_unchanged = False</span>
+        <span class="c1"># report_skipped = True</span>
+        <span class="c1"># exclude = (&quot;id&quot;,)</span>
+        <span class="n">import_id_fields</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">export_id_fields</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;partnerprotein&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;partnerprotein_textbox&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;target_order&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;target_species&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;activity&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;taxonid&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;lc50&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;units&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;percentage_mortality&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;other_citations&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;life_stage&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;instar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;assay_material&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;assay_method&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;data_entered_by&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AssociationResource.dehydrate_sequence"><a class="viewcode-back" href="../../association.html#association.admin.AssociationResource.dehydrate_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">dehydrate_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">association</span><span class="p">):</span>
+        <span class="n">sequence</span> <span class="o">=</span> <span class="n">association</span><span class="o">.</span><span class="n">get_sequence</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">sequence</span></div></div>
+
+
+<div class="viewcode-block" id="AssociationAdmin"><a class="viewcode-back" href="../../association.html#association.admin.AssociationAdmin">[docs]</a><span class="k">class</span> <span class="nc">AssociationAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">AssociationResource</span>
+
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;partnerprotein&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;partnerprotein_textbox&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;target_order&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;target_species&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;activity&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;taxonid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lc50&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;units&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;percentage_mortality&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;other_citations&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;life_stage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;instar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;assay_material&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;assay_method&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_entered_by&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;partnerprotein&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;partnerprotein_textbox&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;target_order&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;target_species&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;activity&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;taxonid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lc50&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;units&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;percentage_mortality&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;other_citations&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;life_stage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;instar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;assay_material&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;assay_method&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_entered_by&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;partnerprotein&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;partnerprotein_textbox&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;target_order&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;target_species&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;activity&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;taxonid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lc50&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;units&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;percentage_mortality&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;other_citations&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;life_stage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;instar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;assay_material&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;assay_method&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_entered_by&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;date&quot;</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FeedbackProteinErrorResource"><a class="viewcode-back" href="../../association.html#association.admin.FeedbackProteinErrorResource">[docs]</a><span class="k">class</span> <span class="nc">FeedbackProteinErrorResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+<div class="viewcode-block" id="FeedbackProteinErrorResource.Meta"><a class="viewcode-back" href="../../association.html#association.admin.FeedbackProteinErrorResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">FeedbackProteinError</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,)</span>
+        <span class="n">import_id_fields</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="FeedbackProteinErrorAdmin"><a class="viewcode-back" href="../../association.html#association.admin.FeedbackProteinErrorAdmin">[docs]</a><span class="k">class</span> <span class="nc">FeedbackProteinErrorAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">FeedbackProteinErrorResource</span>
+
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;email&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;uploaded&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;email&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;uploaded&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;email&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;uploaded&quot;</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MutantProteinsResource"><a class="viewcode-back" href="../../association.html#association.admin.MutantProteinsResource">[docs]</a><span class="k">class</span> <span class="nc">MutantProteinsResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+    <span class="c1"># MutantProteinDatabase is ModifiedProteinDatabase</span>
+<div class="viewcode-block" id="MutantProteinsResource.Meta"><a class="viewcode-back" href="../../association.html#association.admin.MutantProteinsResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">MutantProteinDatabase</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,)</span>
+        <span class="n">import_id_fields</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="MutantProteinsAdmin"><a class="viewcode-back" href="../../association.html#association.admin.MutantProteinsAdmin">[docs]</a><span class="k">class</span> <span class="nc">MutantProteinsAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+
+    <span class="c1"># MutantProteinDatabase is ModifiedProteinDatabase</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">MutantProteinsResource</span>
+
+    <span class="n">fields</span> <span class="o">=</span> <span class="n">allowed_fields</span>
+
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="IdenticalProteinsResource"><a class="viewcode-back" href="../../association.html#association.admin.IdenticalProteinsResource">[docs]</a><span class="k">class</span> <span class="nc">IdenticalProteinsResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+<div class="viewcode-block" id="IdenticalProteinsResource.Meta"><a class="viewcode-back" href="../../association.html#association.admin.IdenticalProteinsResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">IdenticalProteins</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,)</span>
+        <span class="n">import_id_fields</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;proteins&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="IdenticalProteinsAdmin"><a class="viewcode-back" href="../../association.html#association.admin.IdenticalProteinsAdmin">[docs]</a><span class="k">class</span> <span class="nc">IdenticalProteinsAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The protein detail page shows the IdenticalProteins model.</span>
+
+<span class="sd">    Example link below</span>
+<span class="sd">    e.g. https://camtech-bpp.test.ifas.ufl.edu/protein_detail/Cry1Aa9/</span>
+
+<span class="sd">    The django management command</span>
+
+<span class="sd">    database.management.commands -&gt; identical_proteins.py</span>
+
+<span class="sd">    runs biweekly to compare the public database proteins and report only</span>
+<span class="sd">    the identical proteins in a csv file. Then csv file will be uploaded</span>
+<span class="sd">    automatically.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">IdenticalProteinsResource</span>
+
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;proteins&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;proteins&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;proteins&quot;</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Association</span><span class="p">,</span> <span class="n">AssociationAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">IdenticalProteins</span><span class="p">,</span> <span class="n">IdenticalProteinsAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">MutantProteinDatabase</span><span class="p">,</span> <span class="n">MutantProteinsAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">FeedbackProteinError</span><span class="p">,</span> <span class="n">FeedbackProteinErrorAdmin</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

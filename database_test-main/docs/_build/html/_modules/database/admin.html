@@ -1,0 +1,876 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="EN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>database.admin &mdash; BPPRC 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BPPRC
+          
+
+          
+            
+            <img src="../../_static/bpprc.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div>
+   <h3>Quick search</h3>
+
+   <script async src="https://cse.google.com/cse.js?cx=204497451a4ab494b"></script>
+   <div class="gcse-search"></div>
+
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../runlocally.html">Run Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../webhosting.html">Web Hosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BPPRC.html">BPPRC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bestmatchfinder.html">Best Match Finder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../namingalgorithm.html">Naming Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../association.html">Association</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clustalanalysis.html">Clustal Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extra.html">Extra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../youtube.html">BPPRC tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ.html">BPPRC FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BPPRC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>database.admin</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for database.admin</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This encapsulates the logic for displaying the models in the Django admin.</span>
+
+<span class="sd">Public database -&gt; PesticidalProteinDatabase</span>
+
+<span class="sd">Private database -&gt; PesticidalProteinPrivateDatabase</span>
+
+<span class="sd">Protein category description -&gt; Description</span>
+
+<span class="sd">OldnameNewname -&gt; OldnameNewnameTableLeft -&gt; Organized by old name</span>
+
+<span class="sd">OldnameNewname -&gt; OldnameNewnameTableRight -&gt; Organized by new name</span>
+
+<span class="sd">ProteinDetail -&gt; Three domain details of Cry proteins</span>
+
+<span class="sd">StructureDatabase -&gt; Available protein structures of Pesticidal Protein</span>
+
+<span class="sd">PesticidalProteinHiddenSequence -&gt; Only used by naming algorithm</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">Bio</span> <span class="kn">import</span> <span class="n">Entrez</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.admin.checks</span> <span class="kn">import</span> <span class="n">BaseModelAdminChecks</span>
+<span class="kn">from</span> <span class="nn">django.contrib.admin.models</span> <span class="kn">import</span> <span class="n">LogEntry</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">Group</span>
+<span class="kn">from</span> <span class="nn">django.contrib.contenttypes.admin</span> <span class="kn">import</span> <span class="n">GenericStackedInline</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.forms</span> <span class="kn">import</span> <span class="n">Textarea</span><span class="p">,</span> <span class="n">TextInput</span>
+<span class="kn">from</span> <span class="nn">django.utils.html</span> <span class="kn">import</span> <span class="n">format_html</span>
+<span class="kn">from</span> <span class="nn">import_export</span> <span class="kn">import</span> <span class="n">resources</span><span class="p">,</span> <span class="n">widgets</span>
+<span class="kn">from</span> <span class="nn">extra.models</span> <span class="kn">import</span> <span class="n">NCBIAvailability</span>
+<span class="kn">from</span> <span class="nn">import_export.admin</span> <span class="kn">import</span> <span class="n">ImportExportModelAdmin</span>
+<span class="kn">from</span> <span class="nn">import_export.fields</span> <span class="kn">import</span> <span class="n">Field</span>
+
+<span class="kn">from</span> <span class="nn">database.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Description</span><span class="p">,</span>
+    <span class="n">OldnameNewnameTableLeft</span><span class="p">,</span>
+    <span class="n">OldnameNewnameTableRight</span><span class="p">,</span>
+    <span class="n">PesticidalProteinDatabase</span><span class="p">,</span>
+    <span class="n">PesticidalProteinHiddenSequence</span><span class="p">,</span>
+    <span class="n">PesticidalProteinPrivateDatabase</span><span class="p">,</span>
+    <span class="n">ProteinDetail</span><span class="p">,</span>
+    <span class="n">StructureDatabase</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># used by biopython for NCBI</span>
+<span class="n">Entrez</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;admin@bpprc.org&quot;</span>
+
+
+<span class="c1"># model fields import order for public as well as private database</span>
+<span class="n">import_order</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oldname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;othernames&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;taxonid&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bacterium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bacterium_textbox&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;partnerprotein&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;partnerprotein_textbox&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nontoxic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dnasequence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;date&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># # model fields export order for public as well as private database</span>
+<span class="n">export_order</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oldname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;othernames&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bacterium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bacterium_textbox&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;taxonid&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;partnerprotein&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;partnerprotein_textbox&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;toxicto&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nontoxic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dnasequence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;date&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;comment&quot;</span><span class="p">,)</span>
+
+
+<span class="c1"># exclude model fields for public as well as private database during export</span>
+<span class="n">exclude_items</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;name_category&quot;</span><span class="p">,</span> <span class="s2">&quot;predict_name&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;created_by&quot;</span><span class="p">,</span> <span class="s2">&quot;created_on&quot;</span><span class="p">,</span> <span class="s2">&quot;edited_by&quot;</span><span class="p">,</span> <span class="s2">&quot;edited_on&quot;</span><span class="p">,</span> <span class="s2">&quot;published&quot;</span><span class="p">,</span> <span class="s2">&quot;public&quot;</span><span class="p">,</span> <span class="s2">&quot;alignresults&quot;</span><span class="p">,</span> <span class="s2">&quot;fastasequence_file&quot;</span><span class="p">,</span> <span class="s2">&quot;terms_conditions&quot;</span><span class="p">,</span> <span class="s2">&quot;uploaded&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># allowed model fields for public as well as private database during export</span>
+<span class="n">allowed_fields</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oldname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;othernames&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bacterium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bacterium_textbox&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;taxonid&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;partnerprotein&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;partnerprotein_textbox&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;toxicto&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nontoxic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dnasequence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pdbcode&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;admin_user&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;admin_comments&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;date&quot;</span><span class="p">,)</span>
+
+
+<span class="c1"># model fields displayed on the admin for public as well as private database</span>
+<span class="n">display</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oldname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;accession_url&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;accession_availability&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># model search fields on the admin for public as well as private database</span>
+<span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oldname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;othernames&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># display public as well as private databases ordered by name</span>
+<span class="n">ordering</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,)</span>
+
+
+<span class="c1"># https://blog.askesis.pl/post/2019/02/django-admin-inline.html</span>
+<div class="viewcode-block" id="ModelAdminLog"><a class="viewcode-back" href="../../database.html#database.admin.ModelAdminLog">[docs]</a><span class="k">class</span> <span class="nc">ModelAdminLog</span><span class="p">(</span><span class="n">GenericStackedInline</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A log message that stores the admin user, log in time, edited model class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">LogEntry</span>
+
+    <span class="c1"># All fields are read-only, obviously</span>
+    <span class="n">readonly_fields</span> <span class="o">=</span> <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;action_time&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;change_message&quot;</span><span class="p">]</span>
+
+    <span class="c1"># No extra fields so noone can add new logs</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># No one can delete logs</span>
+    <span class="n">can_delete</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># This is a hackity hack! See below</span>
+    <span class="n">checks_class</span> <span class="o">=</span> <span class="n">BaseModelAdminChecks</span>
+
+<div class="viewcode-block" id="ModelAdminLog.change_message"><a class="viewcode-back" href="../../database.html#database.admin.ModelAdminLog.change_message">[docs]</a>    <span class="k">def</span> <span class="nf">change_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">get_change_message</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="FilterByCategories"><a class="viewcode-back" href="../../database.html#database.admin.FilterByCategories">[docs]</a><span class="k">class</span> <span class="nc">FilterByCategories</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">SimpleListFilter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A filter categories in the admin login to filter the data based on the category. This is visible on the right hand side of the admin page in public database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Categories&quot;</span>
+    <span class="n">parameter_name</span> <span class="o">=</span> <span class="s2">&quot;q&quot;</span>
+
+<div class="viewcode-block" id="FilterByCategories.lookups"><a class="viewcode-back" href="../../database.html#database.admin.FilterByCategories.lookups">[docs]</a>    <span class="k">def</span> <span class="nf">lookups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">model_admin</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;App&quot;</span><span class="p">,</span> <span class="s2">&quot;App&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Cry&quot;</span><span class="p">,</span> <span class="s2">&quot;Cry&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Cyt&quot;</span><span class="p">,</span> <span class="s2">&quot;Cyt&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Gpp&quot;</span><span class="p">,</span> <span class="s2">&quot;Gpp&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Mcf&quot;</span><span class="p">,</span> <span class="s2">&quot;Mcf&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Mpp&quot;</span><span class="p">,</span> <span class="s2">&quot;Mpp&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Mtx&quot;</span><span class="p">,</span> <span class="s2">&quot;Mtx&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Spp&quot;</span><span class="p">,</span> <span class="s2">&quot;Spp&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Tpp&quot;</span><span class="p">,</span> <span class="s2">&quot;Tpp&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Vip&quot;</span><span class="p">,</span> <span class="s2">&quot;Vip&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Vpa&quot;</span><span class="p">,</span> <span class="s2">&quot;Vpa&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Vpb&quot;</span><span class="p">,</span> <span class="s2">&quot;Vpb&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;Xpp&quot;</span><span class="p">,</span> <span class="s2">&quot;Xpp&quot;</span><span class="p">),</span>
+        <span class="p">]</span></div>
+
+<div class="viewcode-block" id="FilterByCategories.queryset"><a class="viewcode-back" href="../../database.html#database.admin.FilterByCategories.queryset">[docs]</a>    <span class="k">def</span> <span class="nf">queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="StructureDatabaseResource"><a class="viewcode-back" href="../../database.html#database.admin.StructureDatabaseResource">[docs]</a><span class="k">class</span> <span class="nc">StructureDatabaseResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+<div class="viewcode-block" id="StructureDatabaseResource.Meta"><a class="viewcode-back" href="../../database.html#database.admin.StructureDatabaseResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">StructureDatabase</span>
+        <span class="n">skip_unchanged</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">report_skipped</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,)</span>
+        <span class="n">import_id_fields</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;oldname&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pdbid&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;doi&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pubmedid&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;modified&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="StructureDatabaseAdmin"><a class="viewcode-back" href="../../database.html#database.admin.StructureDatabaseAdmin">[docs]</a><span class="k">class</span> <span class="nc">StructureDatabaseAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">StructureDatabaseResource</span>
+
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;oldname&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pdbid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;doi&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pubmedid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;oldname&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pdbid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;doi&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;modified&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pubmedid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;oldname&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pdbid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;doi&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;modified&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pubmedid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">ordering</span> <span class="o">=</span> <span class="n">ordering</span></div>
+
+
+<div class="viewcode-block" id="BacteriumWidget"><a class="viewcode-back" href="../../database.html#database.admin.BacteriumWidget">[docs]</a><span class="k">class</span> <span class="nc">BacteriumWidget</span><span class="p">(</span><span class="n">widgets</span><span class="o">.</span><span class="n">BooleanWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="BacteriumWidget.Clean"><a class="viewcode-back" href="../../database.html#database.admin.BacteriumWidget.Clean">[docs]</a>    <span class="k">def</span> <span class="nf">Clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;no&#39;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">value</span></div></div>
+
+
+<div class="viewcode-block" id="PesticidalProteinPrivateDatabaseResource"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinPrivateDatabaseResource">[docs]</a><span class="k">class</span> <span class="nc">PesticidalProteinPrivateDatabaseResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+
+    <span class="n">partnerprotein</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">column_name</span><span class="o">=</span><span class="s1">&#39;partnerprotein&#39;</span><span class="p">,</span>
+                           <span class="n">attribute</span><span class="o">=</span><span class="s1">&#39;partnerprotein&#39;</span><span class="p">,</span>
+                           <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">BacteriumWidget</span><span class="p">())</span>
+    <span class="n">bacterium</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">column_name</span><span class="o">=</span><span class="s1">&#39;bacterium&#39;</span><span class="p">,</span>
+                      <span class="n">attribute</span><span class="o">=</span><span class="s1">&#39;bacterium&#39;</span><span class="p">,</span>
+                      <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">BacteriumWidget</span><span class="p">())</span>
+
+<div class="viewcode-block" id="PesticidalProteinPrivateDatabaseResource.Meta"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinPrivateDatabaseResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span>
+        <span class="c1"># skip_unchanged = True</span>
+        <span class="c1"># report_skipped = True</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;fastasequence_file&#39;</span><span class="p">,</span> <span class="s1">&#39;name_category&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;terms_conditions&#39;</span><span class="p">,</span> <span class="s1">&#39;predict_name&#39;</span><span class="p">,</span> <span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="s1">&#39;admin_user&#39;</span><span class="p">,</span> <span class="s1">&#39;admin_comments&#39;</span><span class="p">)</span>
+
+        <span class="c1"># to export only date not time</span>
+        <span class="c1"># widgets = {</span>
+        <span class="c1">#     &#39;date&#39;: {&#39;format&#39;: &#39;%d-%m-%Y&#39;},</span>
+        <span class="c1"># }</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">import_order</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">export_order</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">import_id_fields</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">export_id_fields</span> <span class="o">=</span> <span class="n">import_order</span></div>
+
+<div class="viewcode-block" id="PesticidalProteinPrivateDatabaseResource.dehydrate_bacterium"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinPrivateDatabaseResource.dehydrate_bacterium">[docs]</a>    <span class="k">def</span> <span class="nf">dehydrate_bacterium</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">bacterium</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;No&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Yes&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PesticidalProteinPrivateDatabaseResource.dehydrate_partnerprotein"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinPrivateDatabaseResource.dehydrate_partnerprotein">[docs]</a>    <span class="k">def</span> <span class="nf">dehydrate_partnerprotein</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabase</span><span class="o">.</span><span class="n">partnerprotein</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;No&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Yes&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="PesticidalProteinPrivateDatabaseAdmin"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinPrivateDatabaseAdmin">[docs]</a><span class="k">class</span> <span class="nc">PesticidalProteinPrivateDatabaseAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">PesticidalProteinPrivateDatabaseResource</span>
+
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="n">search_fields</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="n">allowed_fields</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="n">display</span>
+    <span class="n">ordering</span> <span class="o">=</span> <span class="n">ordering</span>
+
+<div class="viewcode-block" id="PesticidalProteinPrivateDatabaseAdmin.accession_url"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinPrivateDatabaseAdmin.accession_url">[docs]</a>    <span class="k">def</span> <span class="nf">accession_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span>
+            <span class="s1">&#39;&lt;a href=&quot;</span><span class="si">%s%s</span><span class="s1">&quot; target=&quot;_blank&quot;&gt;</span><span class="si">%s</span><span class="s1">&lt;/a&gt;&#39;</span>
+            <span class="o">%</span> <span class="p">(</span>
+                <span class="s2">&quot;https://www.ncbi.nlm.nih.gov/protein/&quot;</span><span class="p">,</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">accession</span><span class="p">,</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">accession</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+    <span class="n">accession_url</span><span class="o">.</span><span class="n">allow_tags</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">accession_url</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;View the accession number as an URL&quot;</span>
+
+<div class="viewcode-block" id="PesticidalProteinPrivateDatabaseAdmin.accession_availability"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinPrivateDatabaseAdmin.accession_availability">[docs]</a>    <span class="k">def</span> <span class="nf">accession_availability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">accession</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">accession</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">accession</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s2">&quot;&lt;body&gt; &lt;p&gt;No accession number&lt;/p&gt; &lt;/body&gt;&quot;</span><span class="p">)</span>
+
+        <span class="n">a</span> <span class="o">=</span> <span class="n">NCBIAvailability</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">accession</span><span class="o">=</span><span class="n">accession</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+
+        <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">for</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="s1">&#39;availability&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Private&#39;</span><span class="p">:</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;Private&#39;</span>
+            <span class="k">elif</span> <span class="n">status</span><span class="p">[</span><span class="s1">&#39;availability&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Public&#39;</span><span class="p">:</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;Public&#39;</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;Public&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s1">&#39;&lt;body&gt; &lt;p style=&quot;color:#FF0000&quot;;&gt;Sequence is Public&lt;/p&gt; &lt;/body&gt;&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;Private&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s2">&quot;&lt;body&gt; &lt;p&gt;Sequence is Private&lt;/p&gt; &lt;/body&gt;&quot;</span><span class="p">)</span></div>
+
+    <span class="n">accession_availability</span><span class="o">.</span><span class="n">allow_tags</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">accession_availability</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Accession Available in NCBI&quot;</span></div>
+
+
+<div class="viewcode-block" id="PesticidalProteinHiddenSequenceResource"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinHiddenSequenceResource">[docs]</a><span class="k">class</span> <span class="nc">PesticidalProteinHiddenSequenceResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+<div class="viewcode-block" id="PesticidalProteinHiddenSequenceResource.Meta"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinHiddenSequenceResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">PesticidalProteinHiddenSequence</span>
+        <span class="n">skip_unchanged</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">report_skipped</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;submittersname&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;submittersemail&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;uploaded&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;alignresults&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;predict_name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;terms_conditions&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;admin_user&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;admin_comments&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;public&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;fastasequence_file&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">import_id_fields</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;othernames&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;bacterium_textbox&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;strain&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;family&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;toxicto&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nontoxic&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mammalian_active&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pdbcode&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="PesticidalProteinHiddenSequenceAdmin"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinHiddenSequenceAdmin">[docs]</a><span class="k">class</span> <span class="nc">PesticidalProteinHiddenSequenceAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">PesticidalProteinHiddenSequenceResource</span>
+
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;othernames&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;public&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;othernames&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bacterium_textbox&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;strain&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;publication&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;family&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;toxicto&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nontoxic&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mammalian_active&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pdbcode&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;othernames&quot;</span><span class="p">,</span> <span class="s2">&quot;accession&quot;</span><span class="p">,</span> <span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="s2">&quot;public&quot;</span><span class="p">)</span>
+    <span class="n">ordering</span> <span class="o">=</span> <span class="n">ordering</span></div>
+
+
+<div class="viewcode-block" id="PesticidalProteinDatabaseResource"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinDatabaseResource">[docs]</a><span class="k">class</span> <span class="nc">PesticidalProteinDatabaseResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ModelResource is from django-import-export app and is a subclass</span>
+<span class="sd">    for handling Django models.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">partnerprotein</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">column_name</span><span class="o">=</span><span class="s1">&#39;partnerprotein&#39;</span><span class="p">,</span>
+                           <span class="n">attribute</span><span class="o">=</span><span class="s1">&#39;partnerprotein&#39;</span><span class="p">,</span>
+                           <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">BacteriumWidget</span><span class="p">())</span>
+    <span class="n">bacterium</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">column_name</span><span class="o">=</span><span class="s1">&#39;bacterium&#39;</span><span class="p">,</span>
+                      <span class="n">attribute</span><span class="o">=</span><span class="s1">&#39;bacterium&#39;</span><span class="p">,</span>
+                      <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">BacteriumWidget</span><span class="p">())</span>
+
+<div class="viewcode-block" id="PesticidalProteinDatabaseResource.Meta"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinDatabaseResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span>
+        <span class="c1"># skip_unchanged = True</span>
+        <span class="c1"># report_skipped = True</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;fastasequence_file&#39;</span><span class="p">,</span> <span class="s1">&#39;name_category&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;terms_conditions&#39;</span><span class="p">,</span> <span class="s1">&#39;predict_name&#39;</span><span class="p">,</span> <span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="s1">&#39;admin_user&#39;</span><span class="p">,</span> <span class="s1">&#39;admin_comments&#39;</span><span class="p">)</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">import_order</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">export_order</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">import_id_fields</span> <span class="o">=</span> <span class="n">import_order</span>
+        <span class="n">export_id_fields</span> <span class="o">=</span> <span class="n">import_order</span></div>
+
+<div class="viewcode-block" id="PesticidalProteinDatabaseResource.dehydrate_bacterium"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinDatabaseResource.dehydrate_bacterium">[docs]</a>    <span class="k">def</span> <span class="nf">dehydrate_bacterium</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">PesticidalProteinDatabase</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">bacterium</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;No&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Yes&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PesticidalProteinDatabaseResource.dehydrate_partnerprotein"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinDatabaseResource.dehydrate_partnerprotein">[docs]</a>    <span class="k">def</span> <span class="nf">dehydrate_partnerprotein</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">PesticidalProteinDatabase</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabase</span><span class="o">.</span><span class="n">partnerprotein</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;No&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Yes&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="PesticidalProteinDatabaseAdmin"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinDatabaseAdmin">[docs]</a><span class="k">class</span> <span class="nc">PesticidalProteinDatabaseAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">PesticidalProteinDatabaseResource</span>
+
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="n">search_fields</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="n">allowed_fields</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;oldname&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession_url&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Pfam_Info&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;year&quot;</span><span class="p">,)</span>
+
+    <span class="n">list_filter</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="n">FilterByCategories</span><span class="p">]</span>
+
+<div class="viewcode-block" id="PesticidalProteinDatabaseAdmin.accession_url"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinDatabaseAdmin.accession_url">[docs]</a>    <span class="k">def</span> <span class="nf">accession_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span>
+            <span class="s1">&#39;&lt;a href=&quot;</span><span class="si">%s%s</span><span class="s1">&quot; target=&quot;_blank&quot;&gt;</span><span class="si">%s</span><span class="s1">&lt;/a&gt;&#39;</span>
+            <span class="o">%</span> <span class="p">(</span>
+                <span class="s2">&quot;https://www.ncbi.nlm.nih.gov/protein/&quot;</span><span class="p">,</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">accession</span><span class="p">,</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">accession</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PesticidalProteinDatabaseAdmin.Pfam_Info"><a class="viewcode-back" href="../../database.html#database.admin.PesticidalProteinDatabaseAdmin.Pfam_Info">[docs]</a>    <span class="k">def</span> <span class="nf">Pfam_Info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Cry&quot;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">domain_details</span> <span class="o">=</span> <span class="n">ProteinDetail</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">accession</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">accession</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">ProteinDetail</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+                <span class="n">domain_details</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">domain_details</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s2">&quot;&lt;p&gt;Data Available&lt;/p&gt;&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s1">&#39;&lt;p style=&quot;color:#FF0000&quot;;&gt;Three domain data needed&lt;/p&gt;&#39;</span><span class="p">)</span></div>
+
+    <span class="n">ordering</span> <span class="o">=</span> <span class="n">ordering</span>
+    <span class="n">accession_url</span><span class="o">.</span><span class="n">allow_tags</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">accession_url</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;View the align results&quot;</span></div>
+
+
+<div class="viewcode-block" id="DescriptionResource"><a class="viewcode-back" href="../../database.html#database.admin.DescriptionResource">[docs]</a><span class="k">class</span> <span class="nc">DescriptionResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+<div class="viewcode-block" id="DescriptionResource.Meta"><a class="viewcode-back" href="../../database.html#database.admin.DescriptionResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Description</span></div></div>
+
+
+<div class="viewcode-block" id="DescriptionAdmin"><a class="viewcode-back" href="../../database.html#database.admin.DescriptionAdmin">[docs]</a><span class="k">class</span> <span class="nc">DescriptionAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">DescriptionResource</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">)</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">)</span>
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OldnameNewnameTableLeftResource"><a class="viewcode-back" href="../../database.html#database.admin.OldnameNewnameTableLeftResource">[docs]</a><span class="k">class</span> <span class="nc">OldnameNewnameTableLeftResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+<div class="viewcode-block" id="OldnameNewnameTableLeftResource.Meta"><a class="viewcode-back" href="../../database.html#database.admin.OldnameNewnameTableLeftResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">OldnameNewnameTableLeft</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="s2">&quot;id&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="OldnameNewnameTableLeftAdmin"><a class="viewcode-back" href="../../database.html#database.admin.OldnameNewnameTableLeftAdmin">[docs]</a><span class="k">class</span> <span class="nc">OldnameNewnameTableLeftAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">OldnameNewnameTableLeftResource</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name_2020&quot;</span><span class="p">,</span> <span class="s2">&quot;name_1998&quot;</span><span class="p">,</span> <span class="s2">&quot;alternative_name&quot;</span><span class="p">)</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name_2020&quot;</span><span class="p">,</span> <span class="s2">&quot;name_1998&quot;</span><span class="p">,</span> <span class="s2">&quot;alternative_name&quot;</span><span class="p">)</span>
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name_2020&quot;</span><span class="p">,</span> <span class="s2">&quot;name_1998&quot;</span><span class="p">,</span> <span class="s2">&quot;alternative_name&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OldnameNewnameTableRightResource"><a class="viewcode-back" href="../../database.html#database.admin.OldnameNewnameTableRightResource">[docs]</a><span class="k">class</span> <span class="nc">OldnameNewnameTableRightResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+<div class="viewcode-block" id="OldnameNewnameTableRightResource.Meta"><a class="viewcode-back" href="../../database.html#database.admin.OldnameNewnameTableRightResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">OldnameNewnameTableRight</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="s2">&quot;id&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="OldnameNewnameTableRightAdmin"><a class="viewcode-back" href="../../database.html#database.admin.OldnameNewnameTableRightAdmin">[docs]</a><span class="k">class</span> <span class="nc">OldnameNewnameTableRightAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">OldnameNewnameTableRightResource</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name_1998&quot;</span><span class="p">,</span> <span class="s2">&quot;name_2020&quot;</span><span class="p">,</span> <span class="s2">&quot;alternative_name&quot;</span><span class="p">)</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name_1998&quot;</span><span class="p">,</span> <span class="s2">&quot;name_2020&quot;</span><span class="p">,</span> <span class="s2">&quot;alternative_name&quot;</span><span class="p">)</span>
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name_2020&quot;</span><span class="p">,</span> <span class="s2">&quot;name_1998&quot;</span><span class="p">,</span> <span class="s2">&quot;alternative_name&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ProteinDetailResource"><a class="viewcode-back" href="../../database.html#database.admin.ProteinDetailResource">[docs]</a><span class="k">class</span> <span class="nc">ProteinDetailResource</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">ModelResource</span><span class="p">):</span>
+<div class="viewcode-block" id="ProteinDetailResource.Meta"><a class="viewcode-back" href="../../database.html#database.admin.ProteinDetailResource.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">ProteinDetail</span>
+        <span class="n">skip_unchanged</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">report_skipped</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;accession_name&quot;</span><span class="p">)</span>
+
+        <span class="n">import_id_fields</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sequence&quot;</span>
+            <span class="s2">&quot;fulllength&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;domain_N&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pfam_N&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cdd_N&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;start_N&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end_N&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;domain_M&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pfam_M&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cdd_M&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;start_M&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end_M&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;domain_C&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pfam_C&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cdd_C&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;start_C&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end_C&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ProteinDetailAdmin"><a class="viewcode-back" href="../../database.html#database.admin.ProteinDetailAdmin">[docs]</a><span class="k">class</span> <span class="nc">ProteinDetailAdmin</span><span class="p">(</span><span class="n">ImportExportModelAdmin</span><span class="p">):</span>
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;start_N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;end_N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;start_M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;end_M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;start_C&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;end_C&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">formfield_overrides</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;widget&quot;</span><span class="p">:</span> <span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;20&quot;</span><span class="p">})},</span>
+        <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;widget&quot;</span><span class="p">:</span> <span class="n">Textarea</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rows&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;cols&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">})},</span>
+    <span class="p">}</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sequence&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fulllength&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;domain_N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pfam_N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cdd_N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;start_N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;end_N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;domain_M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pfam_M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cdd_M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;start_M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;end_M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;domain_C&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pfam_C&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cdd_C&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;start_C&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;end_C&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accession_url&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;domain_N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;start_N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;end_N&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;domain_M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;start_M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;end_M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;domain_C&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;start_C&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;end_C&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ordering</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,)</span>
+
+    <span class="c1"># def Protein_Name(self, obj):</span>
+    <span class="c1">#     protein = PesticidalProteinDatabase.objects.get(</span>
+    <span class="c1">#         accession=obj.accession)</span>
+    <span class="c1">#     if protein:</span>
+    <span class="c1">#         return protein.name</span>
+
+<div class="viewcode-block" id="ProteinDetailAdmin.accession_url"><a class="viewcode-back" href="../../database.html#database.admin.ProteinDetailAdmin.accession_url">[docs]</a>    <span class="k">def</span> <span class="nf">accession_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span>
+            <span class="s1">&#39;&lt;a href=&quot;</span><span class="si">%s%s</span><span class="s1">&quot; target=&quot;_blank&quot;&gt;</span><span class="si">%s</span><span class="s1">&lt;/a&gt;&#39;</span>
+            <span class="o">%</span> <span class="p">(</span>
+                <span class="s2">&quot;https://www.ncbi.nlm.nih.gov/protein/&quot;</span><span class="p">,</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">accession</span><span class="p">,</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">accession</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div></div>
+
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">site_header</span> <span class="o">=</span> <span class="s2">&quot;BPPRC Admin Dashboard&quot;</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">index_title</span> <span class="o">=</span> <span class="s2">&quot;BPPRC Available Features&quot;</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">site_title</span> <span class="o">=</span> <span class="s2">&quot;BPPRC adminstration&quot;</span>
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">PesticidalProteinDatabase</span><span class="p">,</span> <span class="n">PesticidalProteinDatabaseAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Description</span><span class="p">,</span> <span class="n">DescriptionAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">ProteinDetail</span><span class="p">,</span> <span class="n">ProteinDetailAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span>
+    <span class="n">PesticidalProteinPrivateDatabase</span><span class="p">,</span>
+    <span class="n">PesticidalProteinPrivateDatabaseAdmin</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span>
+    <span class="n">PesticidalProteinHiddenSequence</span><span class="p">,</span>
+    <span class="n">PesticidalProteinHiddenSequenceAdmin</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">StructureDatabase</span><span class="p">,</span> <span class="n">StructureDatabaseAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">OldnameNewnameTableLeft</span><span class="p">,</span> <span class="n">OldnameNewnameTableLeftAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">OldnameNewnameTableRight</span><span class="p">,</span> <span class="n">OldnameNewnameTableRightAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">Group</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Suresh Pannerselvam.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

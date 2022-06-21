@@ -1,0 +1,63 @@
+{% extends "newwebpage/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5" style="width:900px; margin:0 auto;">
+<h1 class="display-5"> Search specificity data</h1>
+<br>
+Examples:
+<br>
+<h8>Pesticidal protein name:<h8> <br>
+<h8> Cry1Ab7<h8> <br>
+<h8> Cry8 <h8> <br>
+<h8> Mpp2, Mpp3, Mpp46, <h8>
+<p class="text-primary">Note: We recommend searching indvidual categories for faster results.</p>
+<br>
+<br>
+<h8>Target species (enter genus or species element of binomial name):<h8> <br>
+<h8> <i>Spodoptera littoralis</i> <h8> <br>
+<h8> <i>aegypti</i>, <i>atropalpus</i> <h8> <br>
+
+<div class="text-primary text-right">
+  <h6> You have {{ total_cart }} proteins in the cart </h6>
+</div>
+
+
+<form method="post" action="/search_data_association/">
+  {% csrf_token %}
+
+       {{ form.search_term | as_crispy_field }}
+       {{ form.search_fields | as_crispy_field }}
+
+      <button type="submit" class="btn btn-primary" > Search </button>
+</form>
+</div>
+
+  <div>
+  <ul>
+    <li style="font-size:20px">Data in the database are manually sourced from papers and patents.  The dataset will inevitably be incomplete as populating the database is an ongoing process.</li>
+    <li style="font-size:20px">Users should verify any data of interest with the original publication (each source has been cited).</li>
+    <li style="font-size:20px">The database details both susceptible and non-susceptible targets and users should clearly distinguish these distinct strands in the data.</li>
+    <li style="font-size:20px">Users should note that some proteins are only active in association with others, where appropriate this is highlighted in the data.</li>
+  </ul>
+  </div>
+
+
+{% endblock content %}
+
+{% block extrahead %}
+<style>
+
+.asteriskField {
+    display: none;
+}
+
+</style>
+{% endblock extrahead %}
+
+{% block extrajs %}
+
+{% endblock extrajs %}

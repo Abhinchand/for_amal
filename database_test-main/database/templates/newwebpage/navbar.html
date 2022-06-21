@@ -1,0 +1,81 @@
+{% load static %}
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center">
+
+      <div class="logo mr-auto">
+        <h1 class="text-light"><a href="/home/"><span>Home</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+      </div>
+
+      <nav class="nav-menu d-none d-lg-block mr-auto">
+        <ul>
+          <li class="drop-down"><a>About</a>
+            <ul>
+              <li><a href="/about/">About Us</a></li>
+              <li><a href="/funding/">Funding</a></li>
+              <li><a href="/cite/">Cite</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a>Database</a>
+            <ul>
+              <li><a href="/database/">Structural Classes</a></li>
+              <li><a href="/search_database_home/">Search by Name</a></li>
+              <li><a href="/structures/">Protein Structures</a></li>
+              <li><a href="/category_form">Download</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a>Specificity Database</a>
+            <ul>
+              <li><a href="/search_association/">Search</a></li>
+              <li><a href="/download_association/">Download</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a>BestMatchFinder</a>
+            <ul>
+              <li><a href="/bestmatchfinder_home/">Search by sequence</a></li>
+              <li><a href="/bestmatchfinder_database/">Pairwise comparision</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a>Submit your sequence for naming</a>
+            <ul>
+              <li><a href="/submit/">Submission form</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a>Links</a>
+            <ul>
+              <li><a href="/links/">Links</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a>FAQs</a>
+            <ul>
+              <li><a href="/faq/">Frequently asked questions</a></li>
+              <li><a href="/tutorial/">How to use this site</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a>Feedback</a>
+            <ul>
+              <li><a href="/feedback_home">Feedback form</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a>Cart</a>
+            <ul>
+              <li><a href="/view_cart">Download or analyse specific sequences</a></li>
+              <li><a href="{% url 'clear_session_database' %}">Empty Cart</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav><!-- .nav-menu -->
+      <!-- <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'account_logout' %}">Logout</a></li>
+          {% else %}
+          <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+          <li><a href="{% url 'account_login' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      <nav> -->
+</div>
+  </header><!-- End Header -->

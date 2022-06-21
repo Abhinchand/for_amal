@@ -1,0 +1,260 @@
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
+1 0 obj
+<<
+/F1 2 0 R /F2 3 0 R /F3 5 0 R
+>>
+endobj
+2 0 obj
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
+endobj
+3 0 obj
+<<
+/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+>>
+endobj
+4 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.bpprc.org)
+>> /Border [ 0 0 0 ] /Rect [ 262.2429 726.0236 463.5441 738.0236 ] /Subtype /Link /Type /Annot
+>>
+endobj
+5 0 obj
+<<
+/BaseFont /Helvetica-BoldOblique /Encoding /WinAnsiEncoding /Name /F3 /Subtype /Type1 /Type /Font
+>>
+endobj
+6 0 obj
+<<
+/Annots [ 4 0 R ] /Contents 13 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 12 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+7 0 obj
+<<
+/Outlines 9 0 R /PageLabels 14 0 R /PageMode /UseNone /Pages 12 0 R /Type /Catalog
+>>
+endobj
+8 0 obj
+<<
+/Author () /CreationDate (D:20210825103055+05'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20210825103055+05'00') /Producer (ReportLab PDF Library - www.reportlab.com) 
+  /Subject (\(unspecified\)) /Title () /Trapped /False
+>>
+endobj
+9 0 obj
+<<
+/Count 2 /First 10 0 R /Last 11 0 R /Type /Outlines
+>>
+endobj
+10 0 obj
+<<
+/Dest [ 6 0 R /XYZ 62.69291 765.0236 0 ] /Next 11 0 R /Parent 9 0 R /Title (Welcome to BPPRC's documentation!)
+>>
+endobj
+11 0 obj
+<<
+/Dest [ 6 0 R /XYZ 62.69291 565.0236 0 ] /Parent 9 0 R /Prev 10 0 R /Title (Indices and tables)
+>>
+endobj
+12 0 obj
+<<
+/Count 1 /Kids [ 6 0 R ] /Type /Pages
+>>
+endobj
+13 0 obj
+<<
+/Length 2649
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 744.0236 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Welcome to BPPRC's documentation!) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 666.0236 cm
+q
+BT 1 0 0 1 0 62 Tm .334269 Tw 12 TL /F1 10 Tf 0 0 0 rg (The pesticidal protein database is part of the ) Tj 0 0 .501961 rg (Bacterial Pesticidal Protein Resource Center) Tj 0 0 0 rg (. This database) Tj T* 0 Tw 1.523555 Tw (is intended to replace and extend the old Bacillus thuringiensis toxin nomenclature site. The database) Tj T* 0 Tw 2.387984 Tw (currently contains proteins listed in the Bt nomenclature site but with new mnemonics to reflect the) Tj T* 0 Tw 3.307251 Tw (assignment of proteins to different homology groups. New bacteria-derived proteins with pesticidal) Tj T* 0 Tw .862339 Tw (properties have also been added. This site allows users to find the best matches within the database to) Tj T* 0 Tw (their own sequence. Database sequences can be downloaded and analysed in various ways.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 654.0236 cm
+Q
+q
+1 0 0 1 62.69291 583.0236 cm
+q
+.960784 .960784 .862745 rg
+n 0 71 469.8898 -71 re f*
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 6 45 Tm  T* ET
+q
+1 0 0 1 16 40 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2.5 Tm /F3 12.5 Tf 15 TL (Remember!) Tj T* ET
+Q
+Q
+q
+1 0 0 1 16 16 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (By default) Tj T* ET
+Q
+Q
+q
+1 J
+1 j
+.662745 .662745 .662745 RG
+.5 w
+n 0 71 m 469.8898 71 l S
+n 0 0 m 469.8898 0 l S
+n 0 0 m 0 71 l S
+n 469.8898 0 m 469.8898 71 l S
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 577.0236 cm
+Q
+q
+1 0 0 1 62.69291 544.0236 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Indices and tables) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 532.0236 cm
+Q
+q
+1 0 0 1 62.69291 532.0236 cm
+Q
+q
+1 0 0 1 62.69291 520.0236 cm
+q
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+1 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (:ref:`genindex`) Tj T* ET
+Q
+Q
+q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 514.0236 cm
+Q
+q
+1 0 0 1 62.69291 502.0236 cm
+q
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 1 0 0 rg (:ref:`modindex`) Tj T* ET
+Q
+Q
+q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 496.0236 cm
+Q
+q
+1 0 0 1 62.69291 484.0236 cm
+q
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 1 0 0 rg (:ref:`search`) Tj T* ET
+Q
+Q
+q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 484.0236 cm
+Q
+ 
+endstream
+endobj
+14 0 obj
+<<
+/Nums [ 0 15 0 R ]
+>>
+endobj
+15 0 obj
+<<
+/S /D /St 1
+>>
+endobj
+xref
+0 16
+0000000000 65535 f 
+0000000073 00000 n 
+0000000124 00000 n 
+0000000231 00000 n 
+0000000343 00000 n 
+0000000516 00000 n 
+0000000635 00000 n 
+0000000858 00000 n 
+0000000962 00000 n 
+0000001219 00000 n 
+0000001292 00000 n 
+0000001425 00000 n 
+0000001543 00000 n 
+0000001603 00000 n 
+0000004304 00000 n 
+0000004345 00000 n 
+trailer
+<<
+/ID 
+[<ba187995f55b5231f7025264425a74b5><ba187995f55b5231f7025264425a74b5>]
+% ReportLab generated PDF document -- digest (http://www.reportlab.com)
+
+/Info 8 0 R
+/Root 7 0 R
+/Size 16
+>>
+startxref
+4379
+%%EOF

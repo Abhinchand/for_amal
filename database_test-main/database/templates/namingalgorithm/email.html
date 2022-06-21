@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<h3> Email</h3>
+
+
+  {% crispy form %}
+
+{% endblock content %}
+
+
+
+{% block extrajs %}
+<script>
+
+subName=localStorage.getItem('submittersname');
+subEmail=localStorage.getItem('email');
+subname=localStorage.getItem('name');
+
+if (subName) {
+    document.getElementById("id_submittersname").value = subName;
+    document.getElementById("id_subemail").value = subEmail;
+    document.getElementById("id_name").value = subname;
+    localStorage.clear()
+  }
+
+</script>
+
+{% endblock extrajs %}
